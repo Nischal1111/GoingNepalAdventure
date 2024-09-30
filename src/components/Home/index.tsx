@@ -1,9 +1,10 @@
 import React from 'react'
+import HeroSection from './HeroSection'
 
 const MainHome = () => {
   return (
     <div>
-        I am Hello
+      <HeroSection/>
     </div>
   )
 }
