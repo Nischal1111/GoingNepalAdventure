@@ -1,10 +1,12 @@
 import React from 'react'
 import HeroSection from './HeroSection'
+import SearchSection from './SearchSection';
 
 const MainHome = () => {
   return (
-    <div>
+    <div className='relative'>
       <HeroSection/>
+      
     </div>
   )
 }
