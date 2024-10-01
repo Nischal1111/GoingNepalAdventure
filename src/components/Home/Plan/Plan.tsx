@@ -40,7 +40,7 @@ const Plan = () => {
         }}
       ></div>
       <div className='relative z-10'>
-        <SharedTitle title='Plan with us' />
+        <SharedTitle title='Plan with us' subTitle='Plan with us'/>
         <section className='w-full flex gap-16 items-center relative justify-center mt-24 mb-16'>
           {planCards.map((plan, index) => {
             return (
