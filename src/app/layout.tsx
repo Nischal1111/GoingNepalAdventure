@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import localFont from "next/font/local";
-import { Rowdies,Rubik_Mono_One } from 'next/font/google'
+import { Rowdies} from 'next/font/google'
 import "./globals.css";
 import { Provider } from "@/providers/provider";
 import Navbar from "@/shared/Navbar";
@@ -20,11 +20,6 @@ export const rowdies=Rowdies({
   weight: '400',
   subsets: ['latin'],
   display: 'swap',
-})
-export const rubik=localFont({
-  src:"./fonts/RubikOne-Regular.ttf",
-  variable: "--font-rubik",
-  weight: "100 900",
 })
 
 export const metadata: Metadata = {

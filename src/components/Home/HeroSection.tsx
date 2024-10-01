@@ -48,7 +48,7 @@ const HeroSection = () => {
         <>
             <main className='custom-main relative text-white'>
                 <div className="absolute inset-0 bg-black opacity-20 z-[1]"></div>
-                <Image src="/assets/hero.jpeg" alt='hero-section' height={1000} width={1000} className='object-cover h-[90vh] w-screen z-[0]' />
+                <Image src="/assets/hero.jpg" alt='hero-section' height={1000} width={1000} className='object-cover h-[90vh] w-screen z-[0]' />
                 
                 <div className='px-20 flex gap-8 z-[1000] absolute top-[15%]'>
                     <div className='relative h-[50vh] flex gap-1'>
