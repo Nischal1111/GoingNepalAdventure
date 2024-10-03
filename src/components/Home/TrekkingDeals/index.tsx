@@ -8,7 +8,7 @@ const TrekkingDeals = () => {
 
     return (
         <main className='my-12'>
-            <SharedTitle title='Best Selling Treks' subTitle='Best Selling Treks'/>
+            <SharedTitle title='Popular Treks' subTitle='Best Selling Packages'/>
             <CardSlider/>
         </main>
     )

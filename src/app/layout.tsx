@@ -4,6 +4,7 @@ import { Rowdies} from 'next/font/google'
 import "./globals.css";
 import { Provider } from "@/providers/provider";
 import Navbar from "@/shared/Navbar";
+import ScrollToTop from "@/shared/ScrollToTop";
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -33,12 +34,13 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className="bg-light">
+    <html lang="en" className="bg-[#fafafa]">
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
         <Provider>
           <Navbar/>
+          <ScrollToTop/>
           {children}
         </Provider>
       </body>

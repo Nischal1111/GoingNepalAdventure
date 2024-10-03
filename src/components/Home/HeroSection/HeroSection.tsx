@@ -5,6 +5,10 @@ import Image from 'next/image';
 import { PiStarFourFill } from "react-icons/pi";
 import SearchSection from './SearchSection';
 import { motion, AnimatePresence } from 'framer-motion';
+import { FiFacebook } from 'react-icons/fi';
+import { FaInstagram } from 'react-icons/fa';
+import { FaLinkedin, FaXTwitter } from 'react-icons/fa6';
+import Link from 'next/link';
 
 const HeroSection = () => {
     const descSlider = [
@@ -108,7 +112,7 @@ const HeroSection = () => {
                                     animate={{ opacity: 1, y: 0 }}
                                     transition={{ delay: 0.8 }}
                                 >
-                                    <Button className='rounded-sm mt-10 px-12 w-fit text-white border hover:bg-primary hover:border-primary border-white bg-transparent'>
+                                    <Button className='rounded-sm mt-10 px-12 z-[100] w-fit text-white border hover:bg-primary hover:border-primary border-white bg-transparent'>
                                         {descSlider[currentSlide].button}
                                     </Button>
                                 </motion.div>
@@ -120,6 +124,21 @@ const HeroSection = () => {
                             <div className='bg-white w-[90%] h-[1px] relative left-3'></div>
                         </div>
                     </div>
+                </div>
+
+                <div className='absolute top-8 right-8 bg-primary/50 px-3 py-4 rounded-full flex flex-col gap-6 z-[100]'>
+                    <Link href={"https://www.facebook.com/going2nepal/"} target='_blank'>
+                        <FiFacebook size={22} className='transition duration-300 hover:scale-[1.3]'/>
+                    </Link>
+                    <Link href={"https://www.instagram.com/goingnepal/"} target='_blank'>
+                        <FaInstagram size={20} className='transition duration-300 hover:scale-[1.3]'/>      
+                    </Link>
+                    <Link href={"https://x.com/goingnepal"} target='_blank'>      
+                        <FaXTwitter size={20} className='transition duration-300 hover:scale-[1.3]'/>
+                    </Link>
+                    <Link href={"https://www.linkedin.com/in/liladhar-bhandari-1b4832140/?originalSubdomain=np"} target='_blank'>      
+                        <FaLinkedin size={20} className='transition duration-300 hover:scale-[1.3]'/>
+                    </Link>
                 </div>
             </main>
 
