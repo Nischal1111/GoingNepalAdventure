@@ -12,7 +12,7 @@ const WhyGoingNepal = () => {
     {
         title: "Trekking Destinations",
         icon:<IoLocation size={18}/>,
-        description: "Explore a curated list of the world's most stunning trekking locations, from serene forest trails to rugged mountain paths."
+        description: "Explore a curated list of the world&apos;s most stunning trekking locations, from serene forest trails to rugged mountain paths."
     },
     {
         title: "Guided Tours",
@@ -37,7 +37,7 @@ return (
             <Info/>
             <div className='w-full relative'>
                 <SharedTitle title='Why Us' subTitle='Going Nepal Adventure'/>
-                <p className='text-sm text-justify'>At Going Nepal, we are passionate about exploring the great outdoors. Our mission is to help adventurers discover breathtaking trekking routes across the globe. Whether you're a beginner or an experienced trekker, we provide expert guidance and resources to make your next trek unforgettable.</p>
+                <p className='text-sm text-justify'>At Going Nepal, we are passionate about exploring the great outdoors. Our mission is to help adventurers discover breathtaking trekking routes across the globe. Whether you&apos;re a beginner or an experienced trekker, we provide expert guidance and resources to make your next trek unforgettable.</p>
                 <div className='grid grid-cols-2 gap-x-8 gap-y-4 mt-8'>
                     {sections.map((section,index)=>{
                         return(

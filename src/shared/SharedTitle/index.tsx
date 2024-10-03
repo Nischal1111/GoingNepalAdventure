@@ -1,6 +1,11 @@
-import { rowdies } from '@/app/layout'
 import React from 'react'
+import { Rowdies} from 'next/font/google'
 
+const rowdies=Rowdies({
+  weight: '400',
+  subsets: ['latin'],
+  display: 'swap',
+})
 interface titleProps{
     title:string
     subTitle:string

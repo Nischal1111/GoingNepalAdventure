@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect } from "react";
+import React from "react";
 import { AiOutlineArrowUp } from "react-icons/ai";
 
 const ScrollToTop = () => {
