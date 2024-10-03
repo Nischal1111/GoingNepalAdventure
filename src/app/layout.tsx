@@ -4,6 +4,7 @@ import "./globals.css";
 import { Provider } from "@/providers/provider";
 import Navbar from "@/shared/Navbar";
 import ScrollToTop from "@/shared/ScrollToTop";
+import Head from "next/head";
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -28,6 +29,13 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className="bg-[#fafafa]">
+      <Head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+        <meta charSet="UTF-8" />
+        <meta httpEquiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="description" content="Going Nepal Adventure" />
+        <title>Going Nepal Adventure</title>
+      </Head>
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >

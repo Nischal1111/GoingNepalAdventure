@@ -6,6 +6,7 @@ import { IoLocation } from 'react-icons/io5'
 import { FaInfoCircle, FaUserShield } from 'react-icons/fa'
 import { GiGearHammer } from 'react-icons/gi'
 import Info from './Info'
+import Link from 'next/link'
 
 const WhyGoingNepal = () => {
     const sections = [
@@ -33,7 +34,7 @@ const WhyGoingNepal = () => {
 
 return (
     <main className='w-full px-32 py-16'>
-        <section className='flex gap-12 items-center'>
+        <section className='relative flex gap-32 items-center'>
             <Info/>
             <div className='w-full relative'>
                 <SharedTitle title='Why Us' subTitle='Going Nepal Adventure'/>
@@ -51,10 +52,12 @@ return (
                         )
                     })}
                 </div>
-                <div className='flex items-center gap-1 justify-end mt-12 text-primary text-sm cursor-pointer group'>
-                    <p className=' font-semibold underline underline-offset-2'>More about us</p>
-                    <BsArrowRight className='transform transition-transform duration-200 group-hover:translate-x-2' />
-                </div>
+                <Link href={"/aboutUs"}>
+                    <div className='flex items-center gap-1 justify-end mt-12 text-primary text-sm cursor-pointer group'>
+                        <p className=' font-semibold underline underline-offset-2'>More about us</p>
+                        <BsArrowRight className='transform transition-transform duration-200 group-hover:translate-x-2' />
+                    </div>
+                </Link>
             </div>
         </section>
     </main>

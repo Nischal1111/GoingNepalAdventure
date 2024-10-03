@@ -15,7 +15,7 @@ const HeroSection = () => {
         {
             id: 1,
             title: "Go on a journey",
-            desc: "Elevate your adventure with adrenaline-fueled moments.",
+            desc: "Elevate your adventure with wonderful moments.",
             button: "Explore Tours",
         },
         {
@@ -119,10 +119,10 @@ const HeroSection = () => {
                             </motion.div>
                         </AnimatePresence>
 
-                        <div className='relative mt-12 -left-8 flex flex-col gap-1'>
-                            <div className='bg-white w-[90%] h-[1px]'></div>
-                            <div className='bg-white w-[90%] h-[1px] relative left-3'></div>
-                        </div>
+                    </div>
+                    <div className='absolute -bottom-6 ml-6'>
+                        <div className='bg-white w-[40vw] h-[1px]'></div>
+                        <div className='bg-white w-[40vw] h-[1px] relative left-3 mt-1'></div>
                     </div>
                 </div>
 

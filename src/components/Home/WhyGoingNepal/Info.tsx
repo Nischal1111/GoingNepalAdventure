@@ -14,8 +14,13 @@ const Info = () => {
     const [count, setCount] = useState(0)
 
     const slideVariants = {
-        hidden: { opacity: 0, x: -100 },
-        visible: { opacity: 1, x: 0 },
+        hidden: { opacity: 0, y: 100 },
+        visible: { opacity: 1, y: 0 },
+    }
+
+    const slideVariantsReverse = {
+        hidden: { opacity: 0, y: -100 },
+        visible: { opacity: 1, y: 0 },
     }
 
     useEffect(() => {
@@ -35,9 +40,40 @@ const Info = () => {
     }, [inView])
 
     return (
-        <div className="relative w-full h-[500px]" ref={ref}>
-            <section className='relative rounded-full w-[500px] h-[500px] mx-auto'>
-                <Image src="/assets/why.jpg" alt='Why-Going' fill className='rounded-full object-cover'/>
+        <div className="relative w-[600px] mt-16 h-[500px]" ref={ref}>
+            <section className='flex relative w-full h-[400px]'>
+                <AnimatePresence mode='wait'>
+                    <motion.div 
+                        variants={slideVariants}
+                        initial="hidden"
+                        animate={inView ? "visible" : "hidden"}
+                        transition={{ duration: 0.5,delay:.3 }} 
+                        className='absolute top-8 -left-4 rounded-md overflow-hidden h-[400px] w-full'
+                    >
+                        <Image src="/assets/trek.jpeg" alt='Why-Going' height={1000} width={1000} className='z-[997] h-full object-cover' />
+                    </motion.div>
+
+                    <motion.div 
+                        variants={slideVariantsReverse}
+                        initial="hidden"
+                        animate={inView ? "visible" : "hidden"}
+                        transition={{ duration: 0.5,delay:.6 }} 
+                        className='absolute -top-8 left-4 rounded-md overflow-hidden h-[400px] w-full'
+                    >
+                        <Image src="/assets/hero.jpg" alt='Why-Going' height={1000} width={1000} className='z-[998] h-full object-cover' />
+                    </motion.div>
+
+                    <motion.div 
+                        variants={slideVariants}
+                        initial="hidden"
+                        animate={inView ? "visible" : "hidden"}
+                        transition={{ duration: 0.5 ,delay:1}} 
+                        className='absolute top-0 left-16 rounded-md overflow-hidden h-[400px] w-full'
+                    >
+                        <Image src="/assets/why.jpg" alt='Why-Going' height={1000} width={1000} className='z-[999] h-full object-cover' />
+                    </motion.div>
+                </AnimatePresence>
+
                 <div className='absolute top-[25%] -left-20 w-fit'>
                     <AnimatePresence>
                         {inView && (
@@ -46,7 +82,7 @@ const Info = () => {
                                 initial="hidden"
                                 animate="visible"
                                 exit="hidden"
-                                transition={{ duration: 0.5,delay:.2}}  
+                                transition={{ duration: 0.5, delay: .2 }}  
                                 className='bg-zinc-200 px-6 py-2 rounded-full flex gap-4 items-center shadow-2xl border border-gray-300'
                             >
                                 <AvatarGroup isBordered>

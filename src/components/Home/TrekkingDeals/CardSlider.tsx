@@ -38,9 +38,11 @@ const CardSlider: React.FC = () => {
         speed: 500,
         slidesToShow: 3,
         slidesToScroll: 1,
-        centerPadding:"50px",
         prevArrow: <CustomPrevArrow />,
         nextArrow: <CustomNextArrow />,
+        autoplay:true,
+        pauseOnHover: false,
+        autoplaySpeed:4000,
         responsive: [
             {
                 breakpoint: 1024,
@@ -68,6 +70,7 @@ const CardSlider: React.FC = () => {
                 <div className="px-4"><Card /></div>
                 <div className="px-4"><Card /></div>
             </Slider>
+
         </div>
     )
 }

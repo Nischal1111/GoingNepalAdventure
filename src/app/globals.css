@@ -16,6 +16,7 @@
 
 body {
   color: var(--foreground);
+  zoom: 100%;
   background: var(--background);
   font-family: Arial, Helvetica, sans-serif;
   margin: 0;

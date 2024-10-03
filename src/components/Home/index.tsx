@@ -3,6 +3,8 @@ import HeroSection from './HeroSection/HeroSection'
 import Plan from './Plan/Plan';
 import WhyGoingNepal from './WhyGoingNepal';
 import TrekkingDeals from './TrekkingDeals';
+import Journey from './Journey';
+import Trips from './Trips';
 
 const MainHome = () => {
   return (
@@ -11,6 +13,8 @@ const MainHome = () => {
       <Plan/>
       <WhyGoingNepal/>
       <TrekkingDeals/>
+      <Journey/>
+      <Trips/>
     </div>
   )
 }
