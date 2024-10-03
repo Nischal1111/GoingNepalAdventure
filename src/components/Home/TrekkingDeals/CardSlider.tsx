@@ -26,7 +26,7 @@ const CustomNextArrow: React.FC<CustomArrowComponentProps> = ({ onClick }) => (
     <Button
         isIconOnly
         onClick={onClick}
-        className="absolute right-4 top-1/2 text-white -translate-y-1/2 z-10 bg-primary/40 bg-opacity-50 hover:bg-opacity-100 rounded-full p-2 transition-all duration-300"
+        className="absolute right-2 top-1/2 text-white -translate-y-1/2 z-10 bg-primary/40 bg-opacity-50 hover:bg-opacity-100 rounded-full p-2 transition-all duration-300"
     >
         <FaChevronRight/>
     </Button>
@@ -38,6 +38,7 @@ const CardSlider: React.FC = () => {
         speed: 500,
         slidesToShow: 3,
         slidesToScroll: 1,
+        centerPadding:"50px",
         prevArrow: <CustomPrevArrow />,
         nextArrow: <CustomNextArrow />,
         responsive: [
@@ -60,7 +61,7 @@ const CardSlider: React.FC = () => {
 
     return (
         <div className="relative px-12 py-8">
-            <Slider {...settings} className=' pr-12 pl-16 flex items-center justify-center'>
+            <Slider {...settings} className='pr-12 pl-16'>
                 <div className="px-4"><Card /></div>
                 <div className="px-4"><Card /></div>
                 <div className="px-4"><Card /></div>
