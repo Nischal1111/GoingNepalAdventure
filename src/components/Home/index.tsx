@@ -5,6 +5,7 @@ import WhyGoingNepal from './WhyGoingNepal';
 import TrekkingDeals from './TrekkingDeals';
 import Journey from './Journey';
 import Trips from './Trips';
+import Activities from './Activities';
 
 const MainHome = () => {
   return (
@@ -15,6 +16,7 @@ const MainHome = () => {
       <TrekkingDeals/>
       <Journey/>
       <Trips/>
+      <Activities/>
     </div>
   )
 }
