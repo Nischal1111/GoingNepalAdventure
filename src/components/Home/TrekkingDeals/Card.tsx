@@ -5,8 +5,8 @@ import { IoSpeedometerOutline } from 'react-icons/io5'
 
 const Card = () => {
     return (
-        <main className='py-12'>
-            <div className='flex flex-col gap-4 w-[97%] rounded-lg relative bg-white custom-trek-card'>
+        <div className='w-full py-12 max-w-md mx-auto'>
+            <div className='flex flex-col gap-4 rounded-lg relative bg-white custom-trek-card'>
                 <section className='h-[200px] w-full'>
                     <Image src="/assets/hero.jpg" alt="Trek" height={1000} width={1000} className='object-cover h-full w-full rounded-t-lg'/>
                 </section>
@@ -31,7 +31,7 @@ const Card = () => {
                 </section>
                 <p className='absolute top-4 -left-4 text-white z-[100] bg-primary/90 rounded-md text-sm px-4 py-2'>From $1200</p>
             </div>
-        </main>
+        </div>
     )
 }
 

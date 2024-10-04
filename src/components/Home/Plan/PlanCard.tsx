@@ -10,7 +10,7 @@ interface PlanProps {
 const PlanCard: React.FC<PlanProps> = ({ title, img, button, className }) => {
     return (
         <div
-            className={`custom-card h-[400px] w-[30%] flex items-end rounded-lg overflow-hidden relative group ${className}`}
+            className={`custom-card size-[400px] flex items-end rounded-lg overflow-hidden relative group ${className}`}
         >
             <div
                 className="absolute inset-0 transition-transform duration-500 ease-in-out group-hover:scale-110"

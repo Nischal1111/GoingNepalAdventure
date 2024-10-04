@@ -2,6 +2,7 @@
 import SharedTitle from '@/shared/SharedTitle';
 import { Button } from '@nextui-org/react';
 import Image from 'next/image';
+import Link from 'next/link';
 import React from 'react';
 import { FaChevronLeft, FaChevronRight } from 'react-icons/fa';
 import Slider, { CustomArrowProps } from 'react-slick';
@@ -104,6 +105,11 @@ const Activities = () => {
                     <ActivityCard key={activity.id} activity={activity} />
                 ))}
             </Slider>
+            <div className='flex items-center justify-center'>
+                <Link href={"/activities"}>
+                    <Button className=' w-fit bg-primary rounded-md -mt-4 mb-4 text-white px-8 my-12'>Explore Activities</Button>
+                </Link>
+            </div>
         </main>
     );
 };

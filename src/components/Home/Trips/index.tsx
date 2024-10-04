@@ -49,8 +49,20 @@ const Trips = () => {
             button:"View all treks"
         },
     ]
+    const trekbg = "/assets/mountBG.png";
     return (
-        <main className='px-16 mt-16 flex flex-col items-center justify-center'>
+        <main className='px-16 mt-16 flex flex-col items-center justify-center relative'>
+            <div 
+                className='absolute inset-0 z-0'
+                style={{
+                    backgroundImage: `url(${trekbg})`,
+                    backgroundPosition: "center",
+                    backgroundSize: "cover",
+                    backgroundRepeat: "no-repeat",
+                    backgroundAttachment: "fixed",
+                    opacity: 0.3,
+                    }}
+                ></div>
             <SharedTitle title='Trips and Tours' subTitle='Trips and Tours'/>
             <p className='px-16'>We offer a range of tour options, including cultural, luxury, wildlife, pilgrimage, day trips, and climbing and expeditions. These options cater to various interests and preferences, ensuring unforgettable experiences in the Himalayas, with personalized services.We offer a range of tour options, including cultural, luxury, wildlife, pilgrimage, day trips, and climbing and expeditions. These options cater to various interests and preferences, ensuring unforgettable experiences in the Himalayas, with personalized services.</p>
             <section className='w-[90%] grid grid-cols-2 gap-x-8 gap-y-4 my-12 place-content-center'>
@@ -67,7 +79,7 @@ const Trips = () => {
                     )
                 })}
             </section>
-            <div className='flex items-center justify-center'>
+            <div className='flex items-center justify-center my-12'>
                 <Link href={"/tours"}>
                     <Button className=' w-fit bg-primary rounded-md -mt-8 text-white px-8'>View other trips</Button>
                 </Link>
