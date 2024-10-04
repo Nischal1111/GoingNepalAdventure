@@ -30,20 +30,26 @@ const CustomNextArrow: React.FC<CustomArrowComponentProps> = ({ onClick }) => (
     </Button>
 );
 
-// ActivityCard Component
-const ActivityCard: React.FC<{ activity: { title: string, img: string } }> = ({ activity }) => {
+interface ActivityProps {
+    activity: {
+        title: string;
+        img: string;
+    };
+}
+
+const ActivityCard: React.FC<ActivityProps> = ({ activity }) => {
     return (
-        <div className="relative overflow-hidden rounded-lg shadow-md mx-2">
-            <div className="h-[300px] w-full">
+        <div className="relative overflow-hidden rounded-lg shadow-md mx-2 group transition ease-in-out duration-300">
+            <div className="h-[300px] w-full overflow-hidden">
                 <Image
                     src={activity.img}
                     alt={activity.title}
                     height={1000}
                     width={1000}
-                    className="h-full w-full object-cover"
+                    className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-110"
                 />
             </div>
-            <div className="absolute bottom-0 left-0 w-3/4 bg-white rounded-tr-sm py-2 px-4 -translate-y-1/2 shadow-2xl">
+            <div className="absolute bottom-0 left-0 w-3/4 bg-white text-primary group-hover:bg-primary group-hover:text-white transition duration-300 cursor-pointer rounded-sm py-2 px-4 -translate-y-1/2 shadow-2xl">
                 <h3 className="text-lg font-semibold">{activity.title}</h3>
             </div>
         </div>

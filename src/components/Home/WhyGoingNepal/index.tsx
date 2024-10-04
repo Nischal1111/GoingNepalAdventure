@@ -42,7 +42,7 @@ return (
                 <div className='grid grid-cols-2 gap-x-8 gap-y-4 mt-8'>
                     {sections.map((section,index)=>{
                         return(
-                            <div key={index} className='bg-primary/60 rounded-md p-2 px-4 text-white'>
+                            <div key={index} className='bg-primary/90 rounded-md p-2 px-4 text-white'>
                                 <div className='flex gap-2 items-center'>
                                     {section.icon}
                                     <h1 className='font-semibold text-lg'>{section.title}</h1>

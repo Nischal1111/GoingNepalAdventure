@@ -7,7 +7,7 @@ import Link from 'next/link'
 
 const TrekkingDeals = () => {
     
-    const trekbg = "/assets/trekBG.jpg";
+    const trekbg = "/assets/mountBG.png";
 
     return (
         <main className='relative my-12'>
@@ -19,14 +19,14 @@ const TrekkingDeals = () => {
                     backgroundSize: "cover",
                     backgroundRepeat: "no-repeat",
                     backgroundAttachment: "fixed",
-                    opacity: 0.05,
+                    opacity: 0.3,
                     }}
                 ></div>
             <SharedTitle title='Popular Treks' subTitle='Best Selling Packages'/>
             <CardSlider/>
             <div className='flex items-center justify-center'>
                 <Link href={"/treks"}>
-                    <Button className=' w-fit bg-primary rounded-md -mt-8 text-white px-8'>View all Treks</Button>
+                    <Button className=' w-fit bg-primary rounded-md -mt-4 mb-4 text-white px-8'>View all Treks</Button>
                 </Link>
             </div>
         </main>

@@ -1,19 +1,19 @@
 import React from 'react';
 
-interface planProps {
+interface PlanProps {
     title: string;
     img: string;
     button: string;
     className?: string;
 }
 
-const PlanCard: React.FC<planProps> = ({ title, img, button, className }) => {
+const PlanCard: React.FC<PlanProps> = ({ title, img, button, className }) => {
     return (
         <div
-            className={`custom-card h-[400px] w-[30%] flex items-end rounded-lg overflow-hidden relative ${className}`}
+            className={`custom-card h-[400px] w-[30%] flex items-end rounded-lg overflow-hidden relative group ${className}`}
         >
             <div
-                className="absolute inset-0 transition-transform duration-500 ease-in-out hover:scale-110"
+                className="absolute inset-0 transition-transform duration-500 ease-in-out group-hover:scale-110"
                 style={{
                     backgroundImage: `url(${img})`,
                     backgroundSize: 'cover',

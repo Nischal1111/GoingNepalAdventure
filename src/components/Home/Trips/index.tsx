@@ -50,9 +50,10 @@ const Trips = () => {
         },
     ]
     return (
-        <main className='px-16 mt-24 flex flex-col items-center justify-center'>
+        <main className='px-16 mt-16 flex flex-col items-center justify-center'>
             <SharedTitle title='Trips and Tours' subTitle='Trips and Tours'/>
-            <section className='w-[90%] grid grid-cols-2 gap-x-8 gap-y-4 my-20 place-content-center'>
+            <p className='px-16'>We offer a range of tour options, including cultural, luxury, wildlife, pilgrimage, day trips, and climbing and expeditions. These options cater to various interests and preferences, ensuring unforgettable experiences in the Himalayas, with personalized services.We offer a range of tour options, including cultural, luxury, wildlife, pilgrimage, day trips, and climbing and expeditions. These options cater to various interests and preferences, ensuring unforgettable experiences in the Himalayas, with personalized services.</p>
+            <section className='w-[90%] grid grid-cols-2 gap-x-8 gap-y-4 my-12 place-content-center'>
                 {trips.map(item=>{
                     return(
                         <div key={item.title} className='h-[150px] w-full relative'>
