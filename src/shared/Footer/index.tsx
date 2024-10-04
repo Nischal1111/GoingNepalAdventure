@@ -1,5 +1,4 @@
 import React from 'react'
-import Image from "next/image"
 import { Button } from '@nextui-org/react'
 import { FiFacebook } from 'react-icons/fi'
 import { FaInstagram, FaLinkedin } from 'react-icons/fa'
