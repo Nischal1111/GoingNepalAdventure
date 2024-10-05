@@ -42,7 +42,7 @@ body {
 
 .custom-card:hover {
   box-shadow: 0 2px 20px rgba(18, 48, 174, 0.5);
-  cursor: pointer;
+
 }
 
 .custom-trek-card {

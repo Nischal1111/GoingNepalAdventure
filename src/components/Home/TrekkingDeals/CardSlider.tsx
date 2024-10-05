@@ -41,7 +41,7 @@ const CardSlider: React.FC = () => {
         prevArrow: <CustomPrevArrow />,
         nextArrow: <CustomNextArrow />,
         autoplay:true,
-        pauseOnHover: false,
+        pauseOnHover: true,
         autoplaySpeed:4000,
         responsive: [
             {
