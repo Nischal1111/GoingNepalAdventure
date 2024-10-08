@@ -7,7 +7,6 @@ import Journey from './Journey';
 import Trips from './Trips';
 import Activities from './Activities';
 import Blogs from './Blogs';
-import Footer from '@/shared/Footer';
 
 const MainHome = () => {
   return (
