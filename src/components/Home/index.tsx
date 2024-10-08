@@ -20,7 +20,6 @@ const MainHome = () => {
       <Trips/>
       <Activities/>
       <Blogs/>
-      <Footer/>
     </div>
   )
 }

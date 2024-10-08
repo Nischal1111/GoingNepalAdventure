@@ -15,7 +15,6 @@ const Navbar = () => {
         { title: "Tours", link: "/tours" },
         { title: "Activities", link: "/activities" },
         { title: "Destinations", link: "/destinations" },
-        { title: "Hotels", link: "/hotels" },
         { title: "Contact Us", link: "/contact-us" },
         { title: "About Us", link: "/about-us" }
     ];
@@ -63,7 +62,9 @@ const Navbar = () => {
             {!isScrolled && (
                 <section className="flex items-center justify-between py-2 px-12 z-[9999999]">
                     <div className="flex gap-10 items-center">
-                        <Image src={"/assets/logo.png"} alt="GoingNepalLogo" height={1000} width={1000} className="object-contain h-16 w-28" />
+                        <Link href={"/"}>
+                            <Image src={"/assets/logo.png"} alt="GoingNepalLogo" height={1000} width={1000} className="object-contain h-16 w-28" />
+                        </Link>
                         <div className="flex gap-2 items-center">
                             <IoMdCall size={18} />
                             <p className="font-semibold">+977 9867429313</p>

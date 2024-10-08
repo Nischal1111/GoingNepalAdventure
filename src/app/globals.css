@@ -54,3 +54,9 @@ body {
   box-shadow: 0 2px 20px rgba(18, 48, 174, 0.6);
   transform: translateY(-2px);
 }
+
+
+iframe[src*="google.com/maps"] {
+  border: none;
+  outline: none;
+}

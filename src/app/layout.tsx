@@ -5,6 +5,7 @@ import { Provider } from "@/providers/provider";
 import Navbar from "@/shared/Navbar";
 import ScrollToTop from "@/shared/ScrollToTop";
 import Head from "next/head";
+import Footer from "@/shared/Footer";
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -43,6 +44,7 @@ export default function RootLayout({
           <Navbar/>
           <ScrollToTop/>
           {children}
+          <Footer/>
         </Provider>
       </body>
     </html>
