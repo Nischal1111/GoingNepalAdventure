@@ -82,7 +82,7 @@ const MainSection = () => {
                 </div>
             </section>
 
-            <div className='w-full relative my-12 items-center justify-center flex flex-col gap-4'>
+            <div className='w-full relative my-20 items-center justify-center flex flex-col gap-4'>
                 <div className='flex items-center justify-center'>
                     <h1 className={`${rowdies.className} text-4xl w-full`}>Why Going Nepal Adenture</h1>
                 </div>
@@ -125,6 +125,36 @@ const MainSection = () => {
                     <p className='text-justify text-base'>At Going Nepal Adventure, our mission is to help adventurers connect with the pristine beauty of Nepal in a meaningful way. We believe that trekking is more than just a physical journey—it’s an opportunity to immerse yourself in the landscapes, people, and culture that make Nepal unique. We strive to offer trekking experiences that are safe, sustainable, and personalized to each individual’s desires. From high-altitude expeditions like Everest Base Camp to off-the-beaten-path treks in lesser-known regions, we tailor each journey to ensure every trekker finds their perfect adventure. We are also committed to sustainable tourism, ensuring that the beauty of Nepal is preserved for generations to come.</p>
                 </div>
             </section>
+
+            <div className='w-full relative my-20 items-center justify-center flex flex-col gap-4'>
+                <div className='flex items-center justify-center'>
+                    <h1 className={`${rowdies.className} text-4xl w-full`}>Meet Our Team of Travel Experts</h1>
+                </div>
+                    <div className='flex items-center justify-start font-bold text-lg text-primary'>
+                        <p>{'" Passionate Professionals Creating Unforgettable Journeys"'}</p>
+                    </div>
+                <p className='text-base text-justify'>
+                    At Going Nepal, our team of experienced travel professionals is dedicated to crafting unforgettable travel experiences. With years of industry expertise, we specialize in creating personalized itineraries for all types of trips, from romantic getaways to family vacations and adventure excursions. We take the time to understand our clients' preferences to ensure each journey is tailored to their needs. Beyond planning, we provide exceptional customer service throughout the travel process, offering support from booking to arrival. We believe travel is about connecting with people and cultures, and we aim to make every trip both memorable and meaningful. Let us help plan your next adventure!
+                </p>
+                <div className='grid grid-cols-3 gap-x-32 gap-y-4 mt-12'>
+                    <div className='flex flex-col items-center justify-center'>
+                        <Image src={"/assets/ceo.jpg"} alt='ceo' height={1000} width={1000} className='object-cover rounded-md shadow-lg h-[300px]'/>
+                        <h1 className='text-xl font-semibold mt-4'>Lila Dhar Bhandari</h1>
+                        <p className='text-primary text-lg font-bold mt-2'>CEO</p>
+                    </div>
+                    <div className='flex flex-col items-center justify-center'>
+                        <Image src={"/assets/account.jpg"} alt='ceo' height={1000} width={1000} className='object-cover rounded-md shadow-lg h-[300px]'/>
+                        <h1 className='text-xl font-semibold mt-4'>Suvas KC</h1>
+                        <p className='text-primary text-lg font-bold mt-2'>Account</p>
+                    </div>
+                    <div className='flex flex-col items-center justify-center'>
+                        <Image src={"/assets/sales.jpg"} alt='ceo' height={1000} width={1000} className='object-cover rounded-md shadow-lg h-[300px]'/>
+                        <h1 className='text-xl font-semibold mt-4'>Bikash Tamang</h1>
+                        <p className='text-primary text-lg font-bold mt-2'>Sales</p>
+                    </div>
+                </div>
+            </div>
+
         </main>
     )
 }

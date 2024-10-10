@@ -91,7 +91,7 @@ const Footer = () => {
                         <FooterLink>Trekking Packages</FooterLink>
                         <FooterLink>Luxury Tours</FooterLink>
                         <FooterLink>Customize Own Trips</FooterLink>
-                        <FooterLink>MultiDetination Tours</FooterLink>
+                        <FooterLink>MultiDestination Tours</FooterLink>
                     </div>
                 </section>
             </main>
