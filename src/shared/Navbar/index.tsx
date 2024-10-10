@@ -1,8 +1,8 @@
 "use client";
-import { Button } from '@nextui-org/react';
+import { Button, Dropdown, DropdownTrigger, DropdownMenu, DropdownItem } from '@nextui-org/react';
 import React, { useState, useEffect } from 'react';
 import Image from 'next/image';
-import { IoMdCall } from 'react-icons/io';
+import { IoMdCall, IoMdArrowDropdown } from 'react-icons/io';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 
@@ -15,8 +15,12 @@ const Navbar = () => {
         { title: "Tours", link: "/tours" },
         { title: "Activities", link: "/activities" },
         { title: "Destinations", link: "/destinations" },
-        { title: "Contact Us", link: "/contact-us" },
-        { title: "About Us", link: "/about-us" }
+        { title: "Resources", link: "/resources", isDropdown: true },
+    ];
+
+    const rightNav = [
+        { title: "Trek by Days", items: ["5 Days Trek", "10 Days Trek", "15 Days Trek"] },
+        { title: "Trip by Days", items: ["5 Days Trip", "10 Days Trip", "15 Days Trip"] },
     ];
 
     const isActive = (path: string) => pathname === path;
@@ -44,18 +48,79 @@ const Navbar = () => {
                 <section className={`px-16 py-3 bg-primary text-white flex gap-8 items-center z-[9999999] font-semibold tracking-wide transition-opacity duration-300 ease-in-out ${
                     isScrolled ? 'opacity-100' : 'opacity-0'
                 }`}>
+                    {/* Left side of navbar */}
                     {nav.map((item, index) => (
-                        <Link key={index} href={item.link}>
-                            <div className="group relative">
-                                <p>{item.title}</p>
-                                <span
-                                    className={`absolute -bottom-0 left-0 h-[2px] bg-white transition-all ${
-                                        isActive(item.link) ? 'w-full' : 'w-0'
-                                    } group-hover:w-full`}
-                                ></span>
-                            </div>
-                        </Link>
+                        item.isDropdown ? (
+                            <Dropdown key={index } className='bg-primary/90 text-white rounded-sm ' placement='bottom-start'>
+                                <DropdownTrigger>
+                                    <div className="group relative cursor-pointer font-medium tracking-wide flex items-center gap-2">
+                                        <p>{item.title}</p>
+                                        <IoMdArrowDropdown size={18} />
+                                        <span
+                                            className={`absolute -bottom-0 left-0 h-[2px] bg-white transition-all ${
+                                                isActive(item.link) ? 'w-[90%]' : 'w-0'
+                                            } group-hover:w-4/5`}
+                                        ></span>
+                                    </div>
+                                </DropdownTrigger>
+                                <DropdownMenu aria-label="Resources Menu"  variant='light'>
+                                    <DropdownItem key="contact-us">
+                                        <Link href="/contact-us">Contact Us</Link>
+                                    </DropdownItem>
+                                    <DropdownItem key="about-us">
+                                        <Link href="/about-us">About Us</Link>
+                                    </DropdownItem>
+                                    <DropdownItem key="travel-blogs">
+                                        <Link href="/travel-blogs">Travel Blogs</Link>
+                                    </DropdownItem>
+                                    <DropdownItem key="travel-guides">
+                                        <Link href="/travel-guides">Travel Guides</Link>
+                                    </DropdownItem>
+                                    <DropdownItem key="faqs">
+                                        <Link href="/faqs">FAQs</Link>
+                                    </DropdownItem>
+                                    <DropdownItem key="travel-permits">
+                                        <Link href="/travel-permits">Travel Permits</Link>
+                                    </DropdownItem>
+                                    <DropdownItem key="terms-conditions">
+                                        <Link href="/terms-and-conditions">Terms & Conditions</Link>
+                                    </DropdownItem>
+                                </DropdownMenu>
+                            </Dropdown>
+                        ) : (
+                            <Link key={index} href={item.link}>
+                                <div className="group relative">
+                                    <p>{item.title}</p>
+                                    <span
+                                        className={`absolute -bottom-0 left-0 h-[2px] bg-white transition-all ${
+                                            isActive(item.link) ? 'w-full' : 'w-0'
+                                        } group-hover:w-full`}
+                                    ></span>
+                                </div>
+                            </Link>
+                        )
                     ))}
+
+                    {/* Right side of navbar */}
+                    <div className="ml-auto flex gap-8">
+                        {rightNav.map((item, index) => (
+                            <Dropdown key={index} className='min-w-[150px] bg-primary/90 text-white rounded-sm ' placement='bottom-start'>
+                                <DropdownTrigger>
+                                    <div className="group relative cursor-pointer font-medium tracking-wide flex items-center gap-2">
+                                        <p>{item.title}</p>
+                                        <IoMdArrowDropdown size={18} />
+                                    </div>
+                                </DropdownTrigger>
+                                <DropdownMenu aria-label={`${item.title} Menu`} variant='light'>
+                                    {item.items.map((subItem, subIndex) => (
+                                        <DropdownItem key={subIndex}>
+                                            <Link href={`/${item.title.toLowerCase().replace(/ /g, "-")}-${subItem.toLowerCase().replace(/ /g, "-")}`}>{subItem}</Link>
+                                        </DropdownItem>
+                                    ))}
+                                </DropdownMenu>
+                            </Dropdown>
+                        ))}
+                    </div>
                 </section>
             </div>
 
@@ -78,17 +143,75 @@ const Navbar = () => {
                 isScrolled ? 'opacity-0' : 'opacity-100'
             }`}>
                 {nav.map((item, index) => (
-                    <Link key={index} href={item.link}>
-                        <div className="group relative">
-                            <p>{item.title}</p>
-                            <span
-                                className={`absolute -bottom-0 left-0 h-[2px] bg-white transition-all ${
-                                    isActive(item.link) ? 'w-full' : 'w-0'
-                                } group-hover:w-full`}
-                            ></span>
-                        </div>
-                    </Link>
+                    item.isDropdown ? (
+                        <Dropdown key={index} className='bg-primary/90 text-white rounded-sm ' placement='bottom-start' >
+                            <DropdownTrigger>
+                                <div className="group relative cursor-pointer font-medium tracking-wide flex items-center gap-2">
+                                        <p>{item.title}</p>
+                                        <IoMdArrowDropdown size={18} />
+                                        <span
+                                            className={`absolute -bottom-0 left-0 h-[2px] bg-white transition-all ${
+                                                isActive(item.link) ? 'w-full' : 'w-0'
+                                            } group-hover:w-4/5`}
+                                        ></span>
+                                    </div>
+                            </DropdownTrigger>
+                            <DropdownMenu aria-label="Resources Menu"  variant='light'>
+                                <DropdownItem key="contact-us">
+                                    <Link href="/contact-us">Contact Us</Link>
+                                </DropdownItem>
+                                <DropdownItem key="about-us">
+                                    <Link href="/about-us">About Us</Link>
+                                </DropdownItem>
+                                <DropdownItem key="travel-blogs">
+                                    <Link href="/travel-blogs">Travel Blogs</Link>
+                                </DropdownItem>
+                                <DropdownItem key="travel-guides">
+                                    <Link href="/travel-guides">Travel Guides</Link>
+                                </DropdownItem>
+                                <DropdownItem key="faqs">
+                                    <Link href="/faqs">FAQs</Link>
+                                </DropdownItem>
+                                <DropdownItem key="travel-permits">
+                                    <Link href="/travel-permits">Travel Permits</Link>
+                                </DropdownItem>
+                                <DropdownItem key="terms-conditions">
+                                    <Link href="/terms-and-conditions">Terms & Conditions</Link>
+                                </DropdownItem>
+                            </DropdownMenu>
+                        </Dropdown>
+                    ) : (
+                        <Link key={index} href={item.link}>
+                            <div className="group relative">
+                                <p>{item.title}</p>
+                                <span
+                                    className={`absolute -bottom-0 left-0 h-[2px] bg-white transition-all ${
+                                        isActive(item.link) ? 'w-full' : 'w-0'
+                                    } group-hover:w-full`}
+                                ></span>
+                            </div>
+                        </Link>
+                    )
                 ))}
+                <div className="ml-auto flex gap-8">
+                        {rightNav.map((item, index) => (
+                            <Dropdown key={index} className=' min-w-[150px] bg-primary/90 text-white rounded-sm ' placement='bottom-start' >
+                                <DropdownTrigger>
+                                    <div className="group relative cursor-pointer font-medium tracking-wide flex items-center gap-2">
+                                        <p>{item.title}</p>
+                                        <IoMdArrowDropdown size={18} />
+                                    </div>
+                                </DropdownTrigger>
+                                <DropdownMenu aria-label={`${item.title} Menu`}  variant='light'>
+                                    {item.items.map((subItem, subIndex) => (
+                                        <DropdownItem key={subIndex}>
+                                            <Link href={`/${item.title.toLowerCase().replace(/ /g, "-")}-${subItem.toLowerCase().replace(/ /g, "-")}`}>{subItem}</Link>
+                                        </DropdownItem>
+                                    ))}
+                                </DropdownMenu>
+                            </Dropdown>
+                        ))}
+                    </div>
             </section>
         </main>
     );

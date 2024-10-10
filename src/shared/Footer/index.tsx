@@ -63,7 +63,6 @@ const Footer = () => {
                         <FooterLink>Tours</FooterLink>
                         <FooterLink>Activities</FooterLink>
                         <FooterLink>Destinations</FooterLink>
-                        <FooterLink>Hotels</FooterLink>
                         <FooterLink>Contact Us</FooterLink>
                         <FooterLink>About Us</FooterLink>
                     </div>
@@ -75,12 +74,12 @@ const Footer = () => {
                         <div className='w-24 bg-white h-[1px]'></div>
                     </div>
                     <div className='flex flex-col gap-2'>
+                        <FooterLink>Travel Blogs</FooterLink>
+                        <FooterLink>Travel Guides</FooterLink>
                         <FooterLink>FAQs</FooterLink>
                         <FooterLink>Resources</FooterLink>
-                        <FooterLink>Privacy Policy</FooterLink>
-                        <FooterLink>Wellness</FooterLink>
                         <FooterLink>Travel Permits</FooterLink>
-                        <FooterLink>Legal Documents</FooterLink>
+                        <FooterLink>Terms and Conditions</FooterLink>
                     </div>
                 </section>
                 <section className='text-white flex flex-col gap-6'>
