@@ -73,8 +73,8 @@ const Navbar = () => {
                                     <DropdownItem key="travel-blogs">
                                         <Link href="/travel-blogs">Travel Blogs</Link>
                                     </DropdownItem>
-                                    <DropdownItem key="travel-guides">
-                                        <Link href="/travel-guides">Travel Guides</Link>
+                                    <DropdownItem key="wellness">
+                                        <Link href="/wellness">Wellness</Link>
                                     </DropdownItem>
                                     <DropdownItem key="faqs">
                                         <Link href="/faqs">FAQs</Link>
@@ -166,8 +166,8 @@ const Navbar = () => {
                                 <DropdownItem key="travel-blogs">
                                     <Link href="/travel-blogs">Travel Blogs</Link>
                                 </DropdownItem>
-                                <DropdownItem key="travel-guides">
-                                    <Link href="/travel-guides">Travel Guides</Link>
+                                <DropdownItem key="wellness">
+                                    <Link href="/wellness">Wellness</Link>
                                 </DropdownItem>
                                 <DropdownItem key="faqs">
                                     <Link href="/faqs">FAQs</Link>

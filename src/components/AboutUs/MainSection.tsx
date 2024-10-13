@@ -3,9 +3,10 @@ import React from 'react'
 import Image from 'next/image'
 import { rowdies } from '@/utility/font'
 import { IoLocation } from 'react-icons/io5'
-import { FaGlobeAsia, FaInfoCircle, FaRunning, FaShieldAlt, FaUserShield } from 'react-icons/fa'
+import { FaCheckCircle, FaGlobeAsia, FaInfoCircle, FaRunning, FaShieldAlt, FaUserShield } from 'react-icons/fa'
 import { GiGearHammer } from 'react-icons/gi'
 import { WiCloud } from 'react-icons/wi'
+import { Button } from '@nextui-org/react'
 
 const MainSection = () => {
     const sections = [
@@ -154,6 +155,62 @@ const MainSection = () => {
                     </div>
                 </div>
             </div>
+
+            <main className='h-full mt-12 w-full flex flex-row mb-12'>
+                <div className='relative w-1/2 flex px-8 '>
+                    <section className='relative h-[500px] w-[600px] p-2 rounded-md bg-white shadow-md'>
+                        <Image src={"/assets/achievement1.jpg"} alt='Ach' height={1000} width={1000} className='object-cover rounded-md h-full w-full'/>
+                    </section>
+                    <section className='relative h-[250px] w-[250px] p-2 rounded-md bg-white shadow-m -bottom-[19rem] right-20'>
+                        <Image src={"/assets/achievement2.jpg"} alt='Ach' height={1000} width={1000} className='object-cover rounded-md h-full w-full'/>
+                    </section>
+                </div>
+                <div className='relative w-1/2 flex items-start justify-start flex-col gap-4'>
+                        <h1 className={`${rowdies.className} text-4xl w-full flex `}>Achievements</h1>
+                        <div className='flex items-center justify-start font-bold text-lg text-primary'>
+                            <p>{'"Epic Milestones, Unforgettable Journeys"'}</p>
+                        </div>
+                        <p className='text-justify text-base text-gray-700'>At Going Nepal Adventure, we take pride in our achievements, having guided countless adventurers through Nepal&apos;s majestic landscapes. From successful expeditions to the Himalayas to creating sustainable and community-focused trekking experiences, our milestones reflect our commitment to excellence and passion for the great outdoors.</p>
+                        <div className='flex gap-4 items-center mt-2'>
+                            <FaCheckCircle className='text-primary' size={22}/>
+                            <p className='text-base'><span className='font-semibold'>2022</span> Travellers&apos; choice - <span className='font-bold'>Trip Advisor</span></p>
+                        </div>
+                        <div className='flex gap-4 items-center mt-2'>
+                            <FaCheckCircle className='text-primary' size={22}/>
+                            <p className='text-base'><span className='font-semibold'>2023</span> Travellers&apos; choice - <span className='font-bold'>Trip Advisor</span></p>
+                        </div>
+                        <div className='flex gap-4 mt-2 items-center'>
+                            <FaCheckCircle className='text-primary' size={22}/>
+                            <p className='text-base'><span className='font-semibold'>2024</span> Travellers&apos; choice - <span className='font-bold'>Trip Advisor</span></p>
+                        </div>
+
+                        <div className='flex w-full items-center justify-between mt-4'>
+                            <div className='flex flex-col'>
+                                <h1 className='font-bold text-5xl text-primary'>13+</h1>
+                                <p className='text-lg text-gray-500 mt-2'>Years of </p>
+                                <p className='text-lg text-gray-500 mt-[-6px]'>experience</p>
+                            </div>
+                            <div className='flex flex-col'>
+                                <h1 className='font-bold text-5xl text-primary'>350+</h1>
+                                <p className='text-lg text-gray-500 mt-2'>Destination </p>
+                                <p className='text-lg text-gray-500 mt-[-6px]'>collaborations</p>
+                            </div>
+                            <div className='flex flex-col'>
+                                <h1 className='font-bold text-5xl text-primary'>1300+</h1>
+                                <p className='text-lg text-gray-500 mt-2'>Successful</p>
+                                <p className='text-lg text-gray-500 mt-[-6px]'>treks</p>
+                            </div>
+                            <div className='flex flex-col'>
+                                <h1 className='font-bold text-5xl text-primary'>2100+</h1>
+                                <p className='text-lg text-gray-500 mt-2'>Satisfied </p>
+                                <p className='text-lg text-gray-500 mt-[-6px]'>clients</p>
+                            </div>
+                        </div>
+
+                        <Button className='px-8 bg-primary -bottom-4 rounded-md relative text-white'>Plan your trip </Button>
+                        
+                </div>
+            </main>
 
         </main>
     )
