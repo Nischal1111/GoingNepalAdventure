@@ -5,8 +5,8 @@ import { Accordion, AccordionItem, Button } from '@nextui-org/react'
 import React from 'react'
 import { FaCircleQuestion, FaPlus } from 'react-icons/fa6'
 import { RxCross1 } from 'react-icons/rx'
-import { FaRegDotCircle } from "react-icons/fa";
 import Link from 'next/link'
+import Dot from '@/utility/Dot'
 
 
 const FAQs = () => {
@@ -105,7 +105,7 @@ const FAQs = () => {
                       key={index} 
                       aria-label={item.question} 
                       title={item.question}
-                      startContent={<FaRegDotCircle className='text-primary'/>}
+                      startContent={<Dot/>}
                       indicator={({ isOpen }) => (isOpen ? <RxCross1 className='text-primary'/> : <FaPlus className='text-primary'/>)}
                       classNames={itemClasses}
                       className='py-4'
@@ -117,17 +117,17 @@ const FAQs = () => {
             })}
             
           </Accordion>
-        <div className='bg-primary/30 px-12 py-8 rounded-md flex items-center justify-between my-16'>
-          <section className='flex flex-col items-start h-full text-white'>
-                <div className='flex items-center gap-4 mb-2'>
-                  <FaCircleQuestion size={22} className='text-primary'/>
-                  <h1 className='font-semibold text-xl tracking-wide'>Still have questions?</h1>
-                </div>
-          </section>
-          <Link href='/contact-us'>
-            <Button  className='bg-primary rounded-md px-12 text-white'>Contact Us</Button>
-          </Link>
-        </div>
+          <div className='bg-primary/30 px-12 py-6 rounded-md flex items-center justify-between my-16'>
+            <section className='flex flex-col items-start h-full text-white'>
+                  <div className='flex items-center gap-6 mb-2'>
+                    <FaCircleQuestion size={52} className='text-primary'/>
+                    <h1 className='font-medium text-2xl tracking-wider'>Still have questions?</h1>
+                  </div>
+            </section>
+            <Link href='/contact-us'>
+              <Button  className='bg-primary rounded-md px-12 text-white'>Contact Us</Button>
+            </Link>
+          </div>
         </div>
     </main>
   )
