@@ -8,7 +8,7 @@ interface sharedProps{
 }
 const SharedSection:React.FC<sharedProps> = ({title,link,img}) => {
     return (
-        <section className='relative h-[70vh] w-full' style={{background:`url(${img})`,backgroundSize:"cover",backgroundAttachment:"fixed"}}>
+        <section className='relative h-[70vh] w-full' style={{background:`url(${img})`,backgroundSize:"cover",backgroundAttachment:"fixed",backgroundPosition:"center"}}>
             <div className='absolute inset-0 bg-black/20 w-full'></div>
             <Breadcrumb title={title} link={link}/>
         </section>
