@@ -98,7 +98,7 @@ const FAQs = () => {
         <SharedTitle title='Get Info' subTitle='Frequently Asked Questions'/>
         <div className='my-16 px-52'>
           
-          <Accordion>
+          <Accordion defaultExpandedKeys={["0"]}>
             {FAQs.map((item,index)=>{
               return(
                 <AccordionItem 

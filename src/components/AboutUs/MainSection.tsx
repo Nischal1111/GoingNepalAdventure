@@ -1,3 +1,4 @@
+"use client"
 import SharedTitle from '@/shared/SharedTitle'
 import React from 'react'
 import Image from 'next/image'
@@ -7,8 +8,36 @@ import { FaCheckCircle, FaGlobeAsia, FaInfoCircle, FaRunning, FaShieldAlt, FaUse
 import { GiGearHammer } from 'react-icons/gi'
 import { WiCloud } from 'react-icons/wi'
 import { Button } from '@nextui-org/react'
+import { motion, useInView } from 'framer-motion'
 
 const MainSection = () => {
+    const sectionsRef = React.useRef<HTMLDivElement>(null);
+    const teamRef = React.useRef<HTMLDivElement>(null);
+    const sectionsInView = useInView(sectionsRef, { once: true, amount: 0.3 });
+    const teamInView = useInView(teamRef, { once: true, amount: 0.3 });
+
+    const containerVariants = {
+        hidden: {},
+        visible: {
+            transition: {
+                staggerChildren: 0.1
+            }
+        }
+    };
+
+    const itemVariants = {
+        hidden: { opacity: 0, y: 20 },
+        visible: { 
+            opacity: 1, 
+            y: 0,
+            transition: {
+                type: "spring",
+                damping: 12,
+                stiffness: 100
+            }
+        }
+    };
+    
     const sections = [
         {
             title: "Destinations",
@@ -52,6 +81,12 @@ const MainSection = () => {
         }
     ];
 
+    const teamMembers = [
+        { name: "Lila Dhar Bhandari", role: "CEO", image: "/assets/ceo.jpg" },
+        { name: "Suvas KC", role: "Account", image: "/assets/account.jpg" },
+        { name: "Bikash Tamang", role: "Sales", image: "/assets/sales.jpg" },
+    ];
+
     return (
         <main className='px-16 flex items-center justify-center flex-col'>
             <SharedTitle title='We are' subTitle='Going Nepal Adventure'/>
@@ -83,7 +118,7 @@ const MainSection = () => {
                 </div>
             </section>
 
-            <div className='w-full relative my-20 items-center justify-center flex flex-col gap-4'>
+            <div   className='w-full relative my-20 items-center justify-center flex flex-col gap-4'>
                 <div className='flex items-center justify-center'>
                     <h1 className={`${rowdies.className} text-4xl w-full`}>Why Going Nepal Adenture</h1>
                 </div>
@@ -91,19 +126,27 @@ const MainSection = () => {
                         <p>{'"Expert Guides, Personalized Service, and Unforgettable Memories"'}</p>
                     </div>
                 <p className='text-base text-justify'>At Going Nepal Adventure, we pride ourselves on providing more than just trekking tours—we offer personalized, memorable experiences that last a lifetime. Our team of certified, experienced guides has an intimate knowledge of Nepal’s terrain, weather, and culture, ensuring that every aspect of your trek is smooth, safe, and enriching. </p>
-                <div className='grid grid-cols-3 gap-x-8 gap-y-4 mt-8'>
-                    {sections.map((section,index)=>{
-                        return(
-                            <div key={index} className='bg-primary/90 duration-200 transition-all cursor-pointer hover:bg-primary rounded-md py-4 px-6 text-white'>
-                                <div className='flex gap-2 items-center'>
-                                    {section.icon}
-                                    <h1 className='font-semibold text-lg'>{section.title}</h1>
-                                </div>
-                                <p className='text-sm font-light mt-2 text-justify'>{section.description}</p>
+                <motion.div 
+                    ref={sectionsRef}
+                    variants={containerVariants}
+                    initial="hidden"
+                    animate={sectionsInView ? "visible" : "hidden"}
+                    className='grid grid-cols-3 gap-x-8 gap-y-4 mt-8'
+                >
+                    {sections.map((section, index) => (
+                        <motion.div
+                            key={index}
+                            variants={itemVariants}
+                            className='bg-primary/90 cursor-pointer hover:bg-primary rounded-md py-4 px-6 text-white transition-colors duration-300'
+                        >
+                            <div className='flex gap-2 items-center'>
+                                {section.icon}
+                                <h1 className='font-semibold text-lg'>{section.title}</h1>
                             </div>
-                        )
-                    })}
-                </div>
+                            <p className='text-sm font-light mt-2 text-justify'>{section.description}</p>
+                        </motion.div>
+                    ))}
+                </motion.div>
             </div>
 
             <section className='flex flex-row-reverse gap-12 items-center w-full mt-16'>
@@ -137,23 +180,31 @@ const MainSection = () => {
                 <p className='text-base text-justify'>
                     At Going Nepal, our team of experienced travel professionals is dedicated to crafting unforgettable travel experiences. With years of industry expertise, we specialize in creating personalized itineraries for all types of trips, from romantic getaways to family vacations and adventure excursions. We take the time to understand our clients&apos; preferences to ensure each journey is tailored to their needs. Beyond planning, we provide exceptional customer service throughout the travel process, offering support from booking to arrival. We believe travel is about connecting with people and cultures, and we aim to make every trip both memorable and meaningful. Let us help plan your next adventure!
                 </p>
-                <div className='grid grid-cols-3 gap-x-32 gap-y-4 mt-12'>
-                    <div className='flex flex-col items-center justify-center'>
-                        <Image src={"/assets/ceo.jpg"} alt='ceo' height={1000} width={1000} className='object-cover rounded-md shadow-lg h-[300px]'/>
-                        <h1 className='text-xl font-semibold mt-4'>Lila Dhar Bhandari</h1>
-                        <p className='text-primary text-lg font-bold mt-2'>CEO</p>
-                    </div>
-                    <div className='flex flex-col items-center justify-center'>
-                        <Image src={"/assets/account.jpg"} alt='ceo' height={1000} width={1000} className='object-cover rounded-md shadow-lg h-[300px]'/>
-                        <h1 className='text-xl font-semibold mt-4'>Suvas KC</h1>
-                        <p className='text-primary text-lg font-bold mt-2'>Account</p>
-                    </div>
-                    <div className='flex flex-col items-center justify-center'>
-                        <Image src={"/assets/sales.jpg"} alt='ceo' height={1000} width={1000} className='object-cover rounded-md shadow-lg h-[300px]'/>
-                        <h1 className='text-xl font-semibold mt-4'>Bikash Tamang</h1>
-                        <p className='text-primary text-lg font-bold mt-2'>Sales</p>
-                    </div>
-                </div>
+                <motion.div 
+                    ref={teamRef}
+                    variants={containerVariants}
+                    initial="hidden"
+                    animate={teamInView ? "visible" : "hidden"}
+                    className='grid grid-cols-3 gap-x-32 gap-y-4 mt-12'
+                >
+                    {teamMembers.map((member, index) => (
+                        <motion.div 
+                            key={index}
+                            variants={itemVariants}
+                            className='flex flex-col items-center justify-center'
+                        >
+                            <Image 
+                                src={member.image} 
+                                alt={member.name} 
+                                height={1000} 
+                                width={1000} 
+                                className='object-cover rounded-md shadow-lg h-[300px]'
+                            />
+                            <h1 className='text-xl font-semibold mt-4'>{member.name}</h1>
+                            <p className='text-primary text-lg font-bold mt-2'>{member.role}</p>
+                        </motion.div>
+                    ))}
+                </motion.div>
             </div>
 
             <main className='h-full mt-12 w-full flex flex-row mb-12'>
