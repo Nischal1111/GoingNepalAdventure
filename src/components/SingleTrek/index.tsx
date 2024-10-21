@@ -8,10 +8,16 @@ import TrekHighLights from './TrekHighLights';
 import Itinerary from './Itinerary';
 import { trekProps } from './types';
 import TripQuote from './TripQuote';
+import Services from './Services';
+import PackingList from './PackingList';
+import Gallery from './Gallery';
+import TrekFAQs from './TrekFAQs';
+import RightSide from './RightSide/RightSide';
 
 const SingleTrek = () => {
     const trek={
         title:"Everest Base Camp",
+        price:"USD $1200",
         img:"/assets/contactBG.jpg",
         desc:"Everest Base Camp (EBC) is one of the most popular trekking destinations in the world, located in Nepal at an altitude of about 5,364 meters (17,598 feet). The trek offers breathtaking views of the Himalayas, including Mount Everest, the highest peak in the world. Trekkers pass through Sherpa villages, ancient monasteries, and stunning landscapes as they follow trails through Sagarmatha National Park, a UNESCO World Heritage site. The journey typically takes 12-14 days, starting from Lukla, and challenges adventurers with high altitudes and rugged terrain, offering a once-in-a-lifetime experience."
     }
@@ -159,6 +165,131 @@ const SingleTrek = () => {
     }
     ];
 
+    const servicesIncluded: string[] = [
+    "Airport pick-up and drop-off by private vehicle.",
+    "Round-trip flights between Kathmandu and Lukla.",
+    "Accommodation during the trek in local tea houses and lodges.",
+    "All meals during the trek (breakfast, lunch, and dinner).",
+    "An experienced, English-speaking trekking guide and porter services.",
+    "Sagarmatha National Park entry permit and TIMS card.",
+    "First aid medical kit carried by the guide.",
+    "Duffle bag for your belongings during the trek.",
+    "All government and local taxes.",
+    "Farewell dinner in Kathmandu after the trek."
+];
+
+    const servicesNotIncluded: string[] = [
+        "International airfare to and from Kathmandu.",
+        "Nepal entry visa fees.",
+        "Travel and trekking insurance (required).",
+        "Personal trekking equipment (sleeping bags, trekking poles, etc.).",
+        "Tips for guide, porter, and driver.",
+        "Additional meals or snacks in Kathmandu.",
+        "Drinks like bottled water, alcoholic and non-alcoholic beverages.",
+        "Hot showers or charging electronic devices at the tea houses.",
+        "Optional activities or excursions in Kathmandu.",
+        "Emergency evacuation costs in case of altitude sickness or other medical issues."
+    ];
+
+    const trekkingEquipment: {
+        category: string;
+        items: string[];
+    }[] = [
+        {
+        category: "General Equipment",
+        items: [
+            "Backpack (with rain cover)",
+            "Sleeping bag (rated for -10°C to -20°C)",
+            "Trekking poles",
+            "Water bottle or hydration bladder",
+            "Headlamp with extra batteries",
+            "Sunglasses with UV protection",
+            "Personal toiletries (toothbrush, toothpaste, etc.)"
+        ]
+    },
+    {
+        category: "Clothes",
+        items: [
+            "Moisture-wicking t-shirts (long and short sleeves)",
+            "Thermal base layers (top and bottom)",
+            "Insulated jacket (down or synthetic)",
+            "Waterproof and windproof jacket",
+            "Trekking pants (quick-dry)",
+            "Warm gloves and woolen hat",
+            "Socks (wool or synthetic, multiple pairs)"
+        ]
+    },
+    {
+        category: "First Aid Kit",
+        items: [
+            "Personal medications (prescribed by a doctor)",
+            "Blister treatment (moleskin or blister plasters)",
+            "Band-aids and gauze",
+            "Anti-inflammatory pain relief (e.g., ibuprofen)",
+            "Antiseptic wipes or ointment",
+            "Altitude sickness medication (Diamox or similar)",
+            "Medical tape and small scissors"
+        ]
+    },
+    {
+        category: "Other Essentials",
+        items: [
+            "Sunscreen (SPF 30+)",
+            "Lip balm with SPF",
+            "Hand sanitizer",
+            "Trekking map or guidebook",
+            "Portable phone charger or power bank",
+            "Snacks (energy bars, nuts, dried fruit)",
+            "Trekking permits and personal identification"
+        ]
+    }
+];
+
+    const gallery=["/assets/hot_air_balloon.avif","/assets/mountain_biking.avif","/assets/zoo.avif","/assets/about1.jpg"]
+
+    const FAQs:trekProps["FAQs"]=[
+        {
+            question: "What is the best time to trek to Everest Base Camp?",
+            answer: "The best time for the EBC trek is during the pre-monsoon (March to May) and post-monsoon (September to November) seasons. The weather is clearer, offering spectacular mountain views, and temperatures are moderate."
+        },
+        {
+            question: "How difficult is the Everest Base Camp trek?",
+            answer: "The EBC trek is considered moderate to difficult due to high altitude and rugged terrain. Trekkers need to be physically fit, and prior hiking experience is recommended."
+        },
+        {
+            question: "Do I need previous trekking experience for EBC?",
+            answer: "Previous trekking experience is beneficial but not mandatory. However, a good level of physical fitness and preparation for walking long distances at high altitudes is essential."
+        },
+        {
+            question: "How long does the Everest Base Camp trek take?",
+            answer: "The EBC trek typically takes 12-14 days, including acclimatization days. It covers about 130 kilometers (80 miles) round trip."
+        },
+        {
+            question: "What permits do I need for the EBC trek?",
+            answer: "You will need two permits for the EBC trek: the Sagarmatha National Park Permit and the TIMS (Trekkers' Information Management System) card."
+        },
+        {
+            question: "What is the highest point on the Everest Base Camp trek?",
+            answer: "The highest point on the trek is Kala Patthar at 5,545 meters (18,192 feet), which offers stunning views of Mount Everest."
+        },
+        {
+            question: "Is altitude sickness a concern during the trek?",
+            answer: "Yes, altitude sickness is a common concern on the EBC trek. Proper acclimatization, hydration, and a slow, steady pace are crucial to avoid altitude-related issues."
+        },
+        {
+            question: "What kind of accommodation is available on the trek?",
+            answer: "Accommodation along the EBC trek is in tea houses or lodges, which offer basic amenities like meals, beds, and shared bathrooms. Expect limited comfort at higher altitudes."
+        },
+        {
+            question: "Do I need to carry my own food and water during the trek?",
+            answer: "No, you don’t need to carry your own food. Meals are available at tea houses and lodges along the trek route. Bottled water or boiled water is available for purchase, and many trekkers use water purification tablets."
+        },
+        {
+            question: "What kind of physical training is recommended for the EBC trek?",
+            answer: "It is recommended to engage in cardiovascular training (hiking, running, cycling) and strength training for at least 3-4 months before the trek. Focus on endurance and leg strength to handle long walking hours and high altitudes."
+        }
+]
+
     
 
     return (
@@ -193,9 +324,13 @@ const SingleTrek = () => {
                     <TrekHighLights title={trek.title} trekHighlights={ebcTrekHighlights}/>
                     <Itinerary itinerary={itineraryList}/>
                     <TripQuote title={trek.title} desc={trek.desc}/>
+                    <Services servicesIncluded={servicesIncluded} servicesNotIncluded={servicesNotIncluded}/>
+                    <PackingList trekkingEquipment={trekkingEquipment}/>
+                    <TrekFAQs FAQs={FAQs}/>
+                    <Gallery title={trek.title} gallery={gallery}/>
                 </div>
                 <div className='w-[35%]'>
-
+                    <RightSide price={trek.price}/>
                 </div>
             </section>
             

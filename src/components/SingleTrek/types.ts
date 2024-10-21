@@ -2,6 +2,7 @@ export interface trekProps{
     title?:string
     img?:string
     desc?:string
+    price?:string
     minitrekDetails?:{
         title:string
         value:string
@@ -15,5 +16,15 @@ export interface trekProps{
         meals: string;
         accommodation: string;
     }[]|undefined;
-
+    servicesIncluded?:string[]
+    servicesNotIncluded?:string[]
+    trekkingEquipment?:{
+        category:string
+        items:string[]
+    }[]
+    gallery?:string[]
+    FAQs?:{
+        question:string
+        answer:string
+    }[]|undefined
 }
