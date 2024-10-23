@@ -1,10 +1,11 @@
+import Trekking from '@/components/Trekkings'
 import React from 'react'
 
 const page = () => {
   return (
-    <div>
-      Trekking
-    </div>
+    <main>
+      <Trekking/>
+    </main>
   )
 }
 

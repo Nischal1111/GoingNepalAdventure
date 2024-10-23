@@ -1,7 +1,6 @@
 "use client"
 import React from 'react'
-import { rowdies } from '@/utility/font'
-import { FaMapMarkerAlt, FaRegClock, FaMountain, FaUserFriends, FaUtensils, FaBed, FaChevronCircleLeft } from 'react-icons/fa';
+import { FaMapMarkerAlt, FaRegClock, FaMountain, FaUserFriends, FaUtensils, FaBed, FaChevronCircleLeft, FaHiking, FaFirstAid } from 'react-icons/fa';
 import { GiPathDistance } from 'react-icons/gi';
 import { MdDateRange } from 'react-icons/md';
 import TrekOverView from './TrekOverView';
@@ -15,6 +14,16 @@ import Gallery from './Gallery';
 import TrekFAQs from './TrekFAQs';
 import RightSide from './RightSide/RightSide';
 import { Button } from '@nextui-org/react';
+import { Rowdies } from "next/font/google";
+import { IoShirtSharp } from 'react-icons/io5';
+import { BsGearFill } from 'react-icons/bs';
+import { IconType } from 'react-icons';
+
+export const rowdies=Rowdies({
+    weight: '400',
+    subsets: ['latin'],
+    display: 'swap',
+})
 
 const SingleTrek = () => {
     const trek={
@@ -193,9 +202,10 @@ const SingleTrek = () => {
         "Emergency evacuation costs in case of altitude sickness or other medical issues."
     ];
 
-    const trekkingEquipment: {category: string;items: string[];}[] = [
+    const trekkingEquipment: {category: string;items: string[];icon: IconType;}[] = [
         {
         category: "General Equipment",
+        icon:FaHiking,
         items: [
             "Backpack (with rain cover)",
             "Sleeping bag (rated for -10°C to -20°C)",
@@ -208,6 +218,7 @@ const SingleTrek = () => {
     },
     {
         category: "Clothes",
+        icon:IoShirtSharp,
         items: [
             "Moisture-wicking t-shirts (long and short sleeves)",
             "Thermal base layers (top and bottom)",
@@ -220,6 +231,7 @@ const SingleTrek = () => {
     },
     {
         category: "First Aid Kit",
+        icon:FaFirstAid,
         items: [
             "Personal medications (prescribed by a doctor)",
             "Blister treatment (moleskin or blister plasters)",
@@ -232,6 +244,7 @@ const SingleTrek = () => {
     },
     {
         category: "Other Essentials",
+        icon:BsGearFill,
         items: [
             "Sunscreen (SPF 30+)",
             "Lip balm with SPF",

@@ -33,7 +33,7 @@ const QuoteModal: React.FC<modalProps> = ({ isOpen, onClose, text,trekTitle }) =
     };
 
     return (
-        <Modal isOpen={isOpen} onOpenChange={onClose}>
+        <Modal isOpen={isOpen} onOpenChange={onClose} size='2xl'>
             <ModalContent>
                 {() => (
                     <>

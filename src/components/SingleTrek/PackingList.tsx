@@ -15,9 +15,15 @@ const PackingList:React.FC<trekProps> = ({trekkingEquipment}) => {
                 </p>
                 <div className='grid grid-cols-2 gap-y-10'>
                     {trekkingEquipment?.map((item,index)=>{
+                        const Icon = item.icon
                         return(
                                 <div key={index} className='flex flex-col gap-4'>
-                                    <h1 className='font-semibold text-xl'>{item?.category}</h1>
+                                    <div className='flex gap-4 items-center'>
+                                        <div className='rounded-full flex items-center justify-center p-2 size-[2rem] bg-primary/50 text-white'>
+                                            <Icon size={22}/>
+                                        </div>
+                                        <h1 className='font-semibold text-xl'>{item?.category}</h1>
+                                    </div>
                                     <div className='flex flex-col gap-2'>
                                         {item?.items?.map((item,index)=>{
                                             return(

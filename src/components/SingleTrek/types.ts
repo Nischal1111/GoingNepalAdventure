@@ -1,3 +1,5 @@
+import { IconType } from "react-icons"
+
 export interface trekProps{
     title?:string
     img?:string
@@ -21,6 +23,7 @@ export interface trekProps{
     trekkingEquipment?:{
         category:string
         items:string[]
+        icon: IconType;
     }[]
     gallery?:string[]
     FAQs?:{
