@@ -37,6 +37,15 @@ const Trekking = () => {
         "price": 1300
     },
     {
+        "name": "Annapurna Pass Valley Trek",
+        "days": 11,
+        "difficulty": "Moderate",
+        "description": "Explore the diverse landscapes and cultures of the Annapurna region, from lush forests to high mountain passes.",
+        "region": "Annapurna",
+        "image": "https://images.unsplash.com/photo-1486870591958-9b9d0d1dda99",
+        "price": 1300
+    },
+    {
         "name": "Langtang Valley Trek",
         "days": 10,
         "difficulty": "Moderate",
@@ -248,7 +257,7 @@ Dramatic mountain vistas, diverse ecosystems, and time-worn villages await in so
 
 With Trek Me Nepal, begin your Himalayan adventure today, and immerse in a challenging experience that awaits you in Nepal.
                 </p>
-                <h1 className={`${rowdies.className} text-4xl`}>Trekking packages</h1>
+                <h1 className={`${rowdies.className} text-4xl mt-20`}>Trekking packages</h1>
                 <div className='my-8 pl-8'>
                     <Dropdown className=''>
                         <div className='flex items-center gap-4'>
@@ -277,9 +286,9 @@ With Trek Me Nepal, begin your Himalayan adventure today, and immerse in a chall
                         </DropdownMenu>
                     </Dropdown>
                 </div>
-                <div className='px-4 grid grid-cols-4 gap-4 my-4'>
+                <div className='grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 my-4'>
                     {filteredPackages.map((trek, index) => (
-                        <div key={index} className='px-4'>
+                        <div key={index}>
                             <PackageCard {...trek}/>
                         </div>
                     ))}
