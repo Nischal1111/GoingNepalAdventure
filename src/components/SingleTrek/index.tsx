@@ -1,6 +1,7 @@
+"use client"
 import React from 'react'
 import { rowdies } from '@/utility/font'
-import { FaMapMarkerAlt, FaRegClock, FaMountain, FaUserFriends, FaUtensils, FaBed } from 'react-icons/fa';
+import { FaMapMarkerAlt, FaRegClock, FaMountain, FaUserFriends, FaUtensils, FaBed, FaChevronCircleLeft } from 'react-icons/fa';
 import { GiPathDistance } from 'react-icons/gi';
 import { MdDateRange } from 'react-icons/md';
 import TrekOverView from './TrekOverView';
@@ -13,6 +14,7 @@ import PackingList from './PackingList';
 import Gallery from './Gallery';
 import TrekFAQs from './TrekFAQs';
 import RightSide from './RightSide/RightSide';
+import { Button } from '@nextui-org/react';
 
 const SingleTrek = () => {
     const trek={
@@ -191,10 +193,7 @@ const SingleTrek = () => {
         "Emergency evacuation costs in case of altitude sickness or other medical issues."
     ];
 
-    const trekkingEquipment: {
-        category: string;
-        items: string[];
-    }[] = [
+    const trekkingEquipment: {category: string;items: string[];}[] = [
         {
         category: "General Equipment",
         items: [
@@ -294,6 +293,13 @@ const SingleTrek = () => {
 
     return (
         <main className='relative w-full px-16'>
+            <Button
+                className='absolute top-0 left-4 z-50 rounded-full bg-primary p-0 text-white'
+                isIconOnly
+                onClick={() => window.history.back()}
+            >
+                <FaChevronCircleLeft />
+            </Button>
             <section className='relative h-[75vh] mt-4 w-full rounded-md' style={{background:`url(${trek.img})`,backgroundSize:"cover",backgroundPosition:"center",backgroundAttachment:"fixed"}}>
                 <div className='absolute inset-0 bg-black/20 w-full'></div>
                 <div className='w-full relative flex items-center justify-start top-[70%] left-[5%] '>
@@ -330,7 +336,7 @@ const SingleTrek = () => {
                     <Gallery title={trek.title} gallery={gallery}/>
                 </div>
                 <div className='w-[35%]'>
-                    <RightSide price={trek.price}/>
+                    <RightSide price={trek.price} title={trek?.title}/>
                 </div>
             </section>
             
