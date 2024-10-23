@@ -17,7 +17,7 @@ const PackageCard:React.FC<packageProps> = ({name,description,image,price,days,d
     return (
         <div className='w-full my-8 max-w-md mx-auto shadow-xl h-auto cursor-pointer'>
             <div className='flex flex-col gap-4 rounded-lg relative bg-white custom-trek-package'>
-                <section className='h-[200px] w-full'>
+                <section className='h-[170px] w-full'>
                     <Image src={image} alt="Trek" height={1000} width={1000} className='object-cover h-full w-full rounded-t-lg'/>
                 </section>
                 <section className='px-4 flex flex-col gap-4 mb-6'>
@@ -32,7 +32,7 @@ const PackageCard:React.FC<packageProps> = ({name,description,image,price,days,d
                             <p className='text-sm font-semibold'>{difficulty}</p>
                         </div>
                     </div>
-                    <p className='h-20 overflow-hidden text-sm text-justify'>{description}</p>
+                    <p className=' overflow-hidden text-sm text-justify'>{description.slice(0,100)}...</p>
                     <p className='flex self-end underline underline-offset-2 font-medium text-sm text-primary cursor-pointer hover:text-primary/80 transition-colors'>View Details</p>
                 </section>
                 <p className='absolute top-4 -left-4 text-white z-[100] bg-primary/90 rounded-md text-sm px-4 py-2'>From ${price}</p>
