@@ -41,44 +41,46 @@ const QuoteModal: React.FC<modalProps> = ({ isOpen, onClose, text,trekTitle }) =
                             {text.includes('customize') ? 'Customize Trek Form' : 'Get Quote Form'}: {trekTitle}
                         </ModalHeader>
                         <ModalBody>
-                            <p>Please fill out the form below:</p>
-                            <Input 
-                                label="Name" 
-                                placeholder="Enter your name" 
-                                fullWidth 
-                                radius='sm'
-                                isRequired
-                                value={name}
-                                onChange={(e) => setName(e.target.value)}
-                            />
-                            <Input 
-                                label="Email" 
-                                placeholder="Enter your email" 
-                                fullWidth 
-                                radius='sm'
-                                isRequired
-                                value={email}
-                                onChange={(e) => setEmail(e.target.value)}
-                            />
-                            <Input 
-                                label="Number" 
-                                placeholder="Enter your phone number" 
-                                fullWidth 
-                                radius='sm'
-                                isRequired
-                                value={number}
-                                onChange={(e) => setNumber(e.target.value)}
-                            />
-                            <Textarea
-                                label="Message"
-                                placeholder="Enter your message"
-                                fullWidth
-                                radius='sm'
-                                isRequired
-                                value={message}
-                                onChange={(e) => setMessage(e.target.value)}
-                                minRows={4}
-                            />
+                            <form action="" className='flex flex-col gap-4'>
+                                <p>Please fill out the form below:</p>
+                                <Input 
+                                    label="Name" 
+                                    placeholder="Enter your name" 
+                                    fullWidth 
+                                    radius='sm'
+                                    isRequired
+                                    value={name}
+                                    onChange={(e) => setName(e.target.value)}
+                                />
+                                <Input 
+                                    label="Email" 
+                                    placeholder="Enter your email" 
+                                    fullWidth 
+                                    radius='sm'
+                                    isRequired
+                                    value={email}
+                                    onChange={(e) => setEmail(e.target.value)}
+                                />
+                                <Input 
+                                    label="Number" 
+                                    placeholder="Enter your phone number" 
+                                    fullWidth 
+                                    radius='sm'
+                                    isRequired
+                                    value={number}
+                                    onChange={(e) => setNumber(e.target.value)}
+                                />
+                                <Textarea
+                                    label="Message"
+                                    placeholder="Enter your message"
+                                    fullWidth
+                                    radius='sm'
+                                    isRequired
+                                    value={message}
+                                    onChange={(e) => setMessage(e.target.value)}
+                                    minRows={4}
+                                />
+                            </form>
                         </ModalBody>
                         <ModalFooter>
                             <Button color="danger" variant="light" onPress={onClose} className='rounded-sm'>

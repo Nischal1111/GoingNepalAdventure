@@ -103,6 +103,7 @@ const Footer = () => {
                             <FooterLink>Home</FooterLink>
                             <FooterLink>Trekking</FooterLink>
                             <FooterLink>Tours</FooterLink>
+                            <FooterLink>Wellness</FooterLink>
                             <FooterLink>Activities</FooterLink>
                             <FooterLink>Destinations</FooterLink>
                             <FooterLink>Contact Us</FooterLink>
@@ -117,11 +118,11 @@ const Footer = () => {
                         </div>
                         <div className='flex flex-col gap-2'>
                             <FooterLink>Travel Blogs</FooterLink>
-                            <FooterLink>Travel Guides</FooterLink>
+                            <FooterLink>Our Team</FooterLink>
                             <FooterLink>FAQs</FooterLink>
-                            <FooterLink>Resources</FooterLink>
                             <FooterLink>Travel Permits</FooterLink>
                             <FooterLink>Terms and Conditions</FooterLink>
+                            <FooterLink>Privacy Policy</FooterLink>
                         </div>
                     </section>
                     <section className='text-white flex flex-col gap-6'>

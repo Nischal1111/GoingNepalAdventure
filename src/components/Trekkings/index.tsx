@@ -209,11 +209,10 @@ const Trekking = () => {
     }
 ];
 
-const [regions, setRegions] = useState<string[]>([]);
+    const [regions, setRegions] = useState<string[]>([]);
     const [selectedRegion, setSelectedRegion] = useState<string>('');
     const [filteredPackages, setFilteredPackages] = useState<Package[]>([]);
 
-    // Initialize regions and set default selection
     useEffect(() => {
         const uniqueRegions = Array.from(new Set(packages.map(pkg => pkg.region)));
         setRegions(uniqueRegions);
@@ -222,15 +221,14 @@ const [regions, setRegions] = useState<string[]>([]);
             setSelectedRegion(uniqueRegions[0]);
             setFilteredPackages(packages.filter(pkg => pkg.region === uniqueRegions[0]));
         }
-    }, []); // Remove packages from dependency array since it's now static
+    }, []); 
 
-    // Update filtered packages when region changes
     useEffect(() => {
         if (selectedRegion) {
             const newFilteredPackages = packages.filter(pkg => pkg.region === selectedRegion);
             setFilteredPackages(newFilteredPackages);
         }
-    }, [selectedRegion]); // Remove packages from dependency array
+    }, [selectedRegion]);
 
     const handleChange = (selection: Selection) => {
         if (selection instanceof Set && selection.size > 0) {

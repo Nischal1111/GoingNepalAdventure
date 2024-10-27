@@ -305,7 +305,7 @@ const SingleTrek = () => {
     
 
     return (
-        <main className='relative w-full px-16'>
+        <main className='relative px-16'>
             <Button
                 className='absolute top-0 left-4 z-50 rounded-full bg-primary p-0 text-white'
                 isIconOnly
@@ -315,14 +315,14 @@ const SingleTrek = () => {
             </Button>
             <section className='relative h-[75vh] mt-4 w-full rounded-md' style={{background:`url(${trek.img})`,backgroundSize:"cover",backgroundPosition:"center",backgroundAttachment:"fixed"}}>
                 <div className='absolute inset-0 bg-black/20 w-full'></div>
-                <div className='w-full relative flex items-center justify-start top-[70%] left-[5%] '>
+                <div className='w-fit relative flex items-center justify-start top-[70%] left-[5%] '>
                     <div className='flex flex-col items-start'>
-                        <h1 className={`${rowdies.className} text-7xl text-[#DFDCDC]/70`}>{trek.title}</h1>
+                        <h1 className={`${rowdies.className} text-7xl w-fit text-[#DFDCDC]/70`}>{trek.title}</h1>
                         <p className={`${rowdies.className} text-5xl absolute top-10 antialiased text-white`}>{trek.title}</p>
                     </div>
                 </div>
             </section>
-            <section className='flex gap-12 w-full my-12'>
+            <section className='flex gap-12 w-full my-12 justify-between'>
                 <div className='w-[65%]'>
                     <section className='grid grid-cols-3 gap-4 bg-[#5D83C4]/20 rounded-md px-8 py-6 shadow-md'>
                         {
@@ -348,7 +348,7 @@ const SingleTrek = () => {
                     <TrekFAQs FAQs={FAQs}/>
                     <Gallery title={trek.title} gallery={gallery}/>
                 </div>
-                <div className='w-[35%]'>
+                <div className='w-[35%] flex justify-start flex-col items-center'>
                     <RightSide price={trek.price} title={trek?.title}/>
                 </div>
             </section>

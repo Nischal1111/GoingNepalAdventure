@@ -13,6 +13,7 @@ const Navbar = () => {
         { title: "Home", link: "/" },
         { title: "Trekking", link: "/trekking" },
         { title: "Tours", link: "/tours" },
+        { title: "Wellness", link: "/wellness" },
         { title: "Activities", link: "/activities" },
         { 
             title: "Destinations", 
@@ -30,7 +31,6 @@ const Navbar = () => {
                 { title: "Contact Us", href: "/contact-us" },
                 { title: "About Us", href: "/about-us" },
                 { title: "Travel Blogs", href: "/travel-blogs" },
-                { title: "Wellness", href: "/wellness" },
                 { title: "FAQs", href: "/faqs" },
                 { title: "Travel Permits", href: "/travel-permits" },
                 { title: "Terms & Conditions", href: "/terms-and-conditions" },

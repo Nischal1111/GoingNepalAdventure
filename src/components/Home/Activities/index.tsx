@@ -1,7 +1,6 @@
 "use client"
 import SharedTitle from '@/shared/SharedTitle';
 import { Button } from '@nextui-org/react';
-import Image from 'next/image';
 import Link from 'next/link';
 import React from 'react';
 import { FaChevronLeft, FaChevronRight } from 'react-icons/fa';
@@ -40,18 +39,16 @@ interface ActivityProps {
 
 const ActivityCard: React.FC<ActivityProps> = ({ activity }) => {
     return (
-        <div className="relative overflow-hidden rounded-lg shadow-md mx-2 group transition ease-in-out duration-300">
-            <div className="h-[300px] w-full overflow-hidden">
-                <Image
+        <div className="relative h-[300px] mx-auto max-w-[280px] rounded-lg shadow-md group cursor-pointer">
+            <div className="h-full w-full overflow-hidden rounded-lg">
+                <img
                     src={activity.img}
                     alt={activity.title}
-                    height={1000}
-                    width={1000}
                     className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-110"
                 />
             </div>
-            <div className="absolute bottom-0 left-0 w-3/4 bg-white text-primary group-hover:bg-primary group-hover:text-white transition duration-300 cursor-pointer rounded-sm py-2 px-4 -translate-y-1/2 shadow-2xl">
-                <h3 className="text-lg font-semibold">{activity.title}</h3>
+            <div className="absolute bottom-0 left-0 w-3/4 bg-white text-primary group-hover:bg-primary group-hover:text-white transition-all duration-300 rounded-sm py-2 px-4 -translate-y-1/2 shadow-2xl">
+                <h3 className="text-lg font-semibold truncate">{activity.title}</h3>
             </div>
         </div>
     );
@@ -102,7 +99,9 @@ const Activities = () => {
             <SharedTitle title="Activities" subTitle="Explore thrilling activities" />
             <Slider {...settings} className='mt-20'>
                 {activities.map(activity => (
-                    <ActivityCard key={activity.id} activity={activity} />
+                    <div key={activity.id} className="px-2">
+                            <ActivityCard activity={activity} />
+                        </div>
                 ))}
             </Slider>
             <div className='flex items-center justify-center'>
