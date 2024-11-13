@@ -86,7 +86,7 @@ const Itinerary: React.FC<trekProps> = ({ itinerary }) => {
                                 <div className='my-4 px-8 py-4 rounded-md bg-[#5d83c4]/20 flex items-center gap-12 w-fit'>
                                     <div className='flex items-center gap-4'>
                                         <FaBed className='text-primary' size={20} />
-                                        <p className='text-sm'>{item?.accommodation}</p>
+                                        <p className='text-sm'>{item?.accomodation}</p>
                                     </div>
                                     <div className='flex items-center gap-4'>
                                         <FaUtensils className='text-primary' size={16} />

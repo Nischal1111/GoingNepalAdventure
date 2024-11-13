@@ -58,7 +58,7 @@ const TrekFAQs: React.FC<TrekFAQsProps> = ({ FAQs }) => {
                         selectedKeys={expandedKeys}
                         onSelectionChange={handleSelectionChange}
                     >
-                        {FAQs.map((item, index) => (
+                        {FAQs?.map((item, index) => (
                             <AccordionItem
                                 key={index}
                                 aria-label={item.question}

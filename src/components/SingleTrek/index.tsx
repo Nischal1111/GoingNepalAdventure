@@ -30,7 +30,7 @@ export const rowdies=Rowdies({
 
 const SingleTrek = () => {
 
-    const id="6734c5f24cfbed1358238788"
+    const id="6734ce1449e0d0d87db84fd8"
 
     const {data:SingleTrekData,isLoading}=useQuery({
         queryKey: ['singleTrekData',id],
