@@ -1,5 +1,24 @@
 import { IconType } from "react-icons"
 
+interface trekHighLightsProps{
+    content:string
+    links:{
+        text:string
+        url:string
+    }
+}
+
+interface ItineraryLink {
+    text: string;
+    url: string;
+}
+
+interface ItineraryItem {
+    day: number;
+    title: string;
+    description: string;
+    links: ItineraryLink[];
+}
 export interface trekProps{
     title?:string
     img?:string
@@ -10,14 +29,8 @@ export interface trekProps{
         value:string
         icon:JSX.Element
     }[]
-    trekHighlights?: string[];
-    itinerary?: {
-        day: number;
-        title: string;
-        description: string;
-        meals: string;
-        accommodation: string;
-    }[]|undefined;
+    trekHighlights?: trekHighLightsProps[];
+    itinerary?: ItineraryItem[]|undefined;
     servicesIncluded?:string[]
     servicesNotIncluded?:string[]
     trekkingEquipment?:{

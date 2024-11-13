@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 "use client"
 import React, { useState, useCallback } from 'react'
 import { trekProps } from './types'
@@ -10,17 +11,27 @@ import { FaPlus } from 'react-icons/fa'
 import { RxCross1 } from 'react-icons/rx'
 import { FaBed, FaUtensils } from 'react-icons/fa'
 import { IoIosArrowDown, IoIosArrowUp } from 'react-icons/io'
+import Link from 'next/link'
 
-interface single{
-        day: number;
-        title: string;
-        description: string;
-        meals: string;
-        accommodation: string;
-}
 
 const Itinerary: React.FC<trekProps> = ({ itinerary }) => {
     const [expandedKeys, setExpandedKeys] = useState<Selection>(new Set());
+
+    const parseContentWithLinks = (content: string, links: { text: string; url: string }[]) => {
+        let parts: (string | JSX.Element)[] = [content];
+
+        links.forEach(link => {
+        parts = parts.flatMap(part => 
+            typeof part === 'string' 
+            ? part.split(link.text).flatMap((text, i, arr) =>
+                i < arr.length - 1 ? [text, <Link key={i} href={link.url} target="_blank" rel="noopener noreferrer" className="text-primary text-base underline underline-offset-2">{link.text}</Link>] : text
+                )
+            : part
+        );
+        });
+
+        return parts;
+    };
 
     const itemClasses = {
         title: "font-semibold text-base",
@@ -33,7 +44,8 @@ const Itinerary: React.FC<trekProps> = ({ itinerary }) => {
         if (expandedKeys === "all" || (expandedKeys instanceof Set && expandedKeys.size === itinerary?.length)) {
             setExpandedKeys(new Set());
         } else {
-            setExpandedKeys(new Set(itinerary?.map((item:single) => item.day.toString())));
+            // eslint-disable-next-line @typescript-eslint/no-unused-vars
+            setExpandedKeys(new Set(itinerary?.map((item:any) => item.day.toString())));
         }
     }, [itinerary, expandedKeys]);
 
@@ -60,25 +72,25 @@ const Itinerary: React.FC<trekProps> = ({ itinerary }) => {
                         onSelectionChange={handleSelectionChange}
                     >
                         
-                        {(itinerary||[])?.map((item:single) => (
+                        {(itinerary||[])?.map((item:any) => (
                             <AccordionItem
                                 key={item?.day}
                                 aria-label={item.title}
-                                title={item.title}
+                                title={<div className='flex gap-2 '><span className='text-primary'>Day {item?.day}</span><p>: {item?.title}</p></div>}
                                 startContent={<Dot />}
                                 indicator={({ isOpen }) => (isOpen ? <RxCross1 className='text-primary' /> : <FaPlus className='text-primary' />)}
                                 classNames={itemClasses}
                                 className='py-2'
                             >
-                                <p>{item.description}</p>
+                                <p>{parseContentWithLinks(item.description, Array.isArray(item.links) ? item.links : [item.links])}</p>
                                 <div className='my-4 px-8 py-4 rounded-md bg-[#5d83c4]/20 flex items-center gap-12 w-fit'>
                                     <div className='flex items-center gap-4'>
                                         <FaBed className='text-primary' size={20} />
-                                        <p className='text-sm'>{item.accommodation}</p>
+                                        <p className='text-sm'>{item?.accommodation}</p>
                                     </div>
                                     <div className='flex items-center gap-4'>
                                         <FaUtensils className='text-primary' size={16} />
-                                        <p className='text-sm'>{item.meals}</p>
+                                        <p className='text-sm'>{item?.meals}</p>
                                     </div>
                                 </div>
                             </AccordionItem>
