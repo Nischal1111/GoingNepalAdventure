@@ -52,7 +52,7 @@ return (
                         )
                     })}
                 </div>
-                <Link href={"/aboutUs"}>
+                <Link href={"/about-us"}>
                     <div className='flex items-center gap-1 justify-end mt-12 text-primary text-sm cursor-pointer group'>
                         <p className=' font-semibold underline underline-offset-2'>More about us</p>
                         <BsArrowRight className='transform transition-transform duration-200 group-hover:translate-x-2' />
@@ -61,7 +61,7 @@ return (
             </div>
         </section>
     </main>
-  )
+    )
 }
 
 export default WhyGoingNepal

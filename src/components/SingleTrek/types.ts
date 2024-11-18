@@ -44,3 +44,22 @@ export interface trekProps{
         answer:string
     }[]|undefined
 }
+
+
+
+
+// trek poage 
+
+export interface TrekDetails {
+  name: string; // Name of the trek
+  slug: string; // SEO-friendly unique identifier
+  location: string; // Specific location or region of the trek
+  days: {
+    min: number; // Minimum number of days
+    max: number; // Maximum number of days
+  };
+  difficulty: string; // Difficulty level of the trek
+  price: number; // Cost of the trek
+  overview: string; // Overview or summary of the trek
+  thumbnail: string; // Thumbnail image URL
+}

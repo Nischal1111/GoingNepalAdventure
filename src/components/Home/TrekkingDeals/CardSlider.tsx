@@ -8,7 +8,7 @@ import { CustomArrowProps } from "react-slick"
 import { Button } from '@nextui-org/react';
 import Card from './Card';
 import { useQuery } from '@tanstack/react-query';
-import { getAllTreks } from '@/services/treks';
+import { getTreksSlider } from '@/services/treks';
 
 interface CardProps {
     name: string;
@@ -46,7 +46,7 @@ const CustomNextArrow: React.FC<CustomArrowComponentProps> = ({ onClick }) => (
 const CardSlider: React.FC = () => {
     const {data:trekData}=useQuery({
         queryKey: ['trekData'],
-        queryFn:()=>getAllTreks(),
+        queryFn:()=>getTreksSlider(),
     })
 
     const settings = {
