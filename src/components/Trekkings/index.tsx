@@ -1,3 +1,4 @@
+//eslint-disable @typescript-eslint/no-explicit-any
 "use client"
 import SharedSection from '@/shared/SharedSection'
 import { rowdies } from '@/utility/font'
@@ -47,7 +48,7 @@ const Trekking = () => {
 
     useEffect(() => {
         if (selectedRegion) {
-            const newFilteredPackages = trekData?.data?.data?.filter((pkg:any) => pkg.location === selectedRegion);
+            const newFilteredPackages = trekData?.data?.data?.filter((pkg:TrekDetails) => pkg.location === selectedRegion);
             setFilteredPackages(newFilteredPackages);
         }
     }, [selectedRegion]);
