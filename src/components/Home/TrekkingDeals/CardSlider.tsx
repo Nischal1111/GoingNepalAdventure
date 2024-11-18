@@ -7,7 +7,18 @@ import "slick-carousel/slick/slick-theme.css";
 import { CustomArrowProps } from "react-slick"
 import { Button } from '@nextui-org/react';
 import Card from './Card';
+import { useQuery } from '@tanstack/react-query';
+import { getAllTreks } from '@/services/treks';
 
+interface CardProps {
+    name: string;
+    overview: string;
+    thumbnail: string;
+    price: number;
+    days:{min:string,max:string}
+    difficulty:string
+    slug:string
+}
 interface CustomArrowComponentProps extends CustomArrowProps {
     onClick?: () => void;
 }
@@ -33,6 +44,11 @@ const CustomNextArrow: React.FC<CustomArrowComponentProps> = ({ onClick }) => (
 )
 
 const CardSlider: React.FC = () => {
+    const {data:trekData}=useQuery({
+        queryKey: ['trekData'],
+        queryFn:()=>getAllTreks(),
+    })
+
     const settings = {
         infinite: true,
         speed: 500,
@@ -64,11 +80,9 @@ const CardSlider: React.FC = () => {
     return (
         <div className="relative px-12 py-8">
             <Slider {...settings} className='pr-12 pl-16'>
-                <div className="px-4"><Card /></div>
-                <div className="px-4"><Card /></div>
-                <div className="px-4"><Card /></div>
-                <div className="px-4"><Card /></div>
-                <div className="px-4"><Card /></div>
+                {trekData?.data?.data?.map((item:CardProps, index:number) => (
+                    <div key={index} className="px-4"><Card name={item?.name} link={item?.slug} overview={item?.overview} image={item?.thumbnail} price={item?.price} days={`${item?.days?.min} - ${item?.days?.max}`} difficulty={item?.difficulty}/></div>
+                ))}
             </Slider>
         </div>
     )

@@ -16,7 +16,7 @@ interface ItineraryLink {
 interface ItineraryItem {
     day: number;
     title: string;
-    description: string;
+    details: string;
     links: ItineraryLink[];
 }
 export interface trekProps{

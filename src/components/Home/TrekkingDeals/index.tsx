@@ -7,6 +7,7 @@ import Link from 'next/link'
 
 const TrekkingDeals = () => {
     
+    
     const trekbg = "/assets/mountBG.png";
 
     return (

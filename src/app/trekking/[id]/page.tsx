@@ -1,10 +1,10 @@
 import SingleTrek from '@/components/SingleTrek'
 import React from 'react'
 
-const page = () => {
+const page = ({params}:{params:{id:string}}) => {
     return (
         <main>
-            <SingleTrek/>
+            <SingleTrek id={params.id}/>
         </main>
     )
 }

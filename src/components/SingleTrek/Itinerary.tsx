@@ -82,11 +82,11 @@ const Itinerary: React.FC<trekProps> = ({ itinerary }) => {
                                 classNames={itemClasses}
                                 className='py-2'
                             >
-                                <p>{parseContentWithLinks(item.description, Array.isArray(item.links) ? item.links : [item.links])}</p>
+                                <p>{parseContentWithLinks(item.details, Array.isArray(item.links) ? item.links : [item.links])}</p>
                                 <div className='my-4 px-8 py-4 rounded-md bg-[#5d83c4]/20 flex items-center gap-12 w-fit'>
                                     <div className='flex items-center gap-4'>
                                         <FaBed className='text-primary' size={20} />
-                                        <p className='text-sm'>{item?.accomodation}</p>
+                                        <p className='text-sm'>{item?.accommodations}</p>
                                     </div>
                                     <div className='flex items-center gap-4'>
                                         <FaUtensils className='text-primary' size={16} />

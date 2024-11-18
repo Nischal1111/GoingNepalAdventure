@@ -27,10 +27,10 @@ export const rowdies=Rowdies({
     display: 'swap',
 })
 
-
-const SingleTrek = () => {
-
-    const id="6734ce1449e0d0d87db84fd8"
+interface paramsProps{
+    id: string
+}
+const SingleTrek:React.FC<paramsProps> = ({id}) => {
 
     const {data:SingleTrekData,isLoading}=useQuery({
         queryKey: ['singleTrekData',id],
@@ -119,7 +119,7 @@ const SingleTrek = () => {
     }
 ];
 
-    const gallery=["/assets/hot_air_balloon.avif","/assets/mountain_biking.avif","/assets/zoo.avif","/assets/about1.jpg"]
+    const gallery=SingleTrekData?.data?.data?.images
 
     const FAQs=SingleTrekData?.data?.data?.faq
 
@@ -136,7 +136,7 @@ const SingleTrek = () => {
             >
                 <FaChevronCircleLeft />
             </Button>
-            <section className='relative h-[75vh] mt-4 w-full rounded-md' style={{background:`url(${trek.img})`,backgroundSize:"cover",backgroundPosition:"center",backgroundAttachment:"fixed"}}>
+            <section className='relative h-[75vh] mt-4 w-full rounded-md' style={{background:`url(${SingleTrekData?.data?.data?.thumbnail})`,backgroundSize:"cover",backgroundPosition:"center",backgroundAttachment:"fixed"}}>
                 <div className='absolute inset-0 bg-black/20 w-full'></div>
                 <div className='w-fit relative flex items-center justify-start top-[70%] left-[5%] '>
                     <div className='flex flex-col items-start'>
