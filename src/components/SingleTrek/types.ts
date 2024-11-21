@@ -150,10 +150,6 @@ export interface WellnessProps{
   name: string;
     slug: string;
     country: string;
-    days:{
-      min:string
-      max:string
-    }
     price: number;
     overview: string; 
     thumbnail: string;

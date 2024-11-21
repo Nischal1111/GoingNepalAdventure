@@ -6,7 +6,7 @@ import { Button } from '@nextui-org/react'
 import { CiLocationOn } from 'react-icons/ci'
 
 
-const WellnessCard:React.FC<WellnessProps> = ({name,country,slug,overview,thumbnail,price,days}) => {
+const WellnessCard:React.FC<WellnessProps> = ({name,country,slug,overview,thumbnail,price}) => {
     return (
         <Link href={`/wellness/${slug}`}>
             <div className='w-full flex gap-8 h-[180px] shadow-md p-4 border border-gray-200 relative'>

@@ -17,18 +17,21 @@ const HeroSection = () => {
             title: "Go on a journey",
             desc: "Elevate your adventure with wonderful moments.",
             button: "Explore Tours",
+            link:"/tours"
         },
         {
             id: 2,
             title: "Plan your trip",
             desc: "The best views come from the hardest climbs.",
             button: "Explore Treks",
+            link:"/trekking"
         },
         {
             id: 3,
             title: "Thrill-Packed Experiences",
             desc: "Discover the thrill beyond the ordinary.",
             button: "Explore Activities",
+            link:"/activities"
         }
     ];
 
@@ -112,9 +115,11 @@ const HeroSection = () => {
                                     animate={{ opacity: 1, y: 0 }}
                                     transition={{ delay: 0.8 }}
                                 >
-                                    <Button className='rounded-sm mt-10 px-12 z-[100] w-fit text-white border hover:bg-primary hover:border-primary border-white bg-transparent'>
-                                        {descSlider[currentSlide].button}
-                                    </Button>
+                                    <Link href={descSlider[currentSlide].link}>
+                                        <Button className='rounded-sm mt-10 px-12 z-[100] w-fit text-white border hover:bg-primary hover:border-primary border-white bg-transparent'>
+                                            {descSlider[currentSlide].button}
+                                        </Button>
+                                    </Link>
                                 </motion.div>
                             </motion.div>
                         </AnimatePresence>

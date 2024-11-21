@@ -50,6 +50,9 @@ const RightSide: React.FC<trekProps> = ({ price, title }) => {
 
     return (
         <>
+        <div className='px-12'>
+            <Button className='px-12 bg-primary rounded-sm text-white mb-4 w-full'>Download PDF</Button>
+        </div>
             <div className='flex flex-col top-12'>
                 <div className=' py-2 z-[2] px-8 w-[440px]'>
                     <div className='custom-right bg-white rounded-sm pt-6 pb-8 flex flex-col items-center justify-center gap-4'>
