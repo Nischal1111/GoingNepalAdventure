@@ -18,6 +18,7 @@ import TrekFAQs from '../SingleTrek/TrekFAQs'
 import Gallery from '../SingleTrek/Gallery'
 import { Button } from '@nextui-org/react'
 import { rowdies } from '@/utility/font'
+import RightSide from '../SingleTour/RightSide/RightSide'
 
 
 interface wellnessProps {
@@ -153,7 +154,7 @@ const SingleWellness: React.FC<wellnessProps> = ({id}) => {
                     <Gallery title={wellness?.title} gallery={gallery}/>
                 </div>
                 <div className='w-[35%] flex justify-start flex-col items-center'>
-                    {/* <RightSide price={trek?.price} title={trek?.title}/> */}
+                    <RightSide price={wellness?.price} name={wellness?.title}/>
                 </div>
             </section>
             

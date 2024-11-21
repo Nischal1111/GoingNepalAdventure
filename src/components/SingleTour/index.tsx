@@ -17,6 +17,7 @@ import Gallery from '../SingleTrek/Gallery'
 import SharedTitle2 from '@/shared/SharedTitle2'
 import LinedContainer from '@/shared/LinedContainer'
 import Dot from '@/utility/Dot'
+import RightSide from './RightSide/RightSide'
 
 interface pageProps{
     id:string
@@ -152,7 +153,7 @@ const SingleTour:React.FC<pageProps> = ({id}) => {
                     <Gallery title={tour?.title} gallery={gallery}/>
                 </div>
                 <div className='w-[35%] flex justify-start flex-col items-center'>
-                    {/* <RightSide price={trek?.price} title={trek?.title}/> */}
+                    <RightSide price={tour?.price} name={tour?.title}/>
                 </div>
             </section>
             

@@ -68,7 +68,10 @@ export interface TourDetails{
     name: string;
     slug: string;
     country: string;
-    day:number
+    days:{
+      min: number;
+      max: number;
+    }
     price: number; // Cost of the trek
     overview: string; // Overview or summary of the trek
     thumbnail: string;
@@ -111,7 +114,7 @@ export interface Tour {
   _id?: string;
   name?: string;
   slug?: string;
-  price?: number;
+  price?: string;
   thumbnail?: string;
   country?: string;
   language?: string;

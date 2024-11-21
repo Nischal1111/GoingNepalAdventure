@@ -9,7 +9,7 @@ const PackageCard: React.FC<TourDetails> = ({
     overview,
     thumbnail,
     price,
-    day,
+    days,
     country,
     slug,
 }) => {
@@ -36,7 +36,7 @@ const PackageCard: React.FC<TourDetails> = ({
                         <div className="bg-gray-100 rounded-md p-3 flex items-center justify-between">
                             <div className="flex items-center gap-2">
                                 <FaRegClock className="text-primary/60 text-lg" />
-                                <span className="text-sm font-semibold">{day} Days</span>
+                                <span className="text-sm font-semibold">{`${days.min}`} - {`${days.max}`} Days</span>
                             </div>
                             <div className="flex items-center gap-2">
                                 <span className="text-sm font-semibold">{country}</span>

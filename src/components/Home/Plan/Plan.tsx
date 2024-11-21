@@ -9,18 +9,21 @@ const Plan = () => {
       title: "Trekking",
       img: "/assets/trek.jpeg",
       button: "View all treks",
+      link:"/trekking"
     },
     {
       id: 2,
       title: "Tours and Trips",
       img: "/assets/tour.avif",
       button: "View all tours",
+      link:"/tours"
     },
     {
       id: 3,
       title: "Activities",
       img: "/assets/activities.avif",
       button: "View all activities",
+      link:"/activities"
     }
   ];
   

@@ -1,6 +1,5 @@
 "use client"
 import React, { useState } from 'react'
-import { trekProps } from '../types'
 import { Avatar, Button, Checkbox, CheckboxGroup, DatePicker, Divider } from '@nextui-org/react'
 import QuoteModal from './QuoteModal'
 import Image from 'next/image'
@@ -8,6 +7,7 @@ import Link from 'next/link'
 import { Rowdies } from "next/font/google";
 import {today, getLocalTimeZone} from "@internationalized/date";
 import { FaMinus, FaPlus } from 'react-icons/fa6'
+import { Tour } from '@/components/SingleTrek/types'
 
 
 export const rowdies=Rowdies({
@@ -16,7 +16,7 @@ export const rowdies=Rowdies({
     display: 'swap',
 })
 
-const RightSide: React.FC<trekProps> = ({ price, title }) => {
+const RightSide: React.FC<Tour> = ({ price,name }) => {
     const [isQuote, setIsQuote] = useState(false); // eslint-disable-line @typescript-eslint/no-unused-vars
     const [isCustomize, setIsCustomize] = useState(false); // eslint-disable-line @typescript-eslint/no-unused-vars
     const [isOpen, setIsOpen] = useState(false);
@@ -32,14 +32,14 @@ const RightSide: React.FC<trekProps> = ({ price, title }) => {
     const handleQuote = () => {
         setIsQuote(true);
         setIsCustomize(false);
-        setText(`I need a quotation for the trek: ${title}`);
+        setText(`I need a quotation for the trek: ${name}`);
         setIsOpen(true);
     };
 
     const handleCustomize = () => {
         setIsQuote(false);
         setIsCustomize(true);
-        setText(`I need to customize this quotation for the trek: ${title}`);
+        setText(`I need to customize this quotation for the trek: ${name}`);
         setIsOpen(true);
     };
 
@@ -53,7 +53,7 @@ const RightSide: React.FC<trekProps> = ({ price, title }) => {
 
     const basePrice = Number(price?.replace(/[^0-9]/g, '')) || 0
     const totalPrice = basePrice * quantity
-    const finalPrice =totalPrice + (guide?GUIDE_SERVICE_PRICE:0) + (potter?POTTER_SERVICE_PRICE:0) + (fullboard?FULLBOARD_SERVICE_PRICE:0);
+    const finalPrice =totalPrice + (guide?(GUIDE_SERVICE_PRICE*quantity):0) + (potter?POTTER_SERVICE_PRICE*quantity:0) + (fullboard?FULLBOARD_SERVICE_PRICE*quantity:0);
 
     return (
         <>
@@ -127,9 +127,9 @@ const RightSide: React.FC<trekProps> = ({ price, title }) => {
                                     isSelected={guide}
                                     onChange={(e) => setGuide(e.target.checked)}
                                     value="guide-service"
-                                    isDisabled={potter || fullboard}
+                                    isDisabled={potter || fullboard || quantity > 1}
                                 >
-                                    Guide service (+${GUIDE_SERVICE_PRICE})
+                                    Solo Private Tour (+${GUIDE_SERVICE_PRICE})
                                 </Checkbox>
 
                                 {/* Potter Service Checkbox */}
@@ -141,7 +141,7 @@ const RightSide: React.FC<trekProps> = ({ price, title }) => {
                                     value="potter-service"
                                     isDisabled={guide || fullboard} // Disable unless Guide service is selected
                                 >
-                                    Guide with Potter service (+${POTTER_SERVICE_PRICE})
+                                    4 Star (9 Nights) (+${POTTER_SERVICE_PRICE*quantity})
                                 </Checkbox>
 
                                 {/* Fullboard Service Checkbox */}
@@ -154,7 +154,7 @@ const RightSide: React.FC<trekProps> = ({ price, title }) => {
                                     value="fullboard-service"
                                     isDisabled={guide || potter} // Disable unless Guide service is selected
                                 >
-                                    Fullboard service (+${FULLBOARD_SERVICE_PRICE})
+                                    5 Star (9 Nights) (+${FULLBOARD_SERVICE_PRICE*quantity})
                                 </Checkbox>
                             </CheckboxGroup>
                         </div>
@@ -256,7 +256,7 @@ const RightSide: React.FC<trekProps> = ({ price, title }) => {
                     </div>
                 </div>
             </div>
-            <QuoteModal isOpen={isOpen} onClose={() => setIsOpen(false)} text={text} trekTitle={title}/>
+            <QuoteModal isOpen={isOpen} onClose={() => setIsOpen(false)} text={text} trekTitle={name}/>
         </>
     );
 };
