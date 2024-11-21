@@ -19,7 +19,6 @@ const Trekking = () => {
         queryFn:()=>getAllTreks()
     })
 
-    console.log(trekData)
 
     const [regions, setRegions] = useState<string[]>([]);
     const [selectedRegion, setSelectedRegion] = useState<string>('');

@@ -1,8 +1,68 @@
+"use client"
+import { getAllTours } from '@/services/tour'
+import Loader from '@/shared/Loader'
 import SharedSection from '@/shared/SharedSection'
 import { rowdies } from '@/utility/font'
-import React from 'react'
+import { Button, Dropdown, DropdownItem, DropdownMenu, DropdownTrigger } from '@nextui-org/react'
+import { useQuery } from '@tanstack/react-query'
+import React, { useEffect, useState } from 'react'
+import { IoIosArrowDown } from 'react-icons/io'
+import { TourDetails } from '../SingleTrek/types'
+import PackageCard from './TourCard'
 
 const Tours = () => {
+    const [selectedCountry,setSelectedCountry]=useState<string>('')
+    const [countries,setCountries]=useState<string[]>([])
+    const [filteredPackages,setFilteredPackages]=useState<TourDetails[]>([])
+
+
+    const {data:tourData,isLoading}=useQuery({
+        queryKey:['tourData'],
+        queryFn:()=>getAllTours()
+    })
+
+    useEffect(() => {
+        if (tourData?.data?.data) {
+            const uniqueRegions = Array.from(
+                new Set(
+                    (tourData.data.data as TourDetails[])
+                        .map((pkg) => pkg.country)
+                )
+            );
+
+            setCountries(uniqueRegions);
+
+            if (uniqueRegions.length > 0) {
+                const firstRegion = uniqueRegions[0];
+                setSelectedCountry(firstRegion);
+
+                const filtered = (tourData.data.data as TourDetails[])
+                    .filter((pkg) => pkg.country === firstRegion);
+
+                setFilteredPackages(filtered);
+            }
+        }
+    }, [tourData]);
+
+    useEffect(() => {
+        if (selectedCountry) {
+            const newFilteredPackages = tourData?.data?.data?.filter(
+                (pkg: TourDetails) => pkg.country === selectedCountry
+            );
+            setFilteredPackages(newFilteredPackages);
+        }
+    }, [selectedCountry]);
+
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const handleChange = (selection:any) => {
+        if (selection instanceof Set && selection.size > 0) {
+            const selectedValue = Array.from(selection)[0];
+            setSelectedCountry(String(selectedValue));
+        }
+    };
+
+
+    if(isLoading) return <Loader/>
     return (
         <div>
             <SharedSection title='Trips and Tours' link='/tours' img='https://images.unsplash.com/photo-1526712318848-5f38e2740d44?q=80&w=2940&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'/>
@@ -30,8 +90,43 @@ const Tours = () => {
                 Tours in Tibet provide an opportunity to experience its rich monastic culture, meet warm and welcoming Tibetans, and appreciate the region&apos;s unspoiled natural beauty. The landscape, rich in unique flora and fauna, creates an unforgettable backdrop for trekking, sightseeing, and cultural exploration. A journey through Tibet is both a challenging and spiritually enriching experience, ideal for those seeking a deeper connection to Himalayan culture and spirituality. <br /><br />
 
                 </p>
+                <h1 className={`${rowdies.className} text-4xl mt-8`}>Trips and Tours packages</h1>
 
-                
+                <div className='my-8 pl-8'>
+                    <Dropdown>
+                        <div className='flex items-center gap-4'>
+                            <h1 className='font-bold text-sm text-primary'>Select by Country</h1>
+                            <DropdownTrigger>
+                                <Button 
+                                    variant="bordered" 
+                                    className='rounded-sm w-[200px] flex justify-between'
+                                    endContent={<IoIosArrowDown/>}
+                                >
+                                    {selectedCountry || 'Select Country'}
+                                </Button>
+                            </DropdownTrigger>
+                        </div>
+                        <DropdownMenu 
+                            aria-label="Dynamic Actions" 
+                            selectionMode="single" 
+                            selectedKeys={new Set([selectedCountry])}
+                            onSelectionChange={handleChange}
+                        >
+                            {countries.map((country) => (
+                                <DropdownItem key={country}>
+                                    {country}
+                                </DropdownItem>
+                            ))}
+                        </DropdownMenu>
+                    </Dropdown>
+                </div>
+                <div className='grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 my-4'>
+                    {filteredPackages?.map((trek, index) => (
+                        <div key={index}>
+                            <PackageCard {...trek}/>
+                        </div>
+                    ))}
+                </div>
             </section>
         </div>
     )
