@@ -164,9 +164,9 @@ const SingleTrek:React.FC<paramsProps> = ({id}) => {
                     </section>
                     <TrekOverView title={trek?.title} desc={trek.desc}/>
                     <TrekHighLights title={trek?.title} trekHighlights={trekHighLights}/>
+                    <Services servicesIncluded={servicesIncluded} servicesNotIncluded={servicesNotIncluded}/>
                     <Itinerary itinerary={itineraryList}/>
                     <TripQuote title={trek?.title} desc={trek.desc}/>
-                    <Services servicesIncluded={servicesIncluded} servicesNotIncluded={servicesNotIncluded}/>
                     <PackingList trekkingEquipment={trekkingEquipment}/>
                     <TrekFAQs FAQs={FAQs}/>
                     <Gallery title={trek?.title} gallery={gallery}/>

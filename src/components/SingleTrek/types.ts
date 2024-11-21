@@ -145,3 +145,88 @@ export interface Tour {
   __v?: number;
 }
 
+
+export interface WellnessProps{
+  name: string;
+    slug: string;
+    country: string;
+    days:{
+      min:string
+      max:string
+    }
+    price: number;
+    overview: string; 
+    thumbnail: string;
+}
+
+
+interface WellnessHighlight {
+    content: string;
+    links: {
+        text: string;
+        url: string;
+    }[];
+}
+
+interface WellnessItinerary {
+    day: number;
+    title: string;
+    details: string;
+    accommodations: string;
+    meals: string;
+    links: {
+        text: string;
+        url: string;
+    }[];
+}
+
+interface WellnessFAQ {
+    question: string;
+    answer: string;
+}
+
+export interface WellnessData {
+    days?: {
+        min?: number;
+        max?: number;
+    };
+    groupSize?: {
+        min?: number;
+        max?: number;
+    };
+    _id?: string;
+    name?: string;
+    slug?: string;
+    price?: number;
+    thumbnail?: string;
+    country?: string;
+    language?: string;
+    maxAltitude?: string;
+    suitableAge?: string;
+    location?: string;
+    clothesType?: string;
+    arrivalLocation?: string;
+    departureLocation?: string;
+    startingPoint?: string;
+    endingPoint?: string;
+    accommodation?: string[];
+    thingsToKnow?: string[];
+    meal?: string;
+    bestSeason?: string[];
+    overview?: string;
+    highlights?: WellnessHighlight[];
+    itinerary?: WellnessItinerary[];
+    servicesCostIncludes?: string[];
+    servicesCostExcludes?: string[];
+    faq?: WellnessFAQ[];
+    images?: string[];
+    note?: string;
+    viewsCount?: number;
+    isFeatured?: boolean;
+    isPopular?: boolean;
+    isRecommended?: boolean;
+    isNewItem?: boolean;
+    createdAt?: string;
+    updatedAt?: string;
+    __v?: number;
+}

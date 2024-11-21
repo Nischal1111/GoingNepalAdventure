@@ -1,9 +1,24 @@
+"use client"
 import SharedSection from '@/shared/SharedSection'
 import SharedTitle from '@/shared/SharedTitle'
 import React from 'react'
 import Image from 'next/image'
+import { useQuery } from '@tanstack/react-query'
+import { getAllWellness } from '@/services/wellness'
+import WellnessCard from './WellnessCard'
+import { WellnessProps } from '../SingleTrek/types'
+import Loader from '@/shared/Loader'
 
 const Wellness = () => {
+
+    const {data:wellnessData,isLoading}=useQuery({
+        queryKey:["Wellness"],
+        queryFn:()=>getAllWellness()
+    })
+    const data=wellnessData?.data?.data
+
+    if(isLoading) return <Loader/>
+
     return (
         <main className='w-full'>
             <SharedSection title='Wellness' link='/wellness' img='/assets/wellness.avif'/>
@@ -37,13 +52,12 @@ const Wellness = () => {
             <div className='w-full px-24'>
                 <h2 className='font-semibold text-2xl tracking-wide text-primary'>A Holistic Approach to Wellness:</h2>
                 <p className='text-justify mt-4'>Guided by Mr. Dahal&apos;s leadership, Senses Spa and Wellness transcends conventional spa programs and massage therapies. We offer an all-encompassing array of treatment-based therapies meticulously crafted to nurture and harmonize the body, mind, and soul. Our holistic approach to wellness activities is dedicated to empowering individuals to harness their inner energy for self-healing and profound transformation. At Senses Spa and Wellness, we&apos;re not just about relaxation; we&apos;re your partners on the journey to holistic well-being.</p>
-                <div className='flex items-center justify-between gap-8 w-full mt-8'>
-                    <div className='w-1/2 rounded-md h-[150px] relative' style={{background:"url('/assets/wellness.avif')",backgroundSize:"cover"}}>
-
-                    </div>
-                    <div className='w-1/2 rounded-md h-[150px]' style={{background:"url('/assets/wellness.avif')",backgroundSize:"cover"}}>
-
-                    </div>
+                <div className='grid grid-cols-2 gap-8 w-full mt-8'>
+                    {data?.map((item:WellnessProps,index:number)=>{
+                        return(
+                            <WellnessCard key={index} {...item}/>
+                        )
+                    })}
                 </div>
             </div>
         </main>

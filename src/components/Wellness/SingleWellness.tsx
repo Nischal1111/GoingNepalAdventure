@@ -1,94 +1,96 @@
 "use client"
-import { getSingleTour } from '@/services/tour'
+import { getSingleWellness } from '@/services/wellness'
 import Loader from '@/shared/Loader'
-import { rowdies } from '@/utility/font'
-import { Button } from '@nextui-org/react'
 import { useQuery } from '@tanstack/react-query'
 import React from 'react'
 import { CiLineHeight } from 'react-icons/ci'
 import { FaBed, FaChevronCircleLeft, FaMapMarkerAlt, FaMountain, FaRegClock, FaUserFriends, FaUtensils } from 'react-icons/fa'
-import TourOverView from './TourOverview'
-import Itinerary from './Itinerary'
-import TripQuote from '../SingleTrek/TripQuote'
-import Services from '../SingleTrek/Services'
+import { RiShieldKeyholeFill } from 'react-icons/ri'
+import TourOverView from '../SingleTour/TourOverview'
 import TrekHighLights from '../SingleTrek/TrekHighLights'
-import TrekFAQs from '../SingleTrek/TrekFAQs'
-import Gallery from '../SingleTrek/Gallery'
+import Services from '../SingleTrek/Services'
+import Itinerary from '../SingleTour/Itinerary'
+import TripQuote from '../SingleTrek/TripQuote'
 import SharedTitle2 from '@/shared/SharedTitle2'
 import LinedContainer from '@/shared/LinedContainer'
 import Dot from '@/utility/Dot'
+import TrekFAQs from '../SingleTrek/TrekFAQs'
+import Gallery from '../SingleTrek/Gallery'
+import { Button } from '@nextui-org/react'
+import { rowdies } from '@/utility/font'
 
-interface pageProps{
-    id:string
+
+interface wellnessProps {
+    id: string
 }
-const SingleTour:React.FC<pageProps> = ({id}) => {
+const SingleWellness: React.FC<wellnessProps> = ({id}) => {
 
-    const {data:tourData,isLoading}=useQuery({
-        queryKey:["tourData",id],
-        queryFn:()=>getSingleTour(id),
-        enabled:!!id
+    const {data:wellnessData,isLoading}=useQuery({
+        queryKey: ['wellness',id],
+        queryFn:()=>getSingleWellness(id)
     })
 
-    const tour={
-        title:tourData?.data?.data?.name,
-        price:JSON.stringify(tourData?.data?.data?.price),
-        img:tourData?.data?.data?.thumbnail,
-        desc:tourData?.data?.data?.overview
+    const wellness={
+        title:wellnessData?.data?.data?.name,
+        price:JSON.stringify(wellnessData?.data?.data?.price),
+        img:wellnessData?.data?.data?.thumbnail,
+        desc:wellnessData?.data?.data?.overview
     }
 
-    const minitourDetails = [
+    const miniwellnessDetails = [
     {
         title: "Country",
-        value: tourData?.data?.data?.country,
+        value: wellnessData?.data?.data?.country,
         icon: <FaMapMarkerAlt className='text-primary' size={28}/>
     },
     {
         title: "Duration",
-        value: `${tourData?.data?.data?.days?.min} - ${tourData?.data?.data?.days?.max} days`,
+        value: `${wellnessData?.data?.data?.days?.min} - ${wellnessData?.data?.data?.days?.max} days`,
         icon: <FaRegClock className='text-primary' size={28}/>
     },
     {
         title: "Best Seasons",
-        value:tourData?.data?.data?.bestSeason?.join(", "),
+        value:wellnessData?.data?.data?.bestSeason?.join(", "),
         icon: <FaMountain className='text-primary' size={28}/>
     },
     {
         title: "Group Size",
-        value: `${tourData?.data?.data?.groupSize?.min} - ${tourData?.data?.data?.groupSize?.max} people`,
+        value: `${wellnessData?.data?.data?.groupSize?.min} - ${wellnessData?.data?.data?.groupSize?.max} people`,
         icon: <FaUserFriends className='text-primary' size={28}/>
     },
     {
+        title:"Suitable Age",
+        value: wellnessData?.data?.data?.suitableAge,
+        icon: <RiShieldKeyholeFill className='text-primary' size={28}/>
+    },
+    {
         title: "Max Altitude",
-        value: `${tourData?.data?.data?.maxAltitude}`,
+        value: `${wellnessData?.data?.data?.maxAltitude}`,
         icon: <CiLineHeight className='text-primary' size={28}/>
     },
     {
-        title: "Trip Type",
-        value: tourData?.data?.data?.tripType,
-        icon: <FaMountain className='text-primary' size={24}/>
-    },
-    {
         title: "Meals",
-        value: tourData?.data?.data?.meal,
+        value: wellnessData?.data?.data?.meal,
         icon: <FaUtensils className='text-primary' size={28}/>
     },
     {
         title: "Accommodations",
-        value: tourData?.data?.data?.accommodation?.join(", "),
+        value: wellnessData?.data?.data?.accommodation?.join(", "),
         icon: <FaBed className='text-primary' size={28}/>
     }
     ];
 
-    const tourHighLights=tourData?.data?.data?.highlights
+    const wellnessHighLights=wellnessData?.data?.data?.highlights
 
-    const itineraryList = tourData?.data?.data?.itinerary
+    const itineraryList = wellnessData?.data?.data?.itinerary
 
-    const servicesIncluded= tourData?.data?.data?.servicesCostIncludes
-    const servicesNotIncluded= tourData?.data?.data?.servicesCostExcludes
+    const servicesIncluded= wellnessData?.data?.data?.servicesCostIncludes
+    const servicesNotIncluded= wellnessData?.data?.data?.servicesCostExcludes
 
-    const gallery=tourData?.data?.data?.images
+    const gallery=wellnessData?.data?.data?.images
 
-    const FAQs=tourData?.data?.data?.faq
+    const FAQs=wellnessData?.data?.data?.faq
+
 
     if(isLoading) return <Loader/>
     return (
@@ -100,12 +102,12 @@ const SingleTour:React.FC<pageProps> = ({id}) => {
             >
                 <FaChevronCircleLeft />
             </Button>
-            <section className='relative h-[75vh] mt-4 w-full rounded-md' style={{background:`url(${tourData?.data?.data?.thumbnail})`,backgroundSize:"cover",backgroundPosition:"center",backgroundAttachment:"fixed"}}>
+            <section className='relative h-[75vh] mt-4 w-full rounded-md' style={{background:`url(${wellnessData?.data?.data?.thumbnail})`,backgroundSize:"cover",backgroundPosition:"center",backgroundAttachment:"fixed"}}>
                 <div className='absolute inset-0 bg-black/20 w-full'></div>
                 <div className='w-fit relative flex items-center justify-start top-[70%] left-[5%] '>
                     <div className='flex flex-col items-start'>
-                        <h1 className={`${rowdies.className} text-7xl w-fit text-[#DFDCDC]/70`}>{tour.title}</h1>
-                        <p className={`${rowdies.className} text-5xl absolute top-10 antialiased text-white`}>{tour.title}</p>
+                        <h1 className={`${rowdies.className} text-7xl w-fit text-[#DFDCDC]/70`}>{wellness.title}</h1>
+                        <p className={`${rowdies.className} text-5xl absolute top-10 antialiased text-white`}>{wellness.title}</p>
                     </div>
                 </div>
             </section>
@@ -113,7 +115,7 @@ const SingleTour:React.FC<pageProps> = ({id}) => {
                 <div className='w-[65%]'>
                     <section className='grid grid-cols-3 gap-4 bg-[#5D83C4]/20 rounded-md px-8 py-6 shadow-md'>
                         {
-                            minitourDetails.map((item,index)=>(
+                            miniwellnessDetails.map((item,index)=>(
                                 <div className='w-full flex items-center justify-start gap-2' key={index}>
                                     <div className='w-[20%] flex items-center justify-center'>
                                         {item.icon}
@@ -127,16 +129,16 @@ const SingleTour:React.FC<pageProps> = ({id}) => {
                         }
                     </section>
                     
-                    <TourOverView name={tour?.title} overview={tourData?.data?.data?.overview}/>
-                    <TrekHighLights title={tour?.title} trekHighlights={tourHighLights}/>
+                    <TourOverView name={wellness?.title} overview={wellnessData?.data?.data?.overview}/>
+                    <TrekHighLights title={wellness?.title} trekHighlights={wellnessHighLights}/>
                     <Services servicesIncluded={servicesIncluded} servicesNotIncluded={servicesNotIncluded}/>
                     <Itinerary itinerary={itineraryList}/>
-                    <TripQuote title={tour?.title} desc={tour.desc}/>
+                    <TripQuote title={wellness?.title} desc={wellness.desc}/>
                     <div className='my-12'>
                         <SharedTitle2 title='Things To Know' />
                         <LinedContainer>
                             <div className='mt-8'>
-                                {tourData?.data?.data?.thingsToKnow?.map((item:string, index:number) => (
+                                {wellnessData?.data?.data?.thingsToKnow?.map((item:string, index:number) => (
                                     <div key={index} className='flex mt-4 gap-4 items-center'>
                                     <Dot />
                                     <p className='text-base text-justify font-semibold'>
@@ -148,8 +150,7 @@ const SingleTour:React.FC<pageProps> = ({id}) => {
                         </LinedContainer>
                     </div>
                     <TrekFAQs FAQs={FAQs}/>
-                    
-                    <Gallery title={tour?.title} gallery={gallery}/>
+                    <Gallery title={wellness?.title} gallery={gallery}/>
                 </div>
                 <div className='w-[35%] flex justify-start flex-col items-center'>
                     {/* <RightSide price={trek?.price} title={trek?.title}/> */}
@@ -160,4 +161,4 @@ const SingleTour:React.FC<pageProps> = ({id}) => {
     )
 }
 
-export default SingleTour
+export default SingleWellness
