@@ -20,11 +20,11 @@ const TripQuote:React.FC<trekProps> = ({title}) => {
             <section className='flex flex-col items-start h-full text-white'>
                 <div className='flex items-center gap-4 mb-2'>
                     <FaCircleQuestion size={52} className='text-primary'/>
-                    <h1 className='font-semibold text-xl'>Customize your Own Trek</h1>
+                    <h1 className='font-semibold text-xl'>Get a trip Quote for this Trek</h1>
                 </div>
             </section>
             <Button onPress={handleQuote} className='bg-primary rounded-sm px-12 text-white'>
-                Get a Trip Quote
+                Trip Quote
             </Button>
             <QuoteModal isOpen={isOpen} onClose={() => setIsOpen(false)} text={text} trekTitle={title}/>
         </main>
