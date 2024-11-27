@@ -30,7 +30,7 @@ const Navbar = () => {
             items: [
                 { title: "Contact Us", href: "/contact-us" },
                 { title: "About Us", href: "/about-us" },
-                { title: "Travel Blogs", href: "/travel-blogs" },
+                { title: "Travel Blogs", href: "/blogs" },
                 { title: "FAQs", href: "/faqs" },
                 { title: "Travel Permits", href: "/travel-permits" },
                 { title: "Terms & Conditions", href: "/terms-and-conditions" },

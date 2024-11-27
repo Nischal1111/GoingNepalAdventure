@@ -7,8 +7,7 @@ import { FiFacebook } from 'react-icons/fi';
 import { FaXTwitter } from 'react-icons/fa6';
 import { Button } from '@nextui-org/react';
 
-const BlogSection = () => {
-    const blogs = [
+export const blogs = [
     {
         title: "The Ultimate Guide to Mountain Trekking",
         image: "/assets/hot_air_balloon.avif",
@@ -34,6 +33,9 @@ const BlogSection = () => {
         date: "2024-10-01"
     },
 ];
+
+const BlogSection = () => {
+    
 
   return (
     <main className='flex gap-12 items-stretch w-full pb-12 z-[999]'>
