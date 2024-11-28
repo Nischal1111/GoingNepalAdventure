@@ -155,7 +155,9 @@ const Navbar = () => {
                             <p className="font-semibold">+977 9867429313</p>
                         </div>
                     </div>
-                    <Button className="rounded-md bg-primary text-white px-12">Plan trip</Button>
+                    <Link href={"/plan-trip"}>
+                        <Button className="rounded-md bg-primary text-white px-12">Plan trip</Button>
+                    </Link>
                 </section>
             )}
 

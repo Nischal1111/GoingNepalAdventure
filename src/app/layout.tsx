@@ -40,12 +40,12 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        <Provider>
-          <Navbar/>
-          <ScrollToTop/>
-          {children}
-          <Footer/>
-        </Provider>
+          <Provider>
+            <Navbar/>
+            <ScrollToTop/>
+            {children}
+            <Footer/>
+          </Provider>
       </body>
     </html>
   );
