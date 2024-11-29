@@ -1,8 +1,8 @@
-import BlogCard from "@/components/Blogs/BlogCard"
+import SingleBlog from "@/components/Blogs/SingleBlog"
 
-const page = () => {
+const page = ({params}:{params:{id:string}}) => {
     return(
-        <BlogCard/>
+        <SingleBlog id={params.id}/>
     )
 }
 

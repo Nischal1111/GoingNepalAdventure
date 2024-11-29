@@ -1,6 +1,10 @@
 import React from 'react'
 
-const BlogCard = () => {
+interface paramsprops {
+    id:string
+}
+const SingleBlog:React.FC<paramsprops> = () => {
+
     return (
         <div className='w-full px-56'>
             <h1>Trekking is Always fun
@@ -10,4 +14,4 @@ const BlogCard = () => {
     )
 }
 
-export default BlogCard
+export default SingleBlog
