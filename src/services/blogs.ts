@@ -13,3 +13,17 @@ export const getAllBlogs=async()=>{
         }
     }
 }
+
+export const getSingleBlog=async(id:string)=>{
+    try{
+        const res=await axios.get(`${process.env.NEXT_PUBLIC_BASE_URL}/blogs/get-blog-by-slug/${id}`)
+        return res.data
+
+    }catch (err: unknown) {
+        if (axios.isAxiosError(err)) {
+            throw new Error(err.message);
+        } else {
+            throw new Error("An unexpected error occurred");
+        }
+    }
+}

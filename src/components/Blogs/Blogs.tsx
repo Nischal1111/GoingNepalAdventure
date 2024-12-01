@@ -15,7 +15,7 @@ interface Blogs{
     title:string
     description:string
     createdAt:string
-    _id:string
+    slug:string
 }
 const Blogs = () => {
     const {data:blogsData,isLoading}=useQuery({
@@ -44,7 +44,7 @@ const Blogs = () => {
                                     <p>{blog?.createdAt?.split("T")[0]}</p>
                                     <p>By Admin</p>
                                 </div>
-                                <Link href={`/blogs/${blog?._id}`}>
+                                <Link href={`/blogs/${blog?.slug}`}>
                                     <div className='underline underline-offset-2 text-primary text-base mt-2 flex gap-1 items-center cursor-pointer group'>
                                         <p>View post </p>
                                         <BsArrowRight className='transform transition-transform duration-200 group-hover:-rotate-45' />

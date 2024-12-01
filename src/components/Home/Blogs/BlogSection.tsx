@@ -10,13 +10,14 @@ import { Button } from '@nextui-org/react';
 import { useQuery } from '@tanstack/react-query';
 import { getAllBlogs } from '@/services/blogs';
 import Link from 'next/link';
+import { usePathname } from 'next/navigation';
 
 interface Blogs{
     blogImage:string
     title:string
     description:string
     createdAt:string
-    _id:string
+    slug:string
 }
 
 const BlogSection = () => {
@@ -26,9 +27,11 @@ const BlogSection = () => {
         queryFn:()=>getAllBlogs()
     })
 
+    const pathname=usePathname()as string
+
   return (
     <main className='flex gap-12 items-stretch w-full pb-12 z-[999]'>
-        
+
             <section className='w-3/5 flex flex-col gap-2'>
                 <Image src={blogsData?.data[0]?.blogImage} alt={blogsData?.data[0]?.title} height={1000} width={1000} className='object-cover shadow-md rounded-md w-full h-[400px]'/>
                 <div className='text-gray-400 flex items-center gap-2 text-sm'>
@@ -38,7 +41,7 @@ const BlogSection = () => {
                 </div>
                 <h1 className='font-bold text-2xl'>{blogsData?.data[0]?.title}</h1>
                 <div className='flex items-center justify-between mt-auto'>
-                    <Link href={`/blogs/${blogsData?.data[0]?._id}`}>
+                    <Link href={`/blogs/${blogsData?.data[0]?.slug}`}>
                         <div className='underline underline-offset-2 text-primary text-base flex gap-1 items-center cursor-pointer group'>
                             <p>View post </p>
                             <BsArrowRight className='transform transition-transform duration-200 group-hover:-rotate-45' />
@@ -75,7 +78,7 @@ const BlogSection = () => {
                             </div>
                             <h3 className='font-semibold text-base mt-1'>{blog?.title}</h3>
                         </div>
-                        <Link href={`/blogs/${blog?._id}`}>
+                        <Link href={`/blogs/${blog?.slug}`}>
                             <div className='underline underline-offset-2 text-primary text-sm flex gap-1 items-center cursor-pointer group'>
                                 <p>View post </p>
                                 <BsArrowRight className='transform transition-transform duration-200 group-hover:-rotate-45' />
@@ -84,9 +87,11 @@ const BlogSection = () => {
                     </div>
                 </div>
             ))}
-            <Link href={"/blogs"}>
-                <Button className='rounded-md px-12 w-fit bg-primary text-white'>View all</Button>
-            </Link>
+            {pathname!=="/blogs" && (
+                <Link href={"/blogs"}>
+                    <Button className='rounded-md px-12 w-fit bg-primary text-white'>View all</Button>
+                </Link>
+            )}
         </section>
 
     </main>
