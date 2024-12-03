@@ -15,6 +15,7 @@ const PlanTrip = () => {
         setSelected(String(key));
     };
 
+
     const tabs = ["1. Destination", "2. Arrival", "3. Tavel & Accommodation", "4. Budget", "5. Info"];
 
     const renderTab = () => {
@@ -31,6 +32,20 @@ const PlanTrip = () => {
                 return <Info />;
             default:
                 return null;
+        }
+    };
+
+    const handleNext = () => {
+        const currentIndex = tabs.indexOf(selected);
+        if (currentIndex < tabs.length - 1) {
+            setSelected(tabs[currentIndex + 1]);
+        }
+    };
+
+    const handlePrevious = () => {
+        const currentIndex = tabs.indexOf(selected);
+        if (currentIndex > 0) {
+            setSelected(tabs[currentIndex - 1]);
         }
     };
 
@@ -64,12 +79,25 @@ const PlanTrip = () => {
                     {renderTab()}
                 </div>
                 <div className='my-12 flex items-center gap-3 w-full justify-center'>
-                    <Button className='text-white py-4 px-12 rounded-sm bg-primary'>
+                    {tabs.indexOf(selected) > 0 && (
+                        <Button className='text-white py-4 px-12 rounded-sm bg-primary' onClick={handlePrevious}>
                             Previous
-                    </Button>
-                    <Button className='text-white py-4 px-12 rounded-sm bg-primary'>
+                        </Button>
+                    )}
+                    {tabs.indexOf(selected) < tabs.length - 1 ? (
+                        <Button className='text-white py-4 px-12 rounded-sm bg-primary' onPress={handleNext}>
                             Next
                     </Button>
+                    )
+                    :
+                    (
+
+                        <Button className='text-white py-4 px-12 rounded-sm bg-primary' onPress={handleNext}>
+                                Submit
+                        </Button>
+                    )
+                    }
+                    
                 </div>
             </div>
         </div>

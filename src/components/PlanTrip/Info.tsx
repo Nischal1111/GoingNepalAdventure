@@ -1,23 +1,26 @@
 "use client"
-import Loader from '@/shared/Loader'
 import { Autocomplete, AutocompleteItem, Checkbox, Input, Textarea } from '@nextui-org/react'
 import { useQuery } from '@tanstack/react-query'
-import { div } from 'framer-motion/client'
-import React from 'react'
+import React, { useContext } from 'react'
+import {PlanContext} from './PlanContext'
 
 const Info = () => {
 
+  const {fullname,setFullname,address,setAddress,email,setEmail,phone,setPhone,country,setCountry,message,setMessage}=useContext(PlanContext)!
   const { data: countries,isLoading } = useQuery({
   queryKey: ["countries"],
   queryFn: async () => {
     const response = await fetch("https://restcountries.com/v3.1/all");
     const data = await response.json();
+    //eslint-disable-next-line @typescript-eslint/no-explicit-any
     return data.map((country:any) => country.name.common);
   },
 });
 
+const onSelectionChange = (key: React.Key | null) => {
+    setCountry(String(key));
+  };
 
-  console.log(countries)
   return (
     <div className="flex w-full flex-col items-center justify-center px-16">
       <h1 className="text-2xl text-primary font-semibold py-16 tracking-wide">
@@ -30,8 +33,8 @@ const Info = () => {
           label="Fullname"
           labelPlacement="outside"
           placeholder="Enter your fullname"
-          // value={adult || ""}
-          // onChange={(e) => setAdult(e.target.value)}
+          value={fullname || ""}
+          onChange={(e) => setFullname(e.target.value)}
           classNames={{
             inputWrapper: "text-black font-medium bg-white group-data-[focus=true]:bg-white",
             label: "text-black text-lg font-medium",
@@ -43,8 +46,8 @@ const Info = () => {
           label="Address"
           labelPlacement="outside"
           placeholder="Enter your current address"
-          // value={adult || ""}
-          // onChange={(e) => setAdult(e.target.value)}
+          value={address || ""}
+          onChange={(e) => setAddress(e.target.value)}
           classNames={{
             inputWrapper: "text-black font-medium bg-white  group-data-[focus=true]:bg-white",
             label: "text-black text-lg font-medium",
@@ -57,8 +60,8 @@ const Info = () => {
           type="email"
           labelPlacement="outside"
           placeholder="Enter your email address"
-          // value={adult || ""}
-          // onChange={(e) => setAdult(e.target.value)}
+          value={email || ""}
+          onChange={(e) => setEmail(e.target.value)}
           classNames={{
             inputWrapper: "text-black font-medium bg-white group-data-[focus=true]:bg-white",
             label: "text-black text-lg font-medium",
@@ -71,8 +74,8 @@ const Info = () => {
           label="Phone Number"
           labelPlacement="outside"
           placeholder="Enter your contact number"
-          // value={adult || ""}
-          // onChange={(e) => setAdult(e.target.value)}
+          value={phone || ""}
+          onChange={(e) => setPhone(e.target.value)}
           classNames={{
             inputWrapper: "text-black font-medium bg-white group-data-[focus=true]:bg-white",
             label: "text-black text-lg font-medium",
@@ -85,6 +88,8 @@ const Info = () => {
             radius='none'
             color='primary'
             isClearable={false}
+            selectedKey={country || undefined}
+            onSelectionChange={onSelectionChange}
             classNames={{
             }}
         >
@@ -101,6 +106,8 @@ const Info = () => {
             label="Leave a Note"
             labelPlacement='outside'
             placeholder="Enter your message"
+            value={message || ""}
+            onChange={(e) => setMessage(e.target.value)}
             className="h-[300px] mt-8 w-full shadow-sm"
             classNames={{
             inputWrapper: "text-black font-medium bg-white group-data-[focus=true]:bg-white",

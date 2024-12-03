@@ -2,9 +2,11 @@ import { Checkbox, Input } from "@nextui-org/react";
 import React, { useContext } from "react";
 import { PlanContext } from "./PlanContext";
 import Image from "next/image";
+import { FaUser, FaUsers } from "react-icons/fa";
+import { FaUserGroup } from "react-icons/fa6";
 
 const TravelAndAccommodation = () => {
-  const { adult, setAdult, small, setSmall, accommodation, setAccommodation , meal, setMeal} =
+  const { adult, setAdult, small, setSmall, accommodation, setAccommodation , meal, setMeal,trip,setTrip} =
     useContext(PlanContext)!;
 
   const handleAccommodationChange = (type: string) => {
@@ -15,43 +17,69 @@ const TravelAndAccommodation = () => {
     setMeal(meal===mealType?"" : mealType)
     }
 
+    const handleTripChange=(tripType:string)=>{
+      setTrip(trip===tripType?"":tripType)
+      }
   return (
     <div className="flex w-full flex-col items-center justify-center px-16">
       <h1 className="text-2xl text-primary font-semibold py-16 tracking-wide">
         Travellers and Accommodations
       </h1>
-      <div className="flex w-full items-center justify-between">
-        <Input
-          type="number"
-          min={0}
-          radius="none"
-          className="w-2/5 shadow-sm"
-          label="Adult"
-          labelPlacement="outside"
-          placeholder="No. of adults"
-          value={adult || ""}
-          onChange={(e) => setAdult(e.target.value)}
-          classNames={{
-            inputWrapper: "text-black font-medium bg-white",
-            label: "text-black text-lg font-medium",
-          }}
-        />
-        <Input
-          type="number"
-          min={0}
-          radius="none"
-          className="w-2/5 shadow-sm"
-          label="Children"
-          labelPlacement="outside"
-          placeholder="No. of children"
-          value={small || ""}
-          onChange={(e) => setSmall(e.target.value)}
-          classNames={{
-            inputWrapper: "text-black font-medium bg-white",
-            label: "text-black text-lg font-medium",
-          }}
-        />
+      <div className="flex items-center justify-between w-3/5 mb-12">
+        {[
+          {type:"solo",label:"Solo Trip",icon:<FaUser className="text-5xl text-primary" />},
+          {type:"couple",label:"Couple Trip",icon:<FaUserGroup className="text-5xl text-primary" />},
+          {type:"family",label:"Family/Group Trip",icon:<FaUsers className="text-6xl text-primary"/>},
+        ].map((item) => (
+          <div key={item.type} className="w-1/4 flex items-center flex-col gap-2">
+            <div className="w-full h-[150px] bg-primary/10 rounded-sm flex items-center justify-center">
+              {item.icon}
+            </div>
+            <Checkbox
+                isSelected={trip === item.type}
+                onChange={() => handleTripChange(item.type)}
+                className="w-fit"
+              >
+                {item.label}
+              </Checkbox>
+          </div>
+        ))}
+
       </div>
+      {trip==="family"&&(
+        <div className="flex w-full items-center justify-between">
+          <Input
+            type="number"
+            min={0}
+            radius="none"
+            className="w-2/5 shadow-sm"
+            label="Adult"
+            labelPlacement="outside"
+            placeholder="No. of adults"
+            value={adult || ""}
+            onChange={(e) => setAdult(e.target.value)}
+            classNames={{
+              inputWrapper: "text-black font-medium bg-white",
+              label: "text-black text-lg font-medium",
+            }}
+          />
+          <Input
+            type="number"
+            min={0}
+            radius="none"
+            className="w-2/5 shadow-sm"
+            label="Children"
+            labelPlacement="outside"
+            placeholder="No. of children"
+            value={small || ""}
+            onChange={(e) => setSmall(e.target.value)}
+            classNames={{
+              inputWrapper: "text-black font-medium bg-white",
+              label: "text-black text-lg font-medium",
+            }}
+          />
+        </div>
+      )}
       <div className="w-full flex flex-col items-center justify-center">
         <h1 className="text-lg text-primary font-semibold pt-16 pb-4 tracking-wide">
           Preferred Accommodation
