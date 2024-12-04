@@ -68,7 +68,7 @@ const TravelAndAccommodation = () => {
         ))}
 
       </div>
-      {trip==="family"&&(
+      {trip==="Family/Group"&&(
         <div className="flex w-full items-center justify-between">
           <Input
             type="number"

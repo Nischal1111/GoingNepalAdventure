@@ -12,7 +12,7 @@ const TripQuote:React.FC<trekProps> = ({title}) => {
 
     const handleQuote = () => {
         setIsQuote(true);
-        setText(`I need a quotation for the trek: ${title}`);
+        setText(`I need to customize the trek: ${title}`);
         setIsOpen(true);
     };
     return (
@@ -20,7 +20,7 @@ const TripQuote:React.FC<trekProps> = ({title}) => {
             <section className='flex flex-col items-start h-full text-white'>
                 <div className='flex items-center gap-4 mb-2'>
                     <FaCircleQuestion size={52} className='text-primary'/>
-                    <h1 className='font-semibold text-xl'>Get a trip Quote for this Trek</h1>
+                    <h1 className='font-semibold text-xl'>Customize this Trek</h1>
                 </div>
             </section>
             <Button onPress={handleQuote} className='bg-primary rounded-sm px-12 text-white'>
