@@ -146,7 +146,7 @@ const Info = () => {
           >
             {!isLoading &&
               countries?.map((country: string) => (
-                <AutocompleteItem key={country + "1"} value={country}>
+                <AutocompleteItem key={country + ""} value={country}>
                   {country}
                 </AutocompleteItem>
               ))}

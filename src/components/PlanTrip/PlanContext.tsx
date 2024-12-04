@@ -8,11 +8,11 @@ interface PlanProviderProps {
 
 interface trekProps{
     title:string|null
-    id:string | null
+    _id:string | null
 }
 interface tourProps{
     title:string | null
-    id:string | null
+    _id:string | null
 }
 
 interface PlanContextProps {
@@ -78,8 +78,8 @@ const PlanContextProvider:React.FC<PlanProviderProps> = ({ children }) => {
     const [destination, setDestination] = useState<string>("")
     const [trekActivity, setTrekActivity] = useState<boolean>(false)
     const [tourActivity, setTourActivity] = useState<boolean>(false)
-    const [selectedTrek, setSelectedTrek] = useState<trekProps | null>({title:null,id:null})
-    const [selectedTour, setSelectedTour] = useState<tourProps |null>({title:null,id:null})
+    const [selectedTrek, setSelectedTrek] = useState<trekProps | null>({title:null,_id:null})
+    const [selectedTour, setSelectedTour] = useState<tourProps |null>({title:null,_id:null})
     const [specialPlan, setSpecialPlan] = useState<string>("")
     const [stayDays, setStayDays] = useState<string>("YYYY-MM-DD")
     const [alertMessage, setAlertMessage] = useState<string | null>(null);

@@ -3,12 +3,12 @@ import React from 'react'
 import Image from 'next/image'
 import { GoDotFill } from 'react-icons/go';
 import { BsArrowRight } from 'react-icons/bs';
-import { FaInstagram, FaLinkedin } from 'react-icons/fa';
+import { FaInstagram, FaLinkedin, FaRegEye } from 'react-icons/fa';
 import { FiFacebook } from 'react-icons/fi';
 import { FaXTwitter } from 'react-icons/fa6';
 import { Button } from '@nextui-org/react';
 import { useQuery } from '@tanstack/react-query';
-import { getAllBlogs } from '@/services/blogs';
+import {getBlogsByViews } from '@/services/blogs';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 
@@ -18,14 +18,17 @@ interface Blogs{
     description:string
     createdAt:string
     slug:string
+    blogViews:string
 }
 
 const BlogSection = () => {
     
     const {data:blogsData}=useQuery({
-        queryKey:["blogs"],
-        queryFn:()=>getAllBlogs()
+        queryKey:["popularblogs"],
+        queryFn:()=>getBlogsByViews()
     })
+
+
 
     const pathname=usePathname()as string
 
@@ -34,10 +37,12 @@ const BlogSection = () => {
 
             <section className='w-3/5 flex flex-col gap-2'>
                 <Image src={blogsData?.data[0]?.blogImage} alt={blogsData?.data[0]?.title} height={1000} width={1000} className='object-cover shadow-md rounded-md w-full h-[400px]'/>
-                <div className='text-gray-400 flex items-center gap-2 text-sm'>
+                <div className='text-gray-600 flex items-center gap-2 text-sm'>
                     <p>By Admin</p>
                     <GoDotFill size={8}/>
                     <p>{blogsData?.data[0]?.createdAt?.split("T")[0]}</p>
+                    <GoDotFill size={8}/>
+                    <p className='text-xs text-gray-600 flex items-center'><FaRegEye size={12} className='mr-2'/>{blogsData?.data[0]?.blogViews} Views</p>
                 </div>
                 <h1 className='font-bold text-2xl'>{blogsData?.data[0]?.title}</h1>
                 <div className='flex items-center justify-between mt-auto'>
@@ -71,10 +76,12 @@ const BlogSection = () => {
                     <Image src={blog?.blogImage} alt={blog?.title} height={500} width={500} className='object-cover shadow-md rounded-md w-1/3 h-[120px]'/>
                     <div className='flex flex-col justify-between w-2/3'>
                         <div>
-                            <div className='text-gray-400 flex items-center gap-2 text-xs'>
+                            <div className='text-gray-600 flex items-center gap-2 text-xs'>
                                 <p>By Admin</p>
                                 <GoDotFill size={6}/>
                                 <p>{blog?.createdAt?.split("T")[0]}</p>
+                                <GoDotFill size={6}/>
+                                <p className='text-xs text-gray-600 flex items-center'><FaRegEye size={12} className='mr-2'/>{blog?.blogViews} Views</p>
                             </div>
                             <h3 className='font-semibold text-base mt-1'>{blog?.title}</h3>
                         </div>

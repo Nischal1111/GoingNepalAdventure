@@ -9,6 +9,10 @@ import { useQuery } from '@tanstack/react-query'
 import { getAllBlogs } from '@/services/blogs'
 import Loader from '@/shared/Loader'
 import Link from 'next/link'
+import { Input } from '@nextui-org/react'
+import { FaSearch } from 'react-icons/fa'
+import { rowdies } from '@/utility/font'
+import { FaRegEye } from 'react-icons/fa6'
 
 interface Blogs{
     blogImage:string
@@ -16,14 +20,14 @@ interface Blogs{
     description:string
     createdAt:string
     slug:string
+    blogViews:string
 }
 const Blogs = () => {
-    const {data:blogsData,isLoading}=useQuery({
-        queryKey:["blogs"],
+    const {data:allblogsData,isLoading}=useQuery({
+        queryKey:["blogs","all"],
         queryFn:()=>getAllBlogs()
     })
 
-    console.log(blogsData)
 
     if(isLoading)return <Loader/>
     return (
@@ -32,8 +36,12 @@ const Blogs = () => {
             <SharedTitle title="Travel Blogs" subTitle='Insipration for you'/>
             <div className='px-20 py-12'>
                 <BlogSection/>
+                <div className='w-full flex items-center justify-between my-4'>
+                    <h1 className={`w-3/5 font-semibold text-4xl ${rowdies.className} text-primary`}>All Blogs</h1>
+                    <Input placeholder='Search Blogs' className='w-[30%] py-4' size='lg' radius='sm' classNames={{inputWrapper:"bg-white border border-gray-200 group-data-[focus=true]:bg-white"}} startContent={<FaSearch className='text-gray-500 mr-2' size={20}/>}></Input>
+                </div>
                 <div className='grid grid-cols-4 gap-x-10 gap-y-10 my-6'>
-                    {blogsData?.data?.map((blog:Blogs,index:number)=>(
+                    {allblogsData?.data?.map((blog:Blogs,index:number)=>(
                         <div key={index} className='w-full flex flex-col gap-2 pb-2 shadow-sm'>
                             <div className='w-full h-[200px]'>
                                 <Image src={blog?.blogImage} alt={blog?.title} height={1000} width={1000} className='object-cover shadow-md h-full w-full rounded-sm'/>
@@ -44,11 +52,12 @@ const Blogs = () => {
                                     <p>{blog?.createdAt?.split("T")[0]}</p>
                                     <p>By Admin</p>
                                 </div>
-                                <Link href={`/blogs/${blog?.slug}`}>
-                                    <div className='underline underline-offset-2 text-primary text-base mt-2 flex gap-1 items-center cursor-pointer group'>
+                                <Link href={`/blogs/${blog?.slug}`} className='w-full flex items-center justify-between mt-4 '>
+                                    <div className='underline underline-offset-2 text-primary text-base flex gap-1 items-center cursor-pointer group'>
                                         <p>View post </p>
                                         <BsArrowRight className='transform transition-transform duration-200 group-hover:-rotate-45' />
                                     </div>
+                                    <p className='text-xs text-gray-600 flex items-center'><FaRegEye size={12} className='mr-2'/>{blog?.blogViews} Views</p>
                                 </Link>
                             </div>
                         </div>

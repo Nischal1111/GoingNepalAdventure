@@ -32,3 +32,16 @@ export const getSingleTour=async(id:string)=>{
             console.error(error)
         }
 }
+
+export const excludeTour=async(id:string)=>{
+    try {
+        const res = await axios.get(`${process.env.NEXT_PUBLIC_BASE_URL}/tour/tours?excludeId=${id}&page=1&limit=4`);
+        return res.data;
+    } catch (err: unknown) {
+        if (axios.isAxiosError(err)) {
+            throw new Error(err.message);
+        } else {
+            throw new Error("An unexpected error occurred");
+        }
+    }
+}

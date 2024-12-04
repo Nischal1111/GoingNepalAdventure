@@ -44,6 +44,7 @@ export interface trekProps{
         answer:string
     }[]|undefined
     trekPdf?:string
+    _id?:string
 }
 
 

@@ -6,6 +6,7 @@ import Navbar from "@/shared/Navbar";
 import ScrollToTop from "@/shared/ScrollToTop";
 import Head from "next/head";
 import Footer from "@/shared/Footer";
+import { Toaster } from "sonner";
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -44,6 +45,7 @@ export default function RootLayout({
             <Navbar/>
             <ScrollToTop/>
             {children}
+            <Toaster richColors/>
             <Footer/>
           </Provider>
       </body>

@@ -10,9 +10,9 @@ import { getToursByCountryNoLimit } from '@/services/tour'
 interface TrekDropDown{
     name?: string
     country?:string
-    id?:string
+    _id?:string
 }
-const capitalizeFirstLetter = (str: string) => {
+export const capitalizeFirstLetter = (str: string) => {
     return str.charAt(0).toUpperCase() + str.slice(1).toLowerCase();
 };
 const Destination = () => {
@@ -30,13 +30,26 @@ const Destination = () => {
         enabled:!!destination||tourActivity
     })
 
-    const onSelectionChange = (key: React.Key | null) => {
-        setSelectedTrek({title:String(key),id:String(key)});
-        setAlertMessage(null)
+        const onSelectionChange = (key: React.Key | null) => {
+        const selectedTrekItem = trekData?.data?.data?.find((trek: TrekDropDown) => trek.name === key);
+        if (selectedTrekItem) {
+            setSelectedTrek({
+                title: selectedTrekItem.name || null,
+                _id: selectedTrekItem._id || null
+            });
+            setAlertMessage(null)
+        }
     };
+    
     const onSelectionTourChange = (key: React.Key | null) => {
-        setSelectedTour({title:String(key),id:String(key)});
-        setAlertMessage(null)
+        const selectedTourItem = tourData?.data?.data?.find((tour: TrekDropDown) => tour.name === key);
+        if (selectedTourItem) {
+            setSelectedTour({
+                title: selectedTourItem.name || null,
+                _id: selectedTourItem._id || null
+            });
+            setAlertMessage(null)
+        }
     };
     const handleTrek=(e:React.ChangeEvent<HTMLInputElement>)=>{
         setTrekActivity(e.target.checked)
@@ -56,8 +69,8 @@ const Destination = () => {
         setDestination(destination === type ? "" : type);
         setTrekActivity(false)
         setTourActivity(false)
-        setSelectedTrek({title:null,id:null})
-        setSelectedTour({title:null,id:null})
+        setSelectedTrek({title:null,_id:null})
+        setSelectedTour({title:null,_id:null})
         setSpecialPlan("")
     }
     return (
@@ -67,9 +80,9 @@ const Destination = () => {
             </h1>
             <div className="flex items-center justify-center gap-6 my-4 w-full">
             {[
-                { type: "nepal", label: "Nepal",image:"/assets/aboutBG.jpg" },
-                { type: "bhutan", label: "Bhutan" ,image:"/assets/bhutan/b2.avif"},
-                { type: "tibet", label: "Tibet",image:"/assets/tibet/t3.avif" },
+                { type: "Nepal", label: "Nepal",image:"/assets/aboutBG.jpg" },
+                { type: "Bhutan", label: "Bhutan" ,image:"/assets/bhutan/b2.avif"},
+                { type: "Tibet", label: "Tibet",image:"/assets/tibet/t3.avif" },
             ].map(({ type, label,image }) => (
                 <div key={type} className="flex flex-col gap-2 w-full">
                     <div className="h-[160px] w-full">
@@ -91,13 +104,13 @@ const Destination = () => {
             ))}
             </div>
             <div className="flex items-center justify-center gap-6 my-4 w-full">
-                {["nepal", "bhutan", "tibet"].includes(destination)&&(
+                {["Nepal", "Bhutan", "Tibet"].includes(destination)&&(
                     <div className='flex flex-col gap-6 w-full items-center'>
                         <h1 className="text-2xl text-primary font-semibold py-8 tracking-wide">
                             Select your preferred activity
                         </h1>
                         <div className="flex items-center justify-center gap-6 w-full">
-                            {destination==="nepal"&&(
+                            {destination==="Nepal"&&(
                                 <div className="flex flex-col gap-2 w-1/2">
                                     <div className="h-[160px] w-full">
                                         <Image
@@ -119,7 +132,7 @@ const Destination = () => {
                             <div className="flex flex-col gap-2 w-1/2">
                                 <div className="h-[160px] w-full">
                                     <Image
-                                    src={destination==="nepal"?"/assets/hiking.avif":destination==="bhutan"?"/assets/bhutan/b4.avif":"/assets/tibet/t4.avif"}
+                                    src={destination==="Nepal"?"/assets/hiking.avif":destination==="Bhutan"?"/assets/bhutan/b4.avif":"/assets/tibet/t4.avif"}
                                     alt="Tour (Explore various tour types and destinations)"
                                     width={1000}
                                     height={1000}
@@ -156,7 +169,7 @@ const Destination = () => {
                         {!isLoading &&
                         trekData?.data?.data?.map((trek:TrekDropDown) => (
                             //eslint-disable-next-line @typescript-eslint/no-non-null-asserted-optional-chain
-                            <AutocompleteItem key={trek?.name!} value={trek?.id}>
+                            <AutocompleteItem key={trek?.name+""} value={trek?._id}>
                                 {trek?.name}
                             </AutocompleteItem>
                         ))}
@@ -182,7 +195,7 @@ const Destination = () => {
                     >
                         {!tourLoading &&
                         tourData?.data?.data?.map((trek:TrekDropDown) => (
-                            <AutocompleteItem key={trek?.name+"1"} value={trek?.name}>
+                            <AutocompleteItem key={trek?.name+""} value={trek?._id}>
                                 {trek?.name}
                             </AutocompleteItem>
                         ))}

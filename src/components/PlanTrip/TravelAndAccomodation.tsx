@@ -49,9 +49,9 @@ const TravelAndAccommodation = () => {
       </h1>
       <div className="flex items-center justify-between w-3/5 mb-12">
         {[
-          {type:"solo",label:"Solo Trip",icon:<FaUser className="text-5xl text-primary" />},
-          {type:"couple",label:"Couple Trip",icon:<FaUserGroup className="text-5xl text-primary" />},
-          {type:"family",label:"Family/Group Trip",icon:<FaUsers className="text-6xl text-primary"/>},
+          {type:"Solo",label:"Solo Trip",icon:<FaUser className="text-5xl text-primary" />},
+          {type:"Couple",label:"Couple Trip",icon:<FaUserGroup className="text-5xl text-primary" />},
+          {type:"Family/Group",label:"Family/Group Trip",icon:<FaUsers className="text-6xl text-primary"/>},
         ].map((item) => (
           <div key={item.type} className="w-1/4 flex items-center flex-col gap-2">
             <div className="w-full h-[150px] bg-primary/10 rounded-sm flex items-center justify-center">
@@ -108,10 +108,10 @@ const TravelAndAccommodation = () => {
         </h1>
         <div className="grid grid-cols-4 gap-10 my-4">
           {[
-            { type: "3star", label: "3 Star Standard Hotels", image: "https://images.unsplash.com/photo-1663194815198-3e3183f9d9eb?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8MyUyMHN0YXIlMjBob3RlbHxlbnwwfHwwfHx8MA%3D%3D" },
-            { type: "4star", label: "4 Star Standard Hotels", image: "https://images.unsplash.com/photo-1445019980597-93fa8acb246c?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTB8fDQlMjBzdGFyJTIwaG90ZWx8ZW58MHx8MHx8fDI%3D" },
-            { type: "5star", label: "5 Star Standard Hotels", image: "https://images.unsplash.com/photo-1658394182922-fae0590632d6?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8NSUyMHN0YXIlMjBob3RlbHxlbnwwfHwwfHx8Mg%3D%3D" },
-            { type: "luxury", label: "Luxury Hotels", image: "https://images.unsplash.com/photo-1561501900-3701fa6a0864?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8bHV4dXJ5JTIwaG90ZWx8ZW58MHx8MHx8fDI%3D" },
+            { type: "3 Star", label: "3 Star Standard Hotels", image: "https://images.unsplash.com/photo-1663194815198-3e3183f9d9eb?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8MyUyMHN0YXIlMjBob3RlbHxlbnwwfHwwfHx8MA%3D%3D" },
+            { type: "4 Star", label: "4 Star Standard Hotels", image: "https://images.unsplash.com/photo-1445019980597-93fa8acb246c?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTB8fDQlMjBzdGFyJTIwaG90ZWx8ZW58MHx8MHx8fDI%3D" },
+            { type: "5 Star", label: "5 Star Standard Hotels", image: "https://images.unsplash.com/photo-1658394182922-fae0590632d6?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8NSUyMHN0YXIlMjBob3RlbHxlbnwwfHwwfHx8Mg%3D%3D" },
+            { type: "Luxury", label: "Luxury Hotels", image: "https://images.unsplash.com/photo-1561501900-3701fa6a0864?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8bHV4dXJ5JTIwaG90ZWx8ZW58MHx8MHx8fDI%3D" },
           ].map(({ type, label, image }) => (
             <div key={type} className="flex flex-col gap-2">
               <div className="h-[160px] w-full">

@@ -6,8 +6,12 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { Rowdies } from "next/font/google";
 import {today, getLocalTimeZone} from "@internationalized/date";
-import { FaMinus, FaPlus } from 'react-icons/fa6'
+import { FaMinus, FaPlus, FaRegEye } from 'react-icons/fa6'
 import { Tour } from '@/components/SingleTrek/types'
+import { useQuery } from '@tanstack/react-query'
+import { getBlogsByViews } from '@/services/blogs'
+import { excludeTour } from '@/services/tour'
+import { GoDotFill } from 'react-icons/go'
 
 
 export const rowdies=Rowdies({
@@ -16,7 +20,7 @@ export const rowdies=Rowdies({
     display: 'swap',
 })
 
-const RightSide: React.FC<Tour> = ({ price,name }) => {
+const RightSide: React.FC<Tour> = ({ price,name,_id }) => {
     const [isQuote, setIsQuote] = useState(false); // eslint-disable-line @typescript-eslint/no-unused-vars
     const [isCustomize, setIsCustomize] = useState(false); // eslint-disable-line @typescript-eslint/no-unused-vars
     const [isOpen, setIsOpen] = useState(false);
@@ -36,6 +40,17 @@ const RightSide: React.FC<Tour> = ({ price,name }) => {
         setIsOpen(true);
     };
 
+    const {data:exploreBlogsData}=useQuery({
+        queryKey: ['exploreBlogsData'],
+        queryFn:()=>getBlogsByViews(),
+    })
+
+    const {data:excludeData}=useQuery({
+        queryKey: ['excludeData'],
+        queryFn:()=>excludeTour(_id!),
+        enabled:!!_id
+    })
+    
     const handleCustomize = () => {
         setIsQuote(false);
         setIsCustomize(true);
@@ -184,35 +199,29 @@ const RightSide: React.FC<Tour> = ({ price,name }) => {
                         <p className='flex gap-2 items-center font-semibold text-sm'><span className='text-gray-500 text-light'>Whatsapp</span>+977 98757382933</p>
                     </div>
             </div>
-            <div className='px-8 max-w-[800px] w-[440px] my-4'>
+<div className='px-8 max-w-[800px] w-[440px] my-4'>
                 <div className='bg-white shadow-md rounded-md'>
                     <div className='flex w-full flex-col gap-6 py-4 mt-4 rounded-md shadow-md items-center justify-center'>
                         <h1 className={`${rowdies.className} text-2xl text-primary`}>Explore more treks</h1>
                         <div className='flex flex-col w-full items-center justify-center gap-4 mt-4'>
-                            <div className='flex px-4 w-full  items-start gap-4'>
-                                <div className='w-[25%] h-[70px]'>
-                                    <Image src="/assets/tour.avif" alt='tour' height={1000} width={1000} className='object-cover h-full w-full rounded-md'/>
-                                </div>
-                                <h1 className='font-semibold text-lg w-[70%]'>Langtang Trek : 7 Days</h1>
-                            </div>
-                            <div className='flex px-4 w-full  items-start gap-4'>
-                                <div className='w-[25%] h-[70px]'>
-                                    <Image src="/assets/faqBG.jpeg" alt='tour' height={1000} width={1000} className='object-cover h-full w-full rounded-md'/>
-                                </div>
-                                <h1 className='font-semibold text-lg w-[70%]'>Annapurna Circuit Trek : 15 - 17 Days</h1>
-                            </div>
-                            <div className='flex px-4 w-full  items-start gap-4'>
-                                <div className='w-[25%] h-[70px]'>
-                                    <Image src="/assets/about1.jpg" alt='tour' height={1000} width={1000} className='object-cover h-full w-full rounded-md'/>
-                                </div>
-                                <h1 className='font-semibold text-lg w-[70%]'>Tso Rolpa Altitude Trek : 11 - 13 Days</h1>
-                            </div>
-                            <div className='flex px-4 w-full  items-start gap-4'>
-                                <div className='w-[25%] h-[70px]'>
-                                    <Image src="/assets/trek.jpeg" alt='tour' height={1000} width={1000} className='object-cover h-full w-full rounded-md'/>
-                                </div>
-                                <h1 className='font-semibold text-lg w-[70%]'>Manaslu Tsum Valley Trek : 15 Days</h1>
-                            </div>
+                            {excludeData?.data?.map((item:any)=>( //eslint-disable-line @typescript-eslint/no-explicit-any
+                                <Link href={`/trekking/${item?.slug}`} key={item?.id} className='w-full'>
+                                    <div className='flex px-4 w-full  items-start gap-4'>
+                                        <div className='w-[25%] h-[70px]'>
+                                            <Image src={item?.thumbnail} alt='tour' height={1000} width={1000} className='object-cover h-full w-full rounded-md'/>
+                                        </div>
+                                        <div className='w-[70%] flex flex-col'>
+                                            <h1 className='font-semibold text-lg leading-5 '>{item?.name}</h1>
+                                            <div className='flex items-center gap-2 text-gray-600 text-xs mt-2'>
+                                                <p className='text-gray-500 text-sm'>{item?.location}</p>
+                                                <GoDotFill size={8}/>
+                                                <p className='text-gray-500 text-sm'>{item?.tripType}</p>
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                </Link>
+                            ))}
                         </div>
                         <Link href={"/trekking"}>
                             <Button className='bg-transparent hover:underline hover:underline-offset-2 -my-2 text-primary text-sm'>View more treks</Button>
@@ -223,35 +232,24 @@ const RightSide: React.FC<Tour> = ({ price,name }) => {
             <div className='px-8 max-w-[800px] w-[440px] my-4'>
                 <div className='bg-white shadow-md rounded-md'>
                     <div className='flex w-full flex-col gap-6 py-4 mt-4 rounded-md shadow-md items-center justify-center'>
-                        <h1 className={`${rowdies.className} text-2xl text-primary`}>Explore blogs</h1>
+                        <h1 className={`${rowdies.className} text-2xl text-primary`}>Our Popular blogs</h1>
                         <div className='flex flex-col w-full items-center justify-center gap-4 mt-4'>
-                            <div className='flex px-4 w-full  items-start gap-4'>
-                                <div className='w-[25%] h-[70px]'>
-                                    <Image src="/assets/tour.avif" alt='tour' height={1000} width={1000} className='object-cover h-full w-full rounded-md'/>
-                                </div>
-                                <h1 className='font-semibold text-lg w-[70%]'>Langtang Trek : 7 Days</h1>
-                            </div>
-                            <div className='flex px-4 w-full  items-start gap-4'>
-                                <div className='w-[25%] h-[70px]'>
-                                    <Image src="/assets/faqBG.jpeg" alt='tour' height={1000} width={1000} className='object-cover h-full w-full rounded-md'/>
-                                </div>
-                                <h1 className='font-semibold text-lg w-[70%]'>Annapurna Circuit Trek : 15 - 17 Days</h1>
-                            </div>
-                            <div className='flex px-4 w-full  items-start gap-4'>
-                                <div className='w-[25%] h-[70px]'>
-                                    <Image src="/assets/about1.jpg" alt='tour' height={1000} width={1000} className='object-cover h-full w-full rounded-md'/>
-                                </div>
-                                <h1 className='font-semibold text-lg w-[70%]'>Tso Rolpa Altitude Trek : 11 - 13 Days</h1>
-                            </div>
-                            <div className='flex px-4 w-full  items-start gap-4'>
-                                <div className='w-[25%] h-[70px]'>
-                                    <Image src="/assets/trek.jpeg" alt='tour' height={1000} width={1000} className='object-cover h-full w-full rounded-md'/>
-                                </div>
-                                <h1 className='font-semibold text-lg w-[70%]'>Manaslu Tsum Valley Trek : 15 Days</h1>
-                            </div>
+                            {exploreBlogsData?.data?.map((item:any)=>(//eslint-disable-line @typescript-eslint/no-explicit-any
+                                <Link href={`/blogs/${item?.slug}`} key={item?.id} className='w-full'>
+                                    <div className='flex px-4 w-full  items-start gap-4'>
+                                        <div className='w-[25%] h-[70px]'>
+                                            <Image src={item?.blogImage} alt='tour' height={1000} width={1000} className='object-cover h-full w-full rounded-md'/>
+                                        </div>
+                                        <div className='flex flex-col w-[70%]'>
+                                            <h1 className='font-semibold text-base leading-6'>{item?.title?.slice(0,50)}</h1>
+                                            <p className='mt-2 flex items-center text-xs text-gray-600'><FaRegEye size={12} className='mr-2 text-primary'/>{item?.blogViews} Views</p>
+                                        </div>
+                                    </div>    
+                                </Link>
+                            ))}
                         </div>
-                        <Link href={"/trekking"}>
-                            <Button className='bg-transparent hover:underline hover:underline-offset-2 -my-2 text-primary text-sm'>View more treks</Button>
+                        <Link href={"/blogs"}>
+                            <Button className='bg-transparent hover:underline hover:underline-offset-2 -my-2 text-primary text-sm'>Explore more blogs</Button>
                         </Link>
                     </div>
                 </div>

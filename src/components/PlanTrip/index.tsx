@@ -9,17 +9,29 @@ import Budget from './Budget'
 import Info from './Info'
 import { PlanContext } from './PlanContext'
 import Alert from '@/shared/AlertMessage/Alert'
+import { useMutation } from '@tanstack/react-query'
+import { sendPlanTrip } from '@/services/plantrip'
+import { useRouter } from 'next/navigation'
+import { toast } from 'sonner'
+import { capitalizeFirstLetter } from './Destination';
 
 const PlanTrip = () => {
     const [selected, setSelected] = useState<string>("1. Destination");
-    const {budget,adult,small,accommodation,meal,fullname,address,email,phone,country,agree,trip,destination,trekActivity,tourActivity,selectedTrek,selectedTour,stayDays,alertMessage,setAlertMessage}=useContext(PlanContext)!
+    const [completedTabs, setCompletedTabs] = useState<string[]>([]);
+    const {budget,adult,small,accommodation,meal,fullname,address,email,phone,country,specialPlan,message,agree,trip,destination,trekActivity,tourActivity,selectedTrek,selectedTour,stayDays,alertMessage,setAlertMessage}=useContext(PlanContext)!
+    const router=useRouter()
+    const tabs = ["1. Destination", "2. Arrival", "3. Tavel & Accommodation", "4. Budget", "5. Info"];
 
     const selection = (key: string | number) => {
-        setSelected(String(key));
+        const tabKey = String(key);
+        
+        if (!completedTabs.includes(tabKey) && tabKey !== selected) {
+            return;
+        }
+        
+        setSelected(tabKey);
+        setAlertMessage(null);
     };
-
-
-    const tabs = ["1. Destination", "2. Arrival", "3. Tavel & Accommodation", "4. Budget", "5. Info"];
 
     const renderTab = () => {
         switch (selected) {
@@ -38,10 +50,61 @@ const PlanTrip = () => {
         }
     };
 
+    const {mutate:createPlanTrip}=useMutation({
+        
+        mutationFn:(data:any)=>sendPlanTrip(data),//eslint-disable-line @typescript-eslint/no-explicit-any
+        onSuccess:()=>{
+            router.push("/")
+            toast.success("Your plan trip has been submitted.")
+        },
+        onError:()=>{
+            toast.error("Failed to submit your plan trip.")
+        }
+    })
+
+        const submitPlanTrip = () => {
+    const data = {
+        destination: capitalizeFirstLetter(destination),
+        isTrek: trekActivity,
+        isTour: tourActivity,
+        ...(trekActivity && selectedTrek && selectedTrek._id ? {
+            trek: [{
+                trekId: selectedTrek._id,
+                trekName: selectedTrek.title,
+            }]
+        } : {}),
+        ...(tourActivity && selectedTour && selectedTour._id ? {
+            tour: [{
+                tourId: selectedTour._id,
+                tourName: selectedTour.title,
+            }]
+        } : {}),
+        specialPlan: specialPlan || "",
+        duration: stayDays,
+        travelType: trip,
+        adult: adult,
+        children: small,
+        preferedAccomodation: accommodation,
+        mealType: meal,
+        estimatedBudget: JSON.stringify(budget),
+        fullName: fullname,
+        address: address,
+        email: email,
+        phoneNumber: phone,
+        country: country,
+        note: message || "",
+    }
+    createPlanTrip(data)
+}
+
     const handleNext = () => {
         if(!cantProceed()){
             return
         }
+        if (!completedTabs.includes(selected)) {
+            setCompletedTabs(prev => [...prev, selected]);
+        }
+        
         const currentIndex = tabs.indexOf(selected);
         if (currentIndex < tabs.length - 1) {
             setSelected(tabs[currentIndex + 1]);
@@ -50,6 +113,7 @@ const PlanTrip = () => {
     };
 
     const handlePrevious = () => {
+        setAlertMessage(null)
         const currentIndex = tabs.indexOf(selected);
         if (currentIndex > 0) {
             setSelected(tabs[currentIndex - 1]);
@@ -78,7 +142,6 @@ const PlanTrip = () => {
                 setAlertMessage("Please select a tour package.");
                 return false;
             }
-
         }
 
         if(selected === "2. Arrival"){
@@ -125,9 +188,8 @@ const PlanTrip = () => {
                 return false;
             }
         }
-    return true;
-};
-
+        return true;
+    };
 
     return (
         <div className='w-full flex flex-col items-center justify-center'>
@@ -152,6 +214,7 @@ const PlanTrip = () => {
                         <Tab
                             key={key}
                             title={key}
+                            isDisabled={!completedTabs.includes(key) && key !== selected}
                         />
                     ))}
                 </Tabs>
@@ -172,17 +235,12 @@ const PlanTrip = () => {
                     {tabs.indexOf(selected) < tabs.length - 1 ? (
                         <Button className='text-white py-4 px-12 rounded-sm bg-primary' onPress={handleNext}>
                             Next
-                    </Button>
-                    )
-                    :
-                    (
-
-                        <Button className='text-white py-4 px-12 rounded-sm bg-primary' onPress={handleNext}>
-                                Submit
                         </Button>
-                    )
-                    }
-                    
+                    ) : (
+                        <Button className='text-white py-4 px-12 rounded-sm bg-primary' onPress={submitPlanTrip}>
+                            Submit
+                        </Button>
+                    )}
                 </div>
             </div>
         </div>
