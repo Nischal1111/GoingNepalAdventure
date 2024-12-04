@@ -16,7 +16,7 @@ export const rowdies=Rowdies({
     display: 'swap',
 })
 
-const RightSide: React.FC<trekProps> = ({ price, title }) => {
+const RightSide: React.FC<trekProps> = ({ price, title,trekPdf }) => {
     const [isQuote, setIsQuote] = useState(false); // eslint-disable-line @typescript-eslint/no-unused-vars
     const [isCustomize, setIsCustomize] = useState(false); // eslint-disable-line @typescript-eslint/no-unused-vars
     const [isOpen, setIsOpen] = useState(false);
@@ -58,7 +58,9 @@ const RightSide: React.FC<trekProps> = ({ price, title }) => {
     return (
         <>
         <div className='px-12'>
-            <Button className='px-12 bg-primary rounded-sm text-white mb-4 w-full'>Download PDF</Button>
+            <Link href={`${trekPdf}`} target='_blank'>
+                <Button className='px-12 bg-primary rounded-sm text-white mb-4 w-full'>Download PDF</Button>
+            </Link>
         </div>
             <div className='flex flex-col top-12'>
                 <div className=' py-2 z-[2] px-8 w-[440px]'>

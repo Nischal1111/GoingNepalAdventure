@@ -172,7 +172,7 @@ const SingleTrek:React.FC<paramsProps> = ({id}) => {
                     <Gallery title={trek?.title} gallery={gallery}/>
                 </div>
                 <div className='w-[35%] flex justify-start flex-col items-center'>
-                    <RightSide price={trek?.price} title={trek?.title}/>
+                    <RightSide price={trek?.price} title={trek?.title} trekPdf={SingleTrekData?.data?.data?.trekPdf}/>
                 </div>
             </section>
             

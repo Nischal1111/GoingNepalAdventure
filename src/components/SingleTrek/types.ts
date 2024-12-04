@@ -43,6 +43,7 @@ export interface trekProps{
         question:string
         answer:string
     }[]|undefined
+    trekPdf?:string
 }
 
 
