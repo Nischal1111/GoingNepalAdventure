@@ -6,6 +6,14 @@ interface PlanProviderProps {
     children: ReactNode;
 }
 
+interface trekProps{
+    title:string|null
+    id:string | null
+}
+interface tourProps{
+    title:string | null
+    id:string | null
+}
 
 interface PlanContextProps {
     budget: number | number[]
@@ -38,22 +46,26 @@ interface PlanContextProps {
     setTrekActivity:Dispatch<SetStateAction<boolean>>,
     tourActivity?:boolean
     setTourActivity:Dispatch<SetStateAction<boolean>>,
-    selectedTrek:string,
-    setSelectedTrek:Dispatch<SetStateAction<string>>,
-    selectedTour:string,
-    setSelectedTour:Dispatch<SetStateAction<string>>
+    selectedTrek:trekProps|null,
+    setSelectedTrek:Dispatch<SetStateAction<trekProps|null>>,
+    selectedTour:tourProps|null,
+    setSelectedTour:Dispatch<SetStateAction<tourProps|null>>
     specialPlan:string,
     setSpecialPlan:Dispatch<SetStateAction<string>>,
     stayDays:string
     setStayDays:Dispatch<SetStateAction<string>>,
+    alertMessage: string | null;
+    setAlertMessage: Dispatch<SetStateAction<string | null>>;
+    agree:boolean
+    setAgree:Dispatch<SetStateAction<boolean>>
 }
 
 export const PlanContext = createContext<PlanContextProps | null>(null);
 
 const PlanContextProvider:React.FC<PlanProviderProps> = ({ children }) => {
     const [budget, setBudget] = useState<number | number[]>(12500)
-    const [adult, setAdult] = useState<string|null>(null)
-    const [small, setSmall] = useState<string|null>(null)
+    const [adult, setAdult] = useState<string|null>("1")
+    const [small, setSmall] = useState<string|null>("0")
     const [accommodation, setAccommodation] = useState<string>("");
     const [meal, setMeal] = useState<string>("")
     const [fullname, setFullname] = useState<string>("")
@@ -66,11 +78,12 @@ const PlanContextProvider:React.FC<PlanProviderProps> = ({ children }) => {
     const [destination, setDestination] = useState<string>("")
     const [trekActivity, setTrekActivity] = useState<boolean>(false)
     const [tourActivity, setTourActivity] = useState<boolean>(false)
-    const [selectedTrek, setSelectedTrek] = useState<string>("")
-    const [selectedTour, setSelectedTour] = useState<string>("")
+    const [selectedTrek, setSelectedTrek] = useState<trekProps | null>({title:null,id:null})
+    const [selectedTour, setSelectedTour] = useState<tourProps |null>({title:null,id:null})
     const [specialPlan, setSpecialPlan] = useState<string>("")
     const [stayDays, setStayDays] = useState<string>("YYYY-MM-DD")
-    
+    const [alertMessage, setAlertMessage] = useState<string | null>(null);
+    const [agree, setAgree] = useState<boolean>(false)
     
     return (
         <PlanContext.Provider value={{
@@ -111,7 +124,11 @@ const PlanContextProvider:React.FC<PlanProviderProps> = ({ children }) => {
             specialPlan,
             setSpecialPlan,
             stayDays,
-            setStayDays
+            setStayDays,
+            alertMessage,
+            setAlertMessage,
+            agree,
+            setAgree
         }}>
             {children}
         </PlanContext.Provider>

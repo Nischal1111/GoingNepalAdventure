@@ -1,15 +1,18 @@
 "use client"
 import SharedTitle from '@/shared/SharedTitle'
 import { Button, Tab, Tabs } from '@nextui-org/react'
-import React, { useState } from 'react'
+import React, { useContext, useState } from 'react'
 import Destination from './Destination'
 import Arrival from './Arrival'
 import TravelAndAccomodation from './TravelAndAccomodation'
 import Budget from './Budget'
 import Info from './Info'
+import { PlanContext } from './PlanContext'
+import Alert from '@/shared/AlertMessage/Alert'
 
 const PlanTrip = () => {
     const [selected, setSelected] = useState<string>("1. Destination");
+    const {budget,adult,small,accommodation,meal,fullname,address,email,phone,country,agree,trip,destination,trekActivity,tourActivity,selectedTrek,selectedTour,stayDays,alertMessage,setAlertMessage}=useContext(PlanContext)!
 
     const selection = (key: string | number) => {
         setSelected(String(key));
@@ -36,10 +39,14 @@ const PlanTrip = () => {
     };
 
     const handleNext = () => {
+        if(!cantProceed()){
+            return
+        }
         const currentIndex = tabs.indexOf(selected);
         if (currentIndex < tabs.length - 1) {
             setSelected(tabs[currentIndex + 1]);
         }
+        window.scrollTo({ top: 0, behavior: "smooth" });
     };
 
     const handlePrevious = () => {
@@ -47,7 +54,80 @@ const PlanTrip = () => {
         if (currentIndex > 0) {
             setSelected(tabs[currentIndex - 1]);
         }
+        window.scrollTo({ top: 0, behavior: "smooth" });
     };
+
+    const cantProceed = () => { 
+        if (selected === "1. Destination") {
+            if (!destination) {
+                setAlertMessage("Please select a destination");
+                return false;
+            }
+            
+            if (!trekActivity && !tourActivity) {
+                setAlertMessage("Please select a preferred activity");
+                return false;
+            }
+            
+            if (trekActivity && (!selectedTrek || selectedTrek==null)) {
+                setAlertMessage("Please select a trek package.");
+                return false;
+            }
+
+            if (tourActivity && (!selectedTour || selectedTour === null)) {
+                setAlertMessage("Please select a tour package.");
+                return false;
+            }
+
+        }
+
+        if(selected === "2. Arrival"){
+            if(stayDays === "YYYY-MM-DD"){
+                setAlertMessage("Please select your arrival and departure dates");
+                return false;
+            }
+        }
+
+        if(selected === "3. Tavel & Accommodation"){
+            if(!trip){
+                setAlertMessage("Please select a preferred trip.");
+                return false
+            }
+            if(trip==="family"&&(!adult||!small)){
+                setAlertMessage("Please select the number of adults and children.");
+                return false
+            }
+            if(!accommodation){
+                setAlertMessage("Please select a preferred accommodation");
+                return false;
+            }
+            if(!meal){
+                setAlertMessage("Please select a preferred meal plan");
+                return false;
+            }
+        }
+        if(selected === "4. Budget"){
+            if(!budget){
+                setAlertMessage("Please select a budget");
+                return false;
+            }
+        }
+        if(selected === "5. Info"){
+            if(!fullname || !address || !email || !phone || !country){
+                setAlertMessage("Please fill out all the required fields");
+                return false;
+            }
+            if(!agree){
+                setAlertMessage("Please agree to our terms and conditions");
+                setTimeout(()=>{
+                    setAlertMessage(null);
+                },2000)
+                return false;
+            }
+        }
+    return true;
+};
+
 
     return (
         <div className='w-full flex flex-col items-center justify-center'>
@@ -75,8 +155,13 @@ const PlanTrip = () => {
                         />
                     ))}
                 </Tabs>
-                <div className="mt-8 bg-gray-100 rounded-md px-12 py-8">
+                <div className="mt-8 flex items-center justify-center flex-col bg-gray-100 rounded-md px-12 py-8">
                     {renderTab()}
+                    {alertMessage && 
+                        <div className='my-8 w-2/5'>
+                            <Alert message={alertMessage}/>    
+                        </div>
+                    }
                 </div>
                 <div className='my-12 flex items-center gap-3 w-full justify-center'>
                     {tabs.indexOf(selected) > 0 && (

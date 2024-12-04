@@ -10,12 +10,13 @@ import { getToursByCountryNoLimit } from '@/services/tour'
 interface TrekDropDown{
     name?: string
     country?:string
+    id?:string
 }
 const capitalizeFirstLetter = (str: string) => {
     return str.charAt(0).toUpperCase() + str.slice(1).toLowerCase();
 };
 const Destination = () => {
-    const {destination,setDestination,trekActivity,setTrekActivity,tourActivity,setTourActivity,selectedTrek,selectedTour,setSelectedTour,setSelectedTrek,specialPlan,setSpecialPlan}=useContext(PlanContext)!
+    const {destination,setDestination,trekActivity,setTrekActivity,tourActivity,setTourActivity,selectedTrek,selectedTour,setSelectedTour,setSelectedTrek,specialPlan,setSpecialPlan,setAlertMessage}=useContext(PlanContext)!
 
     const {data:trekData,isLoading}=useQuery({
         queryKey: ['trekData'],
@@ -30,14 +31,34 @@ const Destination = () => {
     })
 
     const onSelectionChange = (key: React.Key | null) => {
-        setSelectedTrek(String(key));
+        setSelectedTrek({title:String(key),id:String(key)});
+        setAlertMessage(null)
     };
     const onSelectionTourChange = (key: React.Key | null) => {
-        setSelectedTour(String(key));
+        setSelectedTour({title:String(key),id:String(key)});
+        setAlertMessage(null)
     };
+    const handleTrek=(e:React.ChangeEvent<HTMLInputElement>)=>{
+        setTrekActivity(e.target.checked)
+        setAlertMessage(null)
+    }
+    const handleTour=(e:React.ChangeEvent<HTMLInputElement>)=>{
+        setTourActivity(e.target.checked)
+        setAlertMessage(null)
+    }
+    const handleSpecial=(e:React.ChangeEvent<HTMLInputElement>)=>{
+        setSpecialPlan(e.target.value)
+        setAlertMessage(null)
+    }
 
     const handleDestinationChange = (type: string) => {
+        setAlertMessage(null)
         setDestination(destination === type ? "" : type);
+        setTrekActivity(false)
+        setTourActivity(false)
+        setSelectedTrek({title:null,id:null})
+        setSelectedTour({title:null,id:null})
+        setSpecialPlan("")
     }
     return (
         <div className="flex w-full flex-col items-center justify-center px-16">
@@ -89,7 +110,7 @@ const Destination = () => {
                                     </div>
                                         <Checkbox
                                             isSelected={trekActivity}
-                                            onChange={(e)=>setTrekActivity(e.target.checked)}
+                                            onChange={handleTrek}
                                         >
                                             {"Trek (Adventerous and Thrilling destinations)"}
                                         </Checkbox>
@@ -98,7 +119,7 @@ const Destination = () => {
                             <div className="flex flex-col gap-2 w-1/2">
                                 <div className="h-[160px] w-full">
                                     <Image
-                                    src="/assets/hiking.avif"
+                                    src={destination==="nepal"?"/assets/hiking.avif":destination==="bhutan"?"/assets/bhutan/b4.avif":"/assets/tibet/t4.avif"}
                                     alt="Tour (Explore various tour types and destinations)"
                                     width={1000}
                                     height={1000}
@@ -107,7 +128,7 @@ const Destination = () => {
                                 </div>
                                     <Checkbox
                                         isSelected={tourActivity}
-                                        onChange={(e)=>setTourActivity(e.target.checked)}
+                                        onChange={handleTour}
                                     >
                                         {"Tour (Explore various tour types and destinations)"}
                                     </Checkbox>
@@ -127,14 +148,14 @@ const Destination = () => {
                         radius='none'
                         color='primary'
                         isClearable={false}
-                        selectedKey={selectedTrek || undefined}
+                        selectedKey={selectedTrek?.title || ""}
                         onSelectionChange={onSelectionChange}
                         classNames={{
                         }}
                     >
                         {!isLoading &&
                         trekData?.data?.data?.map((trek:TrekDropDown) => (
-                            <AutocompleteItem key={trek?.name+"1"} value={trek?.name}>
+                            <AutocompleteItem key={trek?.name!} value={trek?.id}>
                                 {trek?.name}
                             </AutocompleteItem>
                         ))}
@@ -153,7 +174,7 @@ const Destination = () => {
                         radius='none'
                         color='primary'
                         isClearable={false}
-                        selectedKey={selectedTour || undefined}
+                        selectedKey={selectedTour?.title || ""}
                         onSelectionChange={onSelectionTourChange}
                         classNames={{
                         }}
@@ -173,7 +194,7 @@ const Destination = () => {
             labelPlacement='outside'
             placeholder="Enter your message"
             value={specialPlan || ""}
-            onChange={(e) => setSpecialPlan(e.target.value)}
+            onChange={handleSpecial}
             className="h-[300px] mt-8 w-full shadow-sm"
             classNames={{
             inputWrapper: "text-black font-medium bg-white group-data-[focus=true]:bg-white",

@@ -6,19 +6,41 @@ import { FaUser, FaUsers } from "react-icons/fa";
 import { FaUserGroup } from "react-icons/fa6";
 
 const TravelAndAccommodation = () => {
-  const { adult, setAdult, small, setSmall, accommodation, setAccommodation , meal, setMeal,trip,setTrip} =
+  const { adult, setAdult, small, setSmall, accommodation, setAccommodation , meal, setMeal,trip,setTrip,setAlertMessage} =
     useContext(PlanContext)!;
 
   const handleAccommodationChange = (type: string) => {
     setAccommodation(accommodation === type ? "" : type);
+    setAlertMessage(null)
   };
 
   const handleMealChange=(mealType:string)=>{
     setMeal(meal===mealType?"" : mealType)
+    setAlertMessage(null)
     }
 
     const handleTripChange=(tripType:string)=>{
       setTrip(trip===tripType?"":tripType)
+      if (tripType === "solo") {
+          setAdult("1");
+          setSmall("0");
+        } else if (tripType === "couple") {
+          setAdult("2");
+          setSmall("0");
+        } else if (tripType === "family") {
+          setAdult("");
+          setSmall("");
+      }
+      setAlertMessage(null)
+      }
+
+      const handleAdult=(e:React.ChangeEvent<HTMLInputElement>)=>{
+        setAdult(e.target.value)
+        setAlertMessage(null)
+      }
+      const handleSmall=(e:React.ChangeEvent<HTMLInputElement>)=>{
+        setSmall(e.target.value)
+        setAlertMessage(null)
       }
   return (
     <div className="flex w-full flex-col items-center justify-center px-16">
@@ -57,7 +79,7 @@ const TravelAndAccommodation = () => {
             labelPlacement="outside"
             placeholder="No. of adults"
             value={adult || ""}
-            onChange={(e) => setAdult(e.target.value)}
+            onChange={handleAdult}
             classNames={{
               inputWrapper: "text-black font-medium bg-white",
               label: "text-black text-lg font-medium",
@@ -72,7 +94,7 @@ const TravelAndAccommodation = () => {
             labelPlacement="outside"
             placeholder="No. of children"
             value={small || ""}
-            onChange={(e) => setSmall(e.target.value)}
+            onChange={handleSmall}
             classNames={{
               inputWrapper: "text-black font-medium bg-white",
               label: "text-black text-lg font-medium",
