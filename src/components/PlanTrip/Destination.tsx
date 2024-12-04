@@ -155,6 +155,7 @@ const Destination = () => {
                     >
                         {!isLoading &&
                         trekData?.data?.data?.map((trek:TrekDropDown) => (
+                            //eslint-disable-next-line @typescript-eslint/no-non-null-asserted-optional-chain
                             <AutocompleteItem key={trek?.name!} value={trek?.id}>
                                 {trek?.name}
                             </AutocompleteItem>
