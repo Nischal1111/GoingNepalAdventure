@@ -6,7 +6,7 @@ import BlogSection from '../Home/Blogs/BlogSection'
 import Image from 'next/image'
 import { BsArrowRight } from 'react-icons/bs'
 import { useQuery } from '@tanstack/react-query'
-import { getAllBlogs } from '@/services/blogs'
+import { getAllBlogs, searchBlogs } from '@/services/blogs'
 import Loader from '@/shared/Loader'
 import Link from 'next/link'
 import { Input } from '@nextui-org/react'
@@ -23,10 +23,20 @@ interface Blogs{
     blogViews:string
 }
 const Blogs = () => {
+    const [search,setSearch]=React.useState<string>("")
+
     const {data:allblogsData,isLoading}=useQuery({
         queryKey:["blogs","all"],
         queryFn:()=>getAllBlogs()
     })
+
+    const {data:searchData}=useQuery({
+        queryKey:["blogs",search],
+        queryFn:()=>searchBlogs(search),
+        enabled:!!search
+    })
+
+    const allblogs=searchData?.data||allblogsData?.data
 
 
     if(isLoading)return <Loader/>
@@ -38,10 +48,10 @@ const Blogs = () => {
                 <BlogSection/>
                 <div className='w-full flex items-center justify-between my-4'>
                     <h1 className={`w-3/5 font-semibold text-4xl ${rowdies.className} text-primary`}>All Blogs</h1>
-                    <Input placeholder='Search Blogs' className='w-[30%] py-4' size='lg' radius='sm' classNames={{inputWrapper:"bg-white border border-gray-200 group-data-[focus=true]:bg-white"}} startContent={<FaSearch className='text-gray-500 mr-2' size={20}/>}></Input>
+                    <Input placeholder='Search Blogs' value={search} onChange={(e)=>setSearch(e.target.value)} className='w-[30%] py-4' size='lg' radius='sm' classNames={{inputWrapper:"bg-white border border-gray-200 group-data-[focus=true]:bg-white"}} startContent={<FaSearch className='text-gray-500 mr-2' size={20}/>}></Input>
                 </div>
                 <div className='grid grid-cols-4 gap-x-10 gap-y-10 my-6'>
-                    {allblogsData?.data?.map((blog:Blogs,index:number)=>(
+                    {allblogs?.map((blog:Blogs,index:number)=>(
                         <div key={index} className='w-full flex flex-col gap-2 pb-2 shadow-sm'>
                             <div className='w-full h-[200px]'>
                                 <Image src={blog?.blogImage} alt={blog?.title} height={1000} width={1000} className='object-cover shadow-md h-full w-full rounded-sm'/>

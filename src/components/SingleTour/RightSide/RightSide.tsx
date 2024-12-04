@@ -86,7 +86,7 @@ const RightSide: React.FC<Tour> = ({ price,name,_id }) => {
 
                 <div className='px-8'>
                     <div className='w-full bg-white shadow-md mt-4 rounded-sm pt-6 pb-8 flex flex-col items-center justify-center gap-4'>
-                        <h1 className={`${rowdies.className} text-2xl text-primary`}>Book your trek</h1>
+                        <h1 className={`${rowdies.className} text-2xl text-primary`}>Book your tour</h1>
                         <h1 className='text-xl font-bold'>${price} <span className='text-gray-600 text-sm font-light'>/ person</span></h1>
                         
                         <div className="flex w-full px-4 mt-4">
@@ -202,7 +202,7 @@ const RightSide: React.FC<Tour> = ({ price,name,_id }) => {
 <div className='px-8 max-w-[800px] w-[440px] my-4'>
                 <div className='bg-white shadow-md rounded-md'>
                     <div className='flex w-full flex-col gap-6 py-4 mt-4 rounded-md shadow-md items-center justify-center'>
-                        <h1 className={`${rowdies.className} text-2xl text-primary`}>Explore more treks</h1>
+                        <h1 className={`${rowdies.className} text-2xl text-primary`}>Explore more tours</h1>
                         <div className='flex flex-col w-full items-center justify-center gap-4 mt-4'>
                             {excludeData?.data?.map((item:any)=>( //eslint-disable-line @typescript-eslint/no-explicit-any
                                 <Link href={`/trekking/${item?.slug}`} key={item?.id} className='w-full'>
@@ -223,7 +223,7 @@ const RightSide: React.FC<Tour> = ({ price,name,_id }) => {
                                 </Link>
                             ))}
                         </div>
-                        <Link href={"/trekking"}>
+                        <Link href={"/tours"}>
                             <Button className='bg-transparent hover:underline hover:underline-offset-2 -my-2 text-primary text-sm'>View more treks</Button>
                         </Link>
                     </div>
