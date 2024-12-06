@@ -7,6 +7,8 @@ import ScrollToTop from "@/shared/ScrollToTop";
 import Head from "next/head";
 import Footer from "@/shared/Footer";
 import { Toaster } from "sonner";
+import Whatsapp from "@/shared/Whatsapp/Whatsapp";
+import { TawkToScript } from "@/shared/TalkTo/Talk";
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -44,6 +46,8 @@ export default function RootLayout({
           <Provider>
             <Navbar/>
             <ScrollToTop/>
+            <Whatsapp/>
+            <TawkToScript/>
             {children}
             <Toaster richColors/>
             <Footer/>

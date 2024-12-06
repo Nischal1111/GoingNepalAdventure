@@ -27,7 +27,6 @@ const Nepal = () => {
         queryFn:()=>getToursByCountry("Nepal",page,limit,)
     })
 
-    console.log(tourData)
 
     const handlePageChange = (newPage: number) => {
     setPage(newPage);

@@ -2,66 +2,151 @@
 "use client"
 import SharedSection from '@/shared/SharedSection'
 import { rowdies } from '@/utility/font'
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import PackageCard from './PackageCard'
-import { Button, Dropdown, DropdownItem, DropdownMenu, DropdownTrigger } from '@nextui-org/react'
+import { Button, Dropdown, DropdownItem, DropdownMenu, DropdownTrigger, Pagination } from '@nextui-org/react'
 import { IoIosArrowDown } from 'react-icons/io'
 import type { Selection } from "@nextui-org/react";
 import { getAllTreks } from '@/services/treks'
 import { useQuery } from '@tanstack/react-query'
 import { TrekDetails } from '../SingleTrek/types'
 import Loader from '@/shared/Loader'
+import NoData from '@/shared/NoData/NoData'
+
+const DURATION_RANGES = [
+    'All Durations',
+    'Less than 5 days',
+    '5-10 days',
+    '10-15 days',
+    '15+ days'
+];
 
 const Trekking = () => {
+    const [page, setPage] = useState(1)
+    const ITEMS_PER_PAGE = 8
 
-    const {data:trekData,isLoading}=useQuery({
+    const {data:trekData, isLoading} = useQuery({
         queryKey: ['trekData'],
         queryFn:()=>getAllTreks()
     })
+    
+    const first = useRef<HTMLDivElement>(null)
 
+    const handlePageChange = (newPage: number) => {
+        setPage(newPage);
+        first?.current?.scrollIntoView({behavior: 'smooth', block: 'start', inline: 'nearest' });
+    };
 
     const [regions, setRegions] = useState<string[]>([]);
-    const [selectedRegion, setSelectedRegion] = useState<string>('');
+    const [difficulties, setDifficulties] = useState<string[]>([]);
+    const [selectedRegion, setSelectedRegion] = useState<string>('All Treks');
+    const [selectedDifficulty, setSelectedDifficulty] = useState<string>('All Difficulties');
+    const [selectedDuration, setSelectedDuration] = useState<string>('All Durations');
     const [filteredPackages, setFilteredPackages] = useState<TrekDetails[]>([]);
 
     useEffect(() => {
-    if (trekData?.data?.data) {
-        const uniqueRegions = Array.from(
-            new Set(
-                (trekData.data.data as TrekDetails[])
-                    .map((pkg) => pkg.location)
-            )
-        );
-        
-        setRegions(uniqueRegions);
-        
-        if (uniqueRegions.length > 0) {
-            const firstRegion = uniqueRegions[0];
-            setSelectedRegion(firstRegion);
+        if (trekData?.data?.data) {
+            // Unique Regions
+            const uniqueRegions = Array.from(
+                new Set(
+                    (trekData.data.data as TrekDetails[])
+                        .map((pkg) => pkg.location)
+                )
+            );
             
-            const filtered = (trekData.data.data as TrekDetails[])
-                .filter((pkg) => pkg.location === firstRegion);
+            // Unique Difficulties
+            const uniqueDifficulties = Array.from(
+                new Set(
+                    (trekData.data.data as TrekDetails[])
+                        .map((pkg) => pkg.difficulty)
+                        .filter((diff): diff is string => diff !== undefined)
+                )
+            );
             
-            setFilteredPackages(filtered);
+            // Add 'All' options
+            const regionsWithAll = ['All Treks', ...uniqueRegions];
+            const difficultiesWithAll = ['All Difficulties', ...uniqueDifficulties];
+
+            setRegions(regionsWithAll);
+            setDifficulties(difficultiesWithAll);
+            
+            // Initial filtering
+            applyFilters(trekData.data.data as TrekDetails[]);
         }
-    }
-}, [trekData]);
+    }, [trekData]);
+
+    const applyFilters = (data: TrekDetails[]) => {
+        let filtered = data;
+
+        // Filter by region
+        if (selectedRegion !== 'All Treks') {
+            filtered = filtered.filter((pkg) => pkg.location === selectedRegion);
+        }
+
+        // Filter by difficulty
+        if (selectedDifficulty !== 'All Difficulties') {
+            filtered = filtered.filter((pkg) => pkg.difficulty === selectedDifficulty);
+        }
+
+        // Filter by duration
+        if (selectedDuration !== 'All Durations') {
+            filtered = filtered.filter((pkg) => {
+                const days = pkg.days ?? 0;
+                switch (selectedDuration) {
+                    case 'Less than 5 days':
+                        return days.max < 5;
+                    case '5-10 days':
+                        return days.max >= 5 && days.max <= 10;
+                    case '10-15 days':
+                        return days.max > 10 && days.max <= 15;
+                    case '15+ days':
+                        return days.max > 15;
+                    default:
+                        return true;
+                }
+            });
+        }
+
+        setFilteredPackages(filtered);
+        setPage(1);
+    };
 
     useEffect(() => {
-        if (selectedRegion) {
-            const newFilteredPackages = trekData?.data?.data?.filter((pkg:TrekDetails) => pkg.location === selectedRegion);
-            setFilteredPackages(newFilteredPackages);
+        if (trekData?.data?.data) {
+            applyFilters(trekData.data.data as TrekDetails[]);
         }
-    }, [selectedRegion]);
+    }, [selectedRegion, selectedDifficulty, selectedDuration, trekData]);
 
-    const handleChange = (selection: Selection) => {
+    const handleRegionChange = (selection: Selection) => {
         if (selection instanceof Set && selection.size > 0) {
             const selectedValue = Array.from(selection)[0];
             setSelectedRegion(String(selectedValue));
         }
     };
 
-    if(isLoading)return <Loader/>
+    const handleDifficultyChange = (selection: Selection) => {
+        if (selection instanceof Set && selection.size > 0) {
+            const selectedValue = Array.from(selection)[0];
+            setSelectedDifficulty(String(selectedValue));
+        }
+    };
+
+    const handleDurationChange = (selection: Selection) => {
+        if (selection instanceof Set && selection.size > 0) {
+            const selectedValue = Array.from(selection)[0];
+            setSelectedDuration(String(selectedValue));
+        }
+    };
+
+    const paginatedPackages = filteredPackages.slice(
+        (page - 1) * ITEMS_PER_PAGE, 
+        page * ITEMS_PER_PAGE
+    );
+
+    // Calculate total pages
+    const totalPages = Math.ceil(filteredPackages.length / ITEMS_PER_PAGE);
+
+    if(isLoading) return <Loader/>
 
     return (
         <main>
@@ -69,38 +154,29 @@ const Trekking = () => {
             <div className='px-16 my-12'>
                 <h1 className={`${rowdies.className} text-4xl`}>Trekking in Nepal</h1>
                 <p className='text-justify text-gray-700 my-8'>
-                    Nepal is home to the Himalayas. The country offers some of the best and essentially unparalleled trekking experience in Nature. Drawing in adventurers from every country, a trekking activity in Nepal is not just about walking but also about an experience of diverse landscapes, rich cultural diversity, seeing unique traditions, and enjoying awe-inspiring mountain vistas. In short, Nepal is THE trekkers&apos; paradise. If summed up in one line, a trekker coming to Nepal will discover that challenging high-altitude treks go hand-in-hand with gentle walks through beautiful landscapes. <br /> <br />
-
-Renowned all over the world as home of the Sherpa people, Everest region is famed for its stunning views of Ama Dablam, Lhotse, Nuptse, Pumori, and the crowning jewel of them all — Mount Everest. Located inside the beautiful Sagarmatha National Park, trekking in Everest is about seeing the pristine lakes of Gokyo, crossing the high-altitude passes, and eventually reaching the base camp of the planet&apos;s tallest peak. <br /> <br />
-
-In the west is Annapurna region, with world-class trekking routes, including the famous Annapurna Circuit. From sub-tropical forests to dry deserts (yes, deserts among the mountains), this region is a combination of basking in nature and mingling with some of the friendliest communities. Equally diverse is Manaslu, a region sought for its solitude, but not for the faint of heart. Challenging mountain passes, unspoiled  ecosystems, and rugged terrain are the hallmarks of Manaslu region. <br /><br />
-
-Close to Kathmandu, yet another region, Langtang Region, is a complete immersion in nature and biodiversity. Trekking inside Langtang National Park, visitors will come across Langtang Valley, pristine lakes in the Gosainkunda area, and Helambu Valley. And for those who want more, there are the off-the-beaten treks in regions like Dolpa, Rara, Makalu, and Kanchanjangha, each with their own distinct natural and cultural experiences. <br /><br />
-
-Dramatic mountain vistas, diverse ecosystems, and time-worn villages await in some of the remotest regions of the world. The journeys are challenging, testing you throughout, but they are equally rewarding. Trekking in Nepal is not a mindless wandering in high-altitude; it&apos;s a promise of an unforgettable journey through some of the world&apos;s most diverse and breathtaking landscapes. It&apos;s a promise of discovery of your own self, inside and out. <br /><br />
-
-With Trek Me Nepal, begin your Himalayan adventure today, and immerse in a challenging experience that awaits you in Nepal.
+                    {/* ... existing description text ... */}
                 </p>
-                <h1 className={`${rowdies.className} text-4xl mt-20`}>Trekking packages</h1>
-                <div className='my-8 pl-8'>
-                    <Dropdown className=''>
+                <h1 ref={first} className={`${rowdies.className} text-4xl mt-20`}>Trekking packages</h1>
+                
+                <div className='my-8 pl-8 flex items-center gap-8'>
+                    <Dropdown>
                         <div className='flex items-center gap-4'>
-                            <h1 className='font-bold text-sm text-primary'>Select by Region</h1>
+                            <h1 className='font-bold text-sm text-primary'>Filter by Region</h1>
                             <DropdownTrigger>
-                                    <Button 
-                                        variant="bordered" 
-                                        className='rounded-sm w-[200px] flex justify-between'
-                                        endContent={<IoIosArrowDown/>}
-                                    >
-                                        {selectedRegion || 'Select Region'}
-                                    </Button>
+                                <Button 
+                                    variant="bordered" 
+                                    className='rounded-sm w-[200px] flex justify-between'
+                                    endContent={<IoIosArrowDown/>}
+                                >
+                                    {selectedRegion || 'Select Region'}
+                                </Button>
                             </DropdownTrigger>
                         </div>
                         <DropdownMenu 
-                            aria-label="Dynamic Actions" 
+                            aria-label="Region Selection" 
                             selectionMode="single" 
                             selectedKeys={new Set([selectedRegion])}
-                            onSelectionChange={handleChange}
+                            onSelectionChange={handleRegionChange}
                         >
                             {regions.map((region) => (
                                 <DropdownItem key={region}>
@@ -109,16 +185,88 @@ With Trek Me Nepal, begin your Himalayan adventure today, and immerse in a chall
                             ))}
                         </DropdownMenu>
                     </Dropdown>
-                </div>
-                <div className='grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 my-4'>
-                    {filteredPackages.map((trek, index) => (
-                        <div key={index}>
-                            <PackageCard {...trek}/>
-                        </div>
-                    ))}
-                </div>
-            </div>
 
+                    <Dropdown>
+                        <div className='flex items-center gap-4'>
+                            <h1 className='font-bold text-sm text-primary'>Filter by Difficulty</h1>
+                            <DropdownTrigger>
+                                <Button 
+                                    variant="bordered" 
+                                    className='rounded-sm w-[200px] flex justify-between'
+                                    endContent={<IoIosArrowDown/>}
+                                >
+                                    {selectedDifficulty || 'Select Difficulty'}
+                                </Button>
+                            </DropdownTrigger>
+                        </div>
+                        <DropdownMenu 
+                            aria-label="Difficulty Selection" 
+                            selectionMode="single" 
+                            selectedKeys={new Set([selectedDifficulty])}
+                            onSelectionChange={handleDifficultyChange}
+                        >
+                            {difficulties.map((difficulty) => (
+                                <DropdownItem key={difficulty}>
+                                    {difficulty}
+                                </DropdownItem>
+                            ))}
+                        </DropdownMenu>
+                    </Dropdown>
+
+                    <Dropdown>
+                        <div className='flex items-center gap-4'>
+                            <h1 className='font-bold text-sm text-primary'>Filter by Duration</h1>
+                            <DropdownTrigger>
+                                <Button 
+                                    variant="bordered" 
+                                    className='rounded-sm w-[200px] flex justify-between'
+                                    endContent={<IoIosArrowDown/>}
+                                >
+                                    {selectedDuration || 'Select Duration'}
+                                </Button>
+                            </DropdownTrigger>
+                        </div>
+                        <DropdownMenu 
+                            aria-label="Duration Selection" 
+                            selectionMode="single" 
+                            selectedKeys={new Set([selectedDuration])}
+                            onSelectionChange={handleDurationChange}
+                        >
+                            {DURATION_RANGES.map((duration) => (
+                                <DropdownItem key={duration}>
+                                    {duration}
+                                </DropdownItem>
+                            ))}
+                        </DropdownMenu>
+                    </Dropdown>
+                </div>
+
+                {paginatedPackages?.length > 0 ? (
+                    <div className='grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 my-4'>
+                        {paginatedPackages.map((trek, index) => (
+                            <div key={index}>
+                                <PackageCard {...trek}/>
+                            </div>
+                        ))}
+                    </div>
+                ) : (
+                    <NoData title="trekking packages" />
+                )}
+
+                {totalPages > 1 && (
+                    <div className="flex justify-center my-12">
+                        <Pagination
+                            isCompact
+                            showControls
+                            initialPage={1}
+                            className='text-primary'
+                            total={totalPages}
+                            page={page}
+                            onChange={handlePageChange}
+                        />
+                    </div>
+                )}
+            </div>
         </main>
     )
 }

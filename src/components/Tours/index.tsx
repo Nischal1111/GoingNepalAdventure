@@ -3,66 +3,145 @@ import { getAllTours } from '@/services/tour'
 import Loader from '@/shared/Loader'
 import SharedSection from '@/shared/SharedSection'
 import { rowdies } from '@/utility/font'
-import { Button, Dropdown, DropdownItem, DropdownMenu, DropdownTrigger } from '@nextui-org/react'
+import { Button, Dropdown, DropdownItem, DropdownMenu, DropdownTrigger, Pagination } from '@nextui-org/react'
 import { useQuery } from '@tanstack/react-query'
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import { IoIosArrowDown } from 'react-icons/io'
+import type { Selection } from "@nextui-org/react";
 import { TourDetails } from '../SingleTrek/types'
 import PackageCard from './TourCard'
+import NoData from '@/shared/NoData/NoData'
+
+const DURATION_RANGES = [
+    'All Durations',
+    'Less than 5 days',
+    '5-10 days',
+    '10-15 days',
+    '15+ days'
+];
 
 const Tours = () => {
-    const [selectedCountry,setSelectedCountry]=useState<string>('')
-    const [countries,setCountries]=useState<string[]>([])
-    const [filteredPackages,setFilteredPackages]=useState<TourDetails[]>([])
+    const [page, setPage] = useState(1)
+    const ITEMS_PER_PAGE = 8
 
+    const [selectedCountry, setSelectedCountry] = useState<string>('All Tours')
+    const [selectedTripType, setSelectedTripType] = useState<string>('All Types')
+    const [selectedDuration, setSelectedDuration] = useState<string>('All Durations')
+    const [countries, setCountries] = useState<string[]>([])
+    const [tripTypes, setTripTypes] = useState<(string|undefined)[]>([])
+    const [filteredPackages, setFilteredPackages] = useState<TourDetails[]>([])
 
-    const {data:tourData,isLoading}=useQuery({
-        queryKey:['tourData'],
-        queryFn:()=>getAllTours()
+    const first = useRef<HTMLDivElement>(null)
+
+    const {data:tourData, isLoading} = useQuery({
+        queryKey: ['tourData'],
+        queryFn: () => getAllTours()
     })
+
+    const handlePageChange = (newPage: number) => {
+        setPage(newPage);
+        first?.current?.scrollIntoView({behavior: 'smooth', block: 'start', inline: 'nearest' });
+    };
 
     useEffect(() => {
         if (tourData?.data?.data) {
-            const uniqueRegions = Array.from(
+            const uniqueCountries = Array.from(
                 new Set(
-                    (tourData.data.data as TourDetails[])
+                    (tourData?.data?.data as TourDetails[])
                         .map((pkg) => pkg.country)
                 )
             );
-
-            setCountries(uniqueRegions);
-
-            if (uniqueRegions.length > 0) {
-                const firstRegion = uniqueRegions[0];
-                setSelectedCountry(firstRegion);
-
-                const filtered = (tourData.data.data as TourDetails[])
-                    .filter((pkg) => pkg.country === firstRegion);
-
-                setFilteredPackages(filtered);
-            }
+            
+            const uniqueTripTypes = Array.from(
+                new Set(
+                    (tourData?.data?.data as TourDetails[])
+                        .map((pkg) => pkg?.tripType)
+                )
+            );
+            
+            const countriesWithAll = ['All Tours', ...uniqueCountries];
+            const tripTypesWithAll = ['All Types', ...uniqueTripTypes];
+            
+            setCountries(countriesWithAll);
+            setTripTypes(tripTypesWithAll);
+            
+            applyFilters(tourData?.data?.data as TourDetails[]);
         }
     }, [tourData]);
 
-    useEffect(() => {
-        if (selectedCountry) {
-            const newFilteredPackages = tourData?.data?.data?.filter(
-                (pkg: TourDetails) => pkg.country === selectedCountry
-            );
-            setFilteredPackages(newFilteredPackages);
-        }
-    }, [selectedCountry]);
+    const applyFilters = (data: TourDetails[]) => {
+        let filtered = data;
 
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    const handleChange = (selection:any) => {
+        // Filter by country
+        if (selectedCountry !== 'All Tours') {
+            filtered = filtered.filter((pkg) => pkg.country === selectedCountry);
+        }
+
+        // Filter by trip type
+        if (selectedTripType !== 'All Types') {
+            filtered = filtered.filter((pkg) => pkg.tripType === selectedTripType);
+        }
+
+        // Filter by duration
+        if (selectedDuration !== 'All Durations') {
+            filtered = filtered.filter((pkg) => {
+                const days = pkg.days ?? 0;
+                switch (selectedDuration) {
+                    case 'Less than 5 days':
+                        return days.max < 5;
+                    case '5-10 days':
+                        return days.max >= 5 && days.max <= 10;
+                    case '10-15 days':
+                        return days.max > 10 && days.max <= 15;
+                    case '15+ days':
+                        return days.max > 15;
+                    default:
+                        return true;
+                }
+            });
+        }
+
+        setFilteredPackages(filtered);
+        setPage(1);
+    };
+
+    useEffect(() => {
+        if (tourData?.data?.data) {
+            applyFilters(tourData.data.data as TourDetails[]);
+        }
+    }, [selectedCountry, selectedTripType, selectedDuration, tourData]);
+
+    const handleCountryChange = (selection: Selection) => {
         if (selection instanceof Set && selection.size > 0) {
             const selectedValue = Array.from(selection)[0];
             setSelectedCountry(String(selectedValue));
         }
     };
 
+    const handleTripTypeChange = (selection: Selection) => {
+        if (selection instanceof Set && selection.size > 0) {
+            const selectedValue = Array.from(selection)[0];
+            setSelectedTripType(String(selectedValue));
+        }
+    };
+
+    const handleDurationChange = (selection: Selection) => {
+        if (selection instanceof Set && selection.size > 0) {
+            const selectedValue = Array.from(selection)[0];
+            setSelectedDuration(String(selectedValue));
+        }
+    };
+
+    const paginatedPackages = filteredPackages.slice(
+        (page - 1) * ITEMS_PER_PAGE, 
+        page * ITEMS_PER_PAGE
+    );
+
+    // Calculate total pages
+    const totalPages = Math.ceil(filteredPackages.length / ITEMS_PER_PAGE);
 
     if(isLoading) return <Loader/>
+
     return (
         <div>
             <SharedSection title='Trips and Tours' link='/tours' img='https://images.unsplash.com/photo-1526712318848-5f38e2740d44?q=80&w=2940&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'/>
@@ -90,9 +169,9 @@ const Tours = () => {
                 Tours in Tibet provide an opportunity to experience its rich monastic culture, meet warm and welcoming Tibetans, and appreciate the region&apos;s unspoiled natural beauty. The landscape, rich in unique flora and fauna, creates an unforgettable backdrop for trekking, sightseeing, and cultural exploration. A journey through Tibet is both a challenging and spiritually enriching experience, ideal for those seeking a deeper connection to Himalayan culture and spirituality. <br /><br />
 
                 </p>
-                <h1 className={`${rowdies.className} text-4xl mt-8`}>Trips and Tours packages</h1>
+                <h1 ref={first} className={`${rowdies.className} text-4xl mt-8`}>Trips and Tours packages</h1>
 
-                <div className='my-8 pl-8'>
+                <div className='my-8 pl-8 flex items-center gap-8'>
                     <Dropdown>
                         <div className='flex items-center gap-4'>
                             <h1 className='font-bold text-sm text-primary'>Select by Country</h1>
@@ -107,10 +186,10 @@ const Tours = () => {
                             </DropdownTrigger>
                         </div>
                         <DropdownMenu 
-                            aria-label="Dynamic Actions" 
+                            aria-label="Country Selection" 
                             selectionMode="single" 
                             selectedKeys={new Set([selectedCountry])}
-                            onSelectionChange={handleChange}
+                            onSelectionChange={handleCountryChange}
                         >
                             {countries.map((country) => (
                                 <DropdownItem key={country}>
@@ -119,14 +198,86 @@ const Tours = () => {
                             ))}
                         </DropdownMenu>
                     </Dropdown>
-                </div>
-                <div className='grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 my-4'>
-                    {filteredPackages?.map((trek, index) => (
-                        <div key={index}>
-                            <PackageCard {...trek}/>
+
+                    <Dropdown>
+                        <div className='flex items-center gap-4'>
+                            <h1 className='font-bold text-sm text-primary'>Select by Trip Type</h1>
+                            <DropdownTrigger>
+                                <Button 
+                                    variant="bordered" 
+                                    className='rounded-sm w-[200px] flex justify-between'
+                                    endContent={<IoIosArrowDown/>}
+                                >
+                                    {selectedTripType || 'Select Trip Type'}
+                                </Button>
+                            </DropdownTrigger>
                         </div>
-                    ))}
+                        <DropdownMenu 
+                            aria-label="Trip Type Selection" 
+                            selectionMode="single" 
+                            selectedKeys={new Set([selectedTripType])}
+                            onSelectionChange={handleTripTypeChange}
+                        >
+                            {tripTypes.map((type) => (
+                                <DropdownItem key={type}>
+                                    {type}
+                                </DropdownItem>
+                            ))}
+                        </DropdownMenu>
+                    </Dropdown>
+
+                    <Dropdown>
+                        <div className='flex items-center gap-4'>
+                            <h1 className='font-bold text-sm text-primary'>Filter by Duration</h1>
+                            <DropdownTrigger>
+                                <Button 
+                                    variant="bordered" 
+                                    className='rounded-sm w-[200px] flex justify-between'
+                                    endContent={<IoIosArrowDown/>}
+                                >
+                                    {selectedDuration || 'Select Duration'}
+                                </Button>
+                            </DropdownTrigger>
+                        </div>
+                        <DropdownMenu 
+                            aria-label="Duration Selection" 
+                            selectionMode="single" 
+                            selectedKeys={new Set([selectedDuration])}
+                            onSelectionChange={handleDurationChange}
+                        >
+                            {DURATION_RANGES.map((duration) => (
+                                <DropdownItem key={duration}>
+                                    {duration}
+                                </DropdownItem>
+                            ))}
+                        </DropdownMenu>
+                    </Dropdown>
                 </div>
+                {paginatedPackages?.length > 0 ? (
+                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 my-4">
+                        {paginatedPackages.map((trek, index) => (
+                        <div key={index}>
+                            <PackageCard {...trek} />
+                        </div>
+                        ))}
+                    </div>
+                    ) : (
+                    <NoData title="packages" />
+                    )}
+
+                {totalPages > 1 && (
+                    <div className="flex justify-center my-12">
+                        <Pagination
+                            isCompact
+                            showControls
+                            initialPage={1}
+                            className='text-primary'
+                            total={totalPages}
+                            page={page}
+                            onChange={handlePageChange}
+                        />
+                    </div>
+                )}
             </section>
         </div>
     )

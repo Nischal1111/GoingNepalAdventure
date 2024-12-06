@@ -9,8 +9,8 @@
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --background:  #fffff;
-    --foreground:#0a0a0a ;
+    --background: #fffff;
+    --foreground: #0a0a0a;
   }
 }
 
@@ -30,8 +30,7 @@ body {
   }
 }
 
-
-::-webkit-scrollbar{
+::-webkit-scrollbar {
   display: none;
 }
 
@@ -42,14 +41,13 @@ body {
 
 .custom-card:hover {
   box-shadow: 0 2px 20px rgba(18, 48, 174, 0.5);
-
 }
 
 .custom-trek-card {
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.15);
   transition: box-shadow 0.3s ease, transform 0.3s ease;
 }
-.custom-trek-package{
+.custom-trek-package {
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.15);
   transition: box-shadow 0.3s ease, transform 0.3s ease;
 }
@@ -63,12 +61,49 @@ body {
   transform: translateY(-2px);
 }
 
-
 iframe[src*="google.com/maps"] {
   border: none;
   outline: none;
 }
 
-.custom-right{
-  box-shadow:0 2px 6px rgba(0, 0, 0, 0.15); ;
+.custom-right {
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+}
+
+.whatsapp_float {
+  position: fixed;
+  width: 70px;
+  height: 70px;
+  bottom: 60px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  left: 40px;
+  background-color: #25d366;
+  color: #fff;
+  border-radius: 50px;
+  text-align: center;
+  font-size: 30px;
+  box-shadow: 2px 2px 3px #999;
+  z-index: 10000;
+}
+
+.whatsapp-icon {
+  margin-top: 0px;
+  font-size: 2.5rem;
+}
+
+/* for mobile */
+@media screen and (max-width: 767px) {
+  .whatsapp-icon {
+    margin-top: 10px;
+  }
+
+  .whatsapp_float {
+    width: 40px;
+    height: 40px;
+    bottom: 20px;
+    left: 10px;
+    font-size: 22px;
+  }
 }

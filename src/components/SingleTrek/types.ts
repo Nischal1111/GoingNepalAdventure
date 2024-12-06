@@ -77,6 +77,7 @@ export interface TourDetails{
     price: number; // Cost of the trek
     overview: string; // Overview or summary of the trek
     thumbnail: string;
+    tripType?: string;
 }
 
 interface TourHighlight {
