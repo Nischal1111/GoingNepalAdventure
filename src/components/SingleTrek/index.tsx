@@ -1,5 +1,5 @@
 "use client"
-import React from 'react'
+import React, { useRef } from 'react'
 import { FaMapMarkerAlt, FaRegClock, FaMountain, FaUserFriends, FaUtensils, FaBed, FaChevronCircleLeft, FaHiking, FaFirstAid } from 'react-icons/fa';
 import { GiPathDistance } from 'react-icons/gi';
 import { MdDateRange } from 'react-icons/md';
@@ -20,6 +20,7 @@ import { IconType } from 'react-icons';
 import { useQuery } from '@tanstack/react-query';
 import { getSingleTrek } from '@/services/treks';
 import Loader from '@/shared/Loader';
+import { ItineraryItem, trekHighLightsProps } from './types';
 
 export const rowdies=Rowdies({
     weight: '400',
@@ -31,12 +32,14 @@ interface paramsProps{
     id: string
 }
 const SingleTrek:React.FC<paramsProps> = ({id}) => {
+    const pdfContentRef = useRef<HTMLDivElement>(null); 
 
     const {data:SingleTrekData,isLoading}=useQuery({
         queryKey: ['singleTrekData',id],
         queryFn:()=>getSingleTrek(id),
         enabled:!!id
     })
+
 
     const trek={
         title:SingleTrekData?.data?.data?.name,
@@ -123,6 +126,50 @@ const SingleTrek:React.FC<paramsProps> = ({id}) => {
 
     const FAQs=SingleTrekData?.data?.data?.faq
 
+    const downloadPDF = () => {
+    const pdfElement = pdfContentRef.current;
+
+    if (pdfElement) {
+        // Log content for debugging
+
+        // Temporarily make the element visible
+        pdfElement.style.display = 'block'; // Ensure the content is visible
+
+        // Ensure proper layout and reflow of the content before generating PDF
+        pdfElement.offsetHeight; //eslint-disable-line @typescript-eslint/no-unused-expressions
+
+        // Add a small delay before generating the PDF (100ms to allow reflow)
+        setTimeout(() => {
+            import('html2pdf.js').then((html2pdf) => {
+                const options = {
+                    margin: [10, 15, 10, 15], // Adjust margins
+                    filename: `${trek.title}.pdf`,
+                    html2canvas: {
+                        scale: 3, 
+                        useCORS: true,
+                    },
+                    jsPDF: {
+                        unit: 'mm',
+                        format: 'a4',
+                        orientation: 'portrait',
+                    },
+                };
+
+                // Generate the PDF from the visible content
+                html2pdf.default().from(pdfElement).set(options).save().then(() => {
+                    // After the PDF is generated, hide the content again
+                    pdfElement.style.display = 'none'; // Hide it again after PDF is saved
+                });
+            });
+        }, 100); // A slight delay to ensure the content has been rendered
+    }
+};
+
+
+
+
+
+
     if(isLoading){
         return <Loader/>
     }
@@ -145,7 +192,7 @@ const SingleTrek:React.FC<paramsProps> = ({id}) => {
                     </div>
                 </div>
             </section>
-            <section className='flex gap-12 w-full my-12 justify-between'>
+            <section  className='flex gap-12 w-full my-12 justify-between'>
                 <div className='w-[65%]'>
                     <section className='grid grid-cols-3 gap-4 bg-[#5D83C4]/20 rounded-md px-8 py-6 shadow-md'>
                         {
@@ -172,10 +219,57 @@ const SingleTrek:React.FC<paramsProps> = ({id}) => {
                     <Gallery title={trek?.title} gallery={gallery}/>
                 </div>
                 <div className='w-[35%] flex justify-start flex-col items-center'>
-                    <RightSide price={trek?.price} title={trek?.title} trekPdf={SingleTrekData?.data?.data?.trekPdf} _id={SingleTrekData?.data?.data?._id}/>
+                    <RightSide price={trek?.price} title={trek?.title} trekPdf={SingleTrekData?.data?.data?.trekPdf} _id={SingleTrekData?.data?.data?._id} downloadPDF={downloadPDF}/>
                 </div>
             </section>
-            
+            <div
+                ref={pdfContentRef}
+                className="hidden-pdf bg-white text-gray-800 p-6 rounded-md shadow-md"
+            >
+                <h1 className="text-3xl font-bold mb-4">{trek.title} Trek Details</h1>
+                <p className="text-base mb-6">{trek.desc}</p>
+
+                <h2 className="text-2xl font-semibold mb-2">Highlights</h2>
+                <ul className="list-disc list-inside mb-6">
+                    {trekHighLights?.map((highlight: trekHighLightsProps, index: number) => (
+                        <li key={index} className="text-base font-bold">{highlight?.content}</li>
+                    ))}
+                </ul>
+
+                <h2 className="text-2xl font-semibold mb-2">Services Included</h2>
+                <ul className="list-disc list-inside mb-6">
+                    {servicesIncluded?.map((service: string[], index: number) => (
+                        <li key={index} className="text-sm">{service}</li>
+                    ))}
+                </ul>
+
+                <h2 className="text-2xl font-semibold mb-2">Services Not Included</h2>
+                <ul className="list-disc list-inside mb-6">
+                    {servicesNotIncluded?.map((service: string[], index: number) => (
+                        <li key={index} className="text-sm">{service}</li>
+                    ))}
+                </ul>
+
+                <h2 className="text-2xl font-semibold mb-2">Itinerary</h2>
+                <ul className="list-decimal list-inside mb-6">
+                    {itineraryList?.map((item: ItineraryItem, index: number) => (
+                        <div key={index}>
+                            <h1 className="text-base font-bold">Day {item.day}: {item.title}</h1>
+                            <p className='ml-4'>{item.details}</p>
+                        </div>
+                    ))}
+                </ul>
+
+                <h2 className="text-2xl font-semibold mb-2">FAQs</h2>
+                <ul className="list-disc list-inside">
+                    {FAQs?.map((faq: { question: string, answer: string }, index: number) => (
+                        <li key={index} className="text-sm">
+                            <strong>{faq.question}</strong> - {faq.answer}
+                        </li>
+                    ))}
+                </ul>
+            </div>
+
         </main>
     )
 }

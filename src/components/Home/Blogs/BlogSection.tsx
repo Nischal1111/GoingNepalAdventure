@@ -3,9 +3,7 @@ import React from 'react'
 import Image from 'next/image'
 import { GoDotFill } from 'react-icons/go';
 import { BsArrowRight } from 'react-icons/bs';
-import { FaInstagram, FaLinkedin, FaRegEye } from 'react-icons/fa';
-import { FiFacebook } from 'react-icons/fi';
-import { FaXTwitter } from 'react-icons/fa6';
+import {  FaRegEye } from 'react-icons/fa';
 import { Button } from '@nextui-org/react';
 import { useQuery } from '@tanstack/react-query';
 import {getBlogsByViews } from '@/services/blogs';
@@ -52,20 +50,7 @@ const BlogSection = () => {
                             <BsArrowRight className='transform transition-transform duration-200 group-hover:-rotate-45' />
                         </div>
                     </Link>
-                    <div className='flex gap-4'>
-                        <Button isIconOnly size='sm' className='bg-primary text-white'>
-                            <FiFacebook size={22} className='transition duration-300 '/>
-                        </Button>
-                        <Button isIconOnly size='sm' className='bg-pink-400 text-white'>
-                            <FaInstagram size={20} className='transition duration-300 '/>      
-                        </Button>
-                        <Button isIconOnly size='sm' className='bg-black text-white'>
-                            <FaXTwitter size={20} className='transition duration-300 '/>
-                        </Button>
-                        <Button isIconOnly size='sm' className='bg-blue-700 text-white'>
-                            <FaLinkedin size={20} className='transition duration-300 '/>
-                        </Button>
-                    </div>
+                    
                 </div>
             </section>
         

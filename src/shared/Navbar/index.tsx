@@ -39,25 +39,6 @@ const Navbar = () => {
         },
     ];
 
-    const rightNav = [
-        { 
-            title: "Trek by Days", 
-            items: [
-                { title: "5 Days Trek", href: "/trek-by-days-5-days-trek" },
-                { title: "10 Days Trek", href: "/trek-by-days-10-days-trek" },
-                { title: "15 Days Trek", href: "/trek-by-days-15-days-trek" }
-            ]
-        },
-        { 
-            title: "Trip by Days", 
-            items: [
-                { title: "5 Days Trip", href: "/trip-by-days-5-days-trip" },
-                { title: "10 Days Trip", href: "/trip-by-days-10-days-trip" },
-                { title: "15 Days Trip", href: "/trip-by-days-15-days-trip" }
-            ]
-        },
-    ];
-
     const isActive = (path: string) => pathname === path;
 
     const handleScroll = () => {
@@ -109,28 +90,6 @@ const Navbar = () => {
         )
     ));
 
-    const renderRightNav = () => (
-        <div className="ml-auto flex gap-8">
-            {rightNav.map((item, index) => (
-                <Dropdown key={index} className='min-w-[150px] bg-primary/90 text-white rounded-sm' placement='bottom-start'>
-                    <DropdownTrigger>
-                        <div className="group relative cursor-pointer font-medium tracking-wide flex items-center gap-2">
-                            <p>{item.title}</p>
-                            <IoMdArrowDropdown size={18} />
-                        </div>
-                    </DropdownTrigger>
-                    <DropdownMenu aria-label={`${item.title} Menu`} variant='light'>
-                        {item.items.map((subItem, subIndex) => (
-                            <DropdownItem key={subIndex} href={subItem.href}>
-                                {subItem.title}
-                            </DropdownItem>
-                        ))}
-                    </DropdownMenu>
-                </Dropdown>
-            ))}
-        </div>
-    );
-
     return (
         <main className="w-full">
             <div className={`fixed top-0 left-0 right-0 transition-transform z-[9999999] duration-300 ease-in-out ${
@@ -140,7 +99,6 @@ const Navbar = () => {
                     isScrolled ? 'opacity-100' : 'opacity-0'
                 }`}>
                     {renderNavItems()}
-                    {renderRightNav()}
                 </section>
             </div>
 
@@ -165,7 +123,6 @@ const Navbar = () => {
                 isScrolled ? 'opacity-0' : 'opacity-100'
             }`}>
                 {renderNavItems()}
-                {renderRightNav()}
             </section>
         </main>
     );

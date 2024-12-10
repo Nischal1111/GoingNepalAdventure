@@ -33,7 +33,13 @@ const CustomNextArrow: React.FC<CustomArrowComponentProps> = ({ onClick }) => (
     </Button>
 )
 
-const Gallery:React.FC<trekProps> = ({title,gallery}) => {
+interface props{
+    title:string
+    gallery:trekProps["gallery"]
+    className?:string
+}
+
+const Gallery:React.FC<props> = ({title,gallery,className}) => {
     const settings = {
         infinite: true,
         speed: 500,
@@ -63,7 +69,7 @@ const Gallery:React.FC<trekProps> = ({title,gallery}) => {
     };
     return (
         <>
-            <main className='mt-16'>
+            <main className={`mt-16 ${className}`}>
                 <SharedTitle2 title={`${title} Gallery`}/>
                 <div className="relative px-0 py-8 w-full mt-4">
                     <Slider {...settings} className='px-12'>
@@ -78,7 +84,7 @@ const Gallery:React.FC<trekProps> = ({title,gallery}) => {
             </div>
             </main>
 
-            <main className='mt-8'>
+            <main className={`mt-8 ${className}`}>
                 <SharedTitle2 title={`${title} Video`}/>
                 <div className='w-[90%] h-[60vh] bg-primary my-12'>
 

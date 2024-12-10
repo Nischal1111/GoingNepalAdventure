@@ -1,8 +1,22 @@
+    'use client'
+import { getAllActivitys } from '@/services/activities'
 import SharedSection from '@/shared/SharedSection'
 import { rowdies } from '@/utility/font'
+import { useQuery } from '@tanstack/react-query'
+import Link from 'next/link'
 import React from 'react'
 
+interface activityProps {
+    title:string,
+    slug:string
+    thumbnail:string
+}
 const Activities = () => {
+    const {data:activityData}=useQuery({
+        queryKey: ['all-activities'],
+        queryFn:()=>getAllActivitys(),
+    })
+
     return (
         <div>
             <SharedSection title='Activities' link='/activities' img='https://images.unsplash.com/photo-1709810953776-ee6027ff8104?q=80&w=2940&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'/>
@@ -17,6 +31,27 @@ const Activities = () => {
                 </p>
 
             </section>
+            <h1 className={`${rowdies.className} text-3xl  mt-4 px-16`}>All Activities</h1>
+            <div className='grid grid-cols-4 gap-8 px-16 mt-8'>
+                {activityData?.data?.map((activity:activityProps)=>{
+                    return(
+                        <Link key={activity.slug} href={`/activities/${activity.slug}`}>
+                            <div  className="relative h-[300px] mx-auto max-w-[280px] rounded-lg shadow-md group cursor-pointer">
+                                <div className="h-full w-full overflow-hidden rounded-lg">
+                                    <img
+                                        src={activity.thumbnail}
+                                        alt={activity.title}
+                                        className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-110"
+                                    />
+                                </div>
+                                <div className="absolute bottom-0 left-0 w-3/4 bg-white text-primary group-hover:bg-primary group-hover:text-white transition-all duration-300 rounded-sm py-2 px-4 -translate-y-1/2 shadow-2xl">
+                                    <h3 className="text-lg font-semibold truncate">{activity.title}</h3>
+                                </div>
+                            </div>
+                        </Link>
+                    )
+                })}
+            </div>    
         </div>
     )
 }

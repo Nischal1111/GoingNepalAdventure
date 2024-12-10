@@ -1,6 +1,6 @@
 import { IconType } from "react-icons"
 
-interface trekHighLightsProps{
+export interface trekHighLightsProps{
     content:string
     links:{
         text:string
@@ -13,7 +13,7 @@ interface ItineraryLink {
     url: string;
 }
 
-interface ItineraryItem {
+export interface ItineraryItem {
     day: number;
     title: string;
     details: string;

@@ -1,7 +1,6 @@
 "use client"
 import React, { useState } from 'react'
-import { Avatar, Button, Checkbox, CheckboxGroup, DatePicker, Divider } from '@nextui-org/react'
-import QuoteModal from './QuoteModal'
+import { Avatar, Button, DatePicker, Divider } from '@nextui-org/react'
 import Image from 'next/image'
 import Link from 'next/link'
 import { Rowdies } from "next/font/google";
@@ -12,6 +11,8 @@ import { useQuery } from '@tanstack/react-query'
 import { getBlogsByViews } from '@/services/blogs'
 import { excludeTour } from '@/services/tour'
 import { GoDotFill } from 'react-icons/go'
+import QuoteModal from '@/components/SingleTrek/RightSide/QuoteModal'
+import { excludeTrek } from '@/services/treks'
 
 
 export const rowdies=Rowdies({
@@ -20,18 +21,12 @@ export const rowdies=Rowdies({
     display: 'swap',
 })
 
-const RightSide: React.FC<Tour> = ({ price,name,_id }) => {
+const RightSide: React.FC<Tour> = ({ price,name }) => {
     const [isQuote, setIsQuote] = useState(false); // eslint-disable-line @typescript-eslint/no-unused-vars
     const [isCustomize, setIsCustomize] = useState(false); // eslint-disable-line @typescript-eslint/no-unused-vars
     const [isOpen, setIsOpen] = useState(false);
     const [text, setText] = useState("");
     const [quantity, setQuantity] = useState(1)
-    const [guide,setGuide]=useState(false)
-    const [potter,setPotter]=useState(false)
-    const [fullboard,setFullboard]=useState(false)
-    const GUIDE_SERVICE_PRICE = 100;
-    const POTTER_SERVICE_PRICE = 150;
-    const FULLBOARD_SERVICE_PRICE = 200;
 
     const handleQuote = () => {
         setIsQuote(true);
@@ -47,16 +42,13 @@ const RightSide: React.FC<Tour> = ({ price,name,_id }) => {
 
     const {data:excludeData}=useQuery({
         queryKey: ['excludeDataTour'],
-        queryFn:()=>excludeTour(_id!),
-        enabled:!!_id
+        queryFn:()=>excludeTour('67500bd53bd976f0eafde6b6'),
     })
-    
-    const handleCustomize = () => {
-        setIsQuote(false);
-        setIsCustomize(true);
-        setText(`I need to customize this quotation for the trek: ${name}`);
-        setIsOpen(true);
-    };
+
+    const {data:excludeDataTrek}=useQuery({
+        queryKey: ['excludeData'],
+        queryFn:()=>excludeTrek('67500bd53bd976f0eafde6b6'),
+    })
 
     const increaseQuantity = () => {
         setQuantity(prev => prev + 1)
@@ -66,21 +58,13 @@ const RightSide: React.FC<Tour> = ({ price,name,_id }) => {
         setQuantity(prev => prev > 1 ? prev - 1 : 1)
     }
 
-    const basePrice = Number(price?.replace(/[^0-9]/g, '')) || 0
-    const totalPrice = basePrice * quantity
-    const finalPrice =totalPrice + (guide?(GUIDE_SERVICE_PRICE*quantity):0) + (potter?POTTER_SERVICE_PRICE*quantity:0) + (fullboard?FULLBOARD_SERVICE_PRICE*quantity:0);
-
     return (
         <>
-        <div className='px-12'>
-            <Button className='px-12 bg-primary rounded-sm text-white mb-4 w-full'>Download PDF</Button>
-        </div>
             <div className='flex flex-col top-12'>
                 <div className=' py-2 z-[2] px-8 w-[440px]'>
                     <div className='custom-right bg-white rounded-sm pt-6 pb-8 flex flex-col items-center justify-center gap-4'>
                         <h1 className={`${rowdies.className} text-2xl text-primary`}>Seek more info</h1>
-                        <Button className='bg-primary text-white px-16 rounded-sm mt-4' onPress={handleQuote}>Get a trip quote</Button>
-                        <Button className='bg-transparent border hover:bg-primary hover:text-white border-primary px-16 rounded-sm' onPress={handleCustomize}>Customize tour</Button>        
+                        <Button className='bg-primary text-white px-16 rounded-sm mt-4' onPress={handleQuote}>Enquire</Button>
                     </div>
                 </div>
 
@@ -135,50 +119,12 @@ const RightSide: React.FC<Tour> = ({ price,name,_id }) => {
                                 </Button>
                             </section>
                         </div>
-                        <div className='flex flex-col justify-start gap-2 w-full px-6'>
-                            <CheckboxGroup label="Select extra services">
-                                {/* Guide Service Checkbox */}
-                                <Checkbox
-                                    isSelected={guide}
-                                    onChange={(e) => setGuide(e.target.checked)}
-                                    value="guide-service"
-                                    isDisabled={potter || fullboard || quantity > 1}
-                                >
-                                    Solo Private Tour (+${GUIDE_SERVICE_PRICE})
-                                </Checkbox>
-
-                                {/* Potter Service Checkbox */}
-                                <Checkbox
-                                    isSelected={potter}
-                                    onChange={(e) => {
-                                            setPotter(e.target.checked);
-                                    }}
-                                    value="potter-service"
-                                    isDisabled={guide || fullboard} // Disable unless Guide service is selected
-                                >
-                                    4 Star (9 Nights) (+${POTTER_SERVICE_PRICE*quantity})
-                                </Checkbox>
-
-                                {/* Fullboard Service Checkbox */}
-                                <Checkbox
-                                    isSelected={fullboard}
-                                    onChange={(e) => {
-                                            setFullboard(e.target.checked);
-                                        
-                                    }}
-                                    value="fullboard-service"
-                                    isDisabled={guide || potter} // Disable unless Guide service is selected
-                                >
-                                    5 Star (9 Nights) (+${FULLBOARD_SERVICE_PRICE*quantity})
-                                </Checkbox>
-                            </CheckboxGroup>
-                        </div>
                         <Divider className='w-full'/>
                         <div className="w-full font-bold text-lg flex items-center justify-between px-6">
                             <h1>Total:</h1> 
                             <div className='flex gap-2 items-center'>
-                                <span className='text-xs text-gray-400'>{quantity} x ${basePrice} = </span>
-                                <span>${finalPrice}</span>
+                                <span className='text-xs text-gray-400'>{quantity} x ${price} = </span>
+                                <span>${price}</span>
                             </div>
                         </div>
                         <Button className='-mb-4 mt-4 bg-primary rounded-sm text-white w-[90%] flex self-center'>Book Now</Button>
@@ -202,7 +148,37 @@ const RightSide: React.FC<Tour> = ({ price,name,_id }) => {
             <div className='px-8 max-w-[800px] w-[440px] my-4'>
                 <div className='bg-white shadow-md rounded-md'>
                     <div className='flex w-full flex-col gap-6 py-4 mt-4 rounded-md shadow-md items-center justify-center'>
-                        <h1 className={`${rowdies.className} text-2xl text-primary`}>Explore tours</h1>
+                        <h1 className={`${rowdies.className} text-2xl text-primary`}>Explore Treks</h1>
+                        <div className='flex flex-col w-full items-center justify-center gap-4 mt-4'>
+                            {excludeDataTrek?.data?.map((item:any)=>( //eslint-disable-line @typescript-eslint/no-explicit-any
+                                <Link href={`/trekking/${item?.slug}`} key={item?.id} className='w-full'>
+                                    <div className='flex px-4 w-full  items-start gap-4'>
+                                        <div className='w-[25%] h-[70px]'>
+                                            <Image src={item?.thumbnail} alt='tour' height={1000} width={1000} className='object-cover h-full w-full rounded-md'/>
+                                        </div>
+                                        <div className='w-[70%] flex flex-col'>
+                                            <h1 className='font-semibold text-lg leading-5 '>{item?.name}</h1>
+                                            <div className='flex items-center gap-2 text-gray-600 text-xs mt-2'>
+                                                <p className='text-gray-500 text-sm'>{item?.location}</p>
+                                                <GoDotFill size={8}/>
+                                                <p className='text-gray-500 text-sm'>{item?.tripType}</p>
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                </Link>
+                            ))}
+                        </div>
+                        <Link href={"/trekking"}>
+                            <Button className='bg-transparent hover:underline hover:underline-offset-2 -my-2 text-primary text-sm'>View more treks</Button>
+                        </Link>
+                    </div>
+                </div>
+            </div>
+            <div className='px-8 max-w-[800px] w-[440px] my-4'>
+                <div className='bg-white shadow-md rounded-md'>
+                    <div className='flex w-full flex-col gap-6 py-4 mt-4 rounded-md shadow-md items-center justify-center'>
+                        <h1 className={`${rowdies.className} text-2xl text-primary`}>Explore more tours</h1>
                         <div className='flex flex-col w-full items-center justify-center gap-4 mt-4'>
                             {excludeData?.data?.map((item:any)=>( //eslint-disable-line @typescript-eslint/no-explicit-any
                                 <Link href={`/trekking/${item?.slug}`} key={item?.id} className='w-full'>

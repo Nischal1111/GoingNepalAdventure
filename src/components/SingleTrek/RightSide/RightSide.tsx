@@ -1,6 +1,5 @@
 "use client"
 import React, { useState } from 'react'
-import { trekProps } from '../types'
 import { Avatar, Button, Checkbox, CheckboxGroup, DatePicker, Divider } from '@nextui-org/react'
 import QuoteModal from './QuoteModal'
 import Image from 'next/image'
@@ -20,7 +19,15 @@ export const rowdies=Rowdies({
     display: 'swap',
 })
 
-const RightSide: React.FC<trekProps> = ({ price, title,trekPdf,_id }) => {
+interface RightSideProps {
+    price: string;
+    title: string;
+    trekPdf: string;
+    _id: string;
+    downloadPDF: () => void;
+}
+
+const RightSide: React.FC<RightSideProps> = ({ price, title,_id,downloadPDF }) => {
     const [isQuote, setIsQuote] = useState(false); // eslint-disable-line @typescript-eslint/no-unused-vars
     const [isCustomize, setIsCustomize] = useState(false); // eslint-disable-line @typescript-eslint/no-unused-vars
     const [isOpen, setIsOpen] = useState(false);
@@ -68,6 +75,7 @@ const RightSide: React.FC<trekProps> = ({ price, title,trekPdf,_id }) => {
         setQuantity(prev => prev > 1 ? prev - 1 : 1)
     }
 
+
     const basePrice = Number(price?.replace(/[^0-9]/g, '')) || 0
     const totalPrice = basePrice * quantity
     const finalPrice =totalPrice + (guide?GUIDE_SERVICE_PRICE:0) + (potter?POTTER_SERVICE_PRICE:0) + (fullboard?FULLBOARD_SERVICE_PRICE:0);
@@ -75,9 +83,7 @@ const RightSide: React.FC<trekProps> = ({ price, title,trekPdf,_id }) => {
     return (
         <>
         <div className='px-12'>
-            <Link href={`${trekPdf}`} target='_blank'>
-                <Button className='px-12 bg-primary rounded-sm text-white mb-4 w-full'>Download PDF</Button>
-            </Link>
+                <Button className='px-12 bg-primary rounded-sm text-white mb-4 w-full' onPress={downloadPDF} >Download PDF</Button>
         </div>
             <div className='flex flex-col top-12'>
                 <div className=' py-2 z-[2] px-8 w-[440px]'>
@@ -264,3 +270,4 @@ const RightSide: React.FC<trekProps> = ({ price, title,trekPdf,_id }) => {
 };
 
 export default RightSide;
+

@@ -107,3 +107,27 @@ iframe[src*="google.com/maps"] {
     font-size: 22px;
   }
 }
+
+
+.hidden-pdf {
+  width: 210mm;
+  /* A4 page width */
+  display: none;
+  /* Initially hidden */
+  min-height: 297mm;
+  /* A4 page height */
+  padding: 20mm;
+  /* Internal margins */
+  background: white;
+  box-shadow: none;
+  /* Remove any shadows */
+  overflow: hidden;
+  /* Prevent overflowing content */
+}
+
+@media print {
+  .hidden-pdf {
+    display: block;
+    /* Visible when printing */
+  }
+}
