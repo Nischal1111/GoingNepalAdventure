@@ -20,7 +20,7 @@ export const rowdies=Rowdies({
     display: 'swap',
 })
 
-const RightSide: React.FC<Tour> = ({ price,name,_id }) => {
+const RightSide: React.FC<Tour> = ({ price,name,_id,slug,category }) => {
     const [isQuote, setIsQuote] = useState(false); // eslint-disable-line @typescript-eslint/no-unused-vars
     const [isCustomize, setIsCustomize] = useState(false); // eslint-disable-line @typescript-eslint/no-unused-vars
     const [isOpen, setIsOpen] = useState(false);
@@ -254,7 +254,7 @@ const RightSide: React.FC<Tour> = ({ price,name,_id }) => {
                     </div>
                 </div>
             </div>
-            <QuoteModal isOpen={isOpen} onClose={() => setIsOpen(false)} text={text} trekTitle={name}/>
+            <QuoteModal isOpen={isOpen} onClose={() => setIsOpen(false)} text={text} trekTitle={name} slug={slug} type={category}/>
         </>
     );
 };

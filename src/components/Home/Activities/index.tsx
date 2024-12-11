@@ -1,6 +1,8 @@
 "use client"
+import { getAllActivitys } from '@/services/activities';
 import SharedTitle from '@/shared/SharedTitle';
 import { Button } from '@nextui-org/react';
+import { useQuery } from '@tanstack/react-query';
 import Link from 'next/link';
 import React from 'react';
 import { FaChevronLeft, FaChevronRight } from 'react-icons/fa';
@@ -32,39 +34,38 @@ const CustomNextArrow: React.FC<CustomArrowComponentProps> = ({ onClick }) => (
 
 interface ActivityProps {
     activity: {
-        title: string;
-        img: string;
+        title:string,
+        slug:string
+        thumbnail:string
     };
 }
 
 const ActivityCard: React.FC<ActivityProps> = ({ activity }) => {
     return (
-        <div className="relative h-[300px] mx-auto max-w-[280px] rounded-lg shadow-md group cursor-pointer">
-            <div className="h-full w-full overflow-hidden rounded-lg">
-                <img
-                    src={activity.img}
-                    alt={activity.title}
-                    className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-110"
-                />
+        <Link href={`/activities/${activity.slug}`}>
+            <div className="relative h-[300px] mx-auto max-w-[280px] rounded-lg shadow-md group cursor-pointer">
+                <div className="h-full w-full overflow-hidden rounded-lg">
+                    <img
+                        src={activity.thumbnail}
+                        alt={activity.title}
+                        className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-110"
+                    />
+                </div>
+                <div className="absolute bottom-0 left-0 w-3/4 bg-white text-primary group-hover:bg-primary group-hover:text-white transition-all duration-300 rounded-sm py-2 px-4 -translate-y-1/2 shadow-2xl">
+                    <h3 className="text-lg font-semibold truncate">{activity.title}</h3>
+                </div>
             </div>
-            <div className="absolute bottom-0 left-0 w-3/4 bg-white text-primary group-hover:bg-primary group-hover:text-white transition-all duration-300 rounded-sm py-2 px-4 -translate-y-1/2 shadow-2xl">
-                <h3 className="text-lg font-semibold truncate">{activity.title}</h3>
-            </div>
-        </div>
+        </Link>
     );
 };
 
 const Activities = () => {
-    const activities = [
-        { id: 1, title: "Climbing", img: "/assets/hero.jpg" },
-        { id: 2, title: "Hiking", img: "/assets/hiking.avif" },
-        { id: 3, title: "Wildlife", img: "/assets/wildlife.avif" },
-        { id: 4, title: "Zoo", img: "/assets/zoo.avif" },
-        { id: 5, title: "Paragliding", img: "/assets/activities.avif" },
-        { id: 6, title: "Hot Air Balloon", img: "/assets/hot_air_balloon.avif" },
-        { id: 7, title: "Rafting", img: "/assets/rafting.avif" },
-        { id: 8, title: "Mountain Biking", img: "/assets/mountain_biking.avif" }
-    ];
+
+    const {data:activityData}=useQuery({
+        queryKey: ['all-activities-home-slider'],
+        queryFn:()=>getAllActivitys(),
+    })
+
 
     const settings = {
         infinite: true,
@@ -98,8 +99,8 @@ const Activities = () => {
         <main className="px-16 my-16 mt-24">
             <SharedTitle title="Activities" subTitle="Explore thrilling activities" />
             <Slider {...settings} className='mt-20'>
-                {activities.map(activity => (
-                    <div key={activity.id} className="px-2">
+                {activityData?.data?.map((activity:any) => ( //eslint-disable-line @typescript-eslint/no-explicit-any
+                    <div key={activity._id} className="px-2">
                             <ActivityCard activity={activity} />
                         </div>
                 ))}

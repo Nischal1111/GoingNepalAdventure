@@ -5,7 +5,7 @@ import { trekProps } from './types';
 import { FaCircleQuestion } from 'react-icons/fa6';
 import QuoteModal from './RightSide/QuoteModal';
 
-const TripQuote:React.FC<trekProps> = ({title}) => {
+const TripQuote:React.FC<trekProps> = ({title,slug}) => {
     const [isQuote, setIsQuote] = useState(false); // eslint-disable-line @typescript-eslint/no-unused-vars
     const [isOpen, setIsOpen] = useState(false);
     const [text, setText] = useState("");
@@ -26,7 +26,7 @@ const TripQuote:React.FC<trekProps> = ({title}) => {
             <Button onPress={handleQuote} className='bg-primary rounded-sm px-12 text-white'>
                 Trip Quote
             </Button>
-            <QuoteModal isOpen={isOpen} onClose={() => setIsOpen(false)} text={text} trekTitle={title}/>
+            <QuoteModal isOpen={isOpen} onClose={() => setIsOpen(false)} text={text} trekTitle={title} slug={slug}/>
         </main>
     )
 }

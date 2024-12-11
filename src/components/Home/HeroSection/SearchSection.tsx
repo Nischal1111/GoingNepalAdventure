@@ -22,7 +22,7 @@ const SearchSection = () => {
             </div>
 
             <form className='flex gap-4 w-3/5 items-center' onSubmit={handleSearch}>
-              <Input className='shadow-md' value={search} onChange={(e)=>setSearch(e.target.value)} size='sm' type="text" label="Search treks, tours or activities" />
+              <Input className='shadow-md' value={search} onChange={(e)=>setSearch(e.target.value)} size='lg' type="text" label="Search treks, tours or activities"/>
               <Button type='submit' className='bg-primary rounded-sm px-10 text-white'>Search</Button>
             </form>
         </section>

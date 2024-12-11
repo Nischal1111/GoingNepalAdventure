@@ -25,9 +25,10 @@ interface RightSideProps {
     trekPdf: string;
     _id: string;
     downloadPDF: () => void;
+    slug:string
 }
 
-const RightSide: React.FC<RightSideProps> = ({ price, title,_id,downloadPDF }) => {
+const RightSide: React.FC<RightSideProps> = ({ price, title,_id,downloadPDF,slug }) => {
     const [isQuote, setIsQuote] = useState(false); // eslint-disable-line @typescript-eslint/no-unused-vars
     const [isCustomize, setIsCustomize] = useState(false); // eslint-disable-line @typescript-eslint/no-unused-vars
     const [isOpen, setIsOpen] = useState(false);
@@ -264,7 +265,7 @@ const RightSide: React.FC<RightSideProps> = ({ price, title,_id,downloadPDF }) =
                     </div>
                 </div>
             </div>
-            <QuoteModal isOpen={isOpen} onClose={() => setIsOpen(false)} text={text} trekTitle={title}/>
+            <QuoteModal isOpen={isOpen} onClose={() => setIsOpen(false)} text={text} trekTitle={title} slug={slug}/>
         </>
     );
 };

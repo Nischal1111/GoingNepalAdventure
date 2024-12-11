@@ -1,15 +1,20 @@
 "use client"
+import { postQuotes } from '@/services/quote';
 import { Button, Modal, ModalBody, ModalContent, ModalFooter, ModalHeader, Input, Textarea } from '@nextui-org/react'
+import { useMutation } from '@tanstack/react-query';
 import React, { useState, useEffect } from 'react'
+import { toast } from 'sonner';
 
 interface modalProps {
     isOpen: boolean;
     onClose: () => void;
     text: string;
     trekTitle: string | undefined;
+    slug:string|undefined
+    type:string|undefined
 }
 
-const QuoteModal: React.FC<modalProps> = ({ isOpen, onClose, text,trekTitle }) => {
+const QuoteModal: React.FC<modalProps> = ({ isOpen, onClose, text,trekTitle,slug,type }) => {
     const [name, setName] = useState('');
     const [email, setEmail] = useState('');
     const [number, setNumber] = useState('');
@@ -21,15 +26,33 @@ const QuoteModal: React.FC<modalProps> = ({ isOpen, onClose, text,trekTitle }) =
         }
     }, [isOpen, text]);
 
+    const {mutate:postQuotesMutation}=useMutation({
+        mutationFn:(data:any)=>postQuotes(data), //eslint-disable-line @typescript-eslint/no-explicit-any   
+        onSuccess:()=>{
+            toast.success('Your quote has been sent successfully.')
+            setName('')
+            setEmail('')
+            setNumber('')
+            onClose(); 
+        },
+        onError:()=>{
+            toast.error('Failed to send your quote.')
+        }
+    })
+
     const handleSubmit = () => {
         const formData = {
             name,
             email,
             number,
-            message
+            message,
+            requestType:text.includes('customize') ? 'customize' : 'quote',
+            itemSlug:slug,
+            itemName:trekTitle,
+            itemType:type
         };
-        console.log("Form Data Submitted:", formData);
-        onClose(); 
+        postQuotesMutation(formData);
+        
     };
 
     return (

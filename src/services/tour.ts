@@ -45,3 +45,17 @@ export const excludeTour=async(id:string)=>{
         }
     }
 }
+export const getTourTypes=async()=>{
+    try {
+        const res = await axios.get(`${process.env.NEXT_PUBLIC_BASE_URL}/trips-and-tours/get`);
+        return res.data;
+    } catch (err: unknown) {
+        if (axios.isAxiosError(err)) {
+            throw new Error(err.message);
+        } else {
+            throw new Error("An unexpected error occurred");
+        }
+    }
+}
+
+

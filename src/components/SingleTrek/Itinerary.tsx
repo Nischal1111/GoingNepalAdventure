@@ -13,11 +13,7 @@ import { FaBed, FaUtensils } from 'react-icons/fa'
 import { IoIosArrowDown, IoIosArrowUp } from 'react-icons/io'
 import Link from 'next/link'
 
-
-const Itinerary: React.FC<trekProps> = ({ itinerary }) => {
-    const [expandedKeys, setExpandedKeys] = useState<Selection>(new Set());
-
-    const parseContentWithLinks = (content: string, links: { text: string; url: string }[]) => {
+export const parseContentWithLinks = (content: string, links: { text: string; url: string }[]) => {
         let parts: (string | JSX.Element)[] = [content];
 
         links.forEach(link => {
@@ -32,6 +28,11 @@ const Itinerary: React.FC<trekProps> = ({ itinerary }) => {
 
         return parts;
     };
+
+const Itinerary: React.FC<trekProps> = ({ itinerary }) => {
+    const [expandedKeys, setExpandedKeys] = useState<Selection>(new Set());
+
+    
 
     const itemClasses = {
         title: "font-semibold text-base",

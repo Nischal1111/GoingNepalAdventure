@@ -213,13 +213,13 @@ const SingleTrek:React.FC<paramsProps> = ({id}) => {
                     <TrekHighLights title={trek?.title} trekHighlights={trekHighLights}/>
                     <Services servicesIncluded={servicesIncluded} servicesNotIncluded={servicesNotIncluded}/>
                     <Itinerary itinerary={itineraryList}/>
-                    <TripQuote title={trek?.title} desc={trek.desc}/>
+                    <TripQuote title={trek?.title} desc={trek.desc} slug={SingleTrekData?.data?.data?.slug}/>
                     <PackingList trekkingEquipment={trekkingEquipment}/>
                     <TrekFAQs FAQs={FAQs}/>
                     <Gallery title={trek?.title} gallery={gallery}/>
                 </div>
                 <div className='w-[35%] flex justify-start flex-col items-center'>
-                    <RightSide price={trek?.price} title={trek?.title} trekPdf={SingleTrekData?.data?.data?.trekPdf} _id={SingleTrekData?.data?.data?._id} downloadPDF={downloadPDF}/>
+                    <RightSide slug={SingleTrekData?.data?.data?.slug} price={trek?.price} title={trek?.title} trekPdf={SingleTrekData?.data?.data?.trekPdf} _id={SingleTrekData?.data?.data?._id} downloadPDF={downloadPDF}/>
                 </div>
             </section>
             <div

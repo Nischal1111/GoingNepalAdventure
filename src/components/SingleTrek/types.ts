@@ -24,6 +24,7 @@ export interface trekProps{
     img?:string
     desc?:string
     price?:string
+    slug?:string
     minitrekDetails?:{
         title:string
         value:string
@@ -106,6 +107,7 @@ interface TourFAQ {
 }
 
 export interface Tour {
+  category?:string
   days?: {
     min: number;
     max: number;
