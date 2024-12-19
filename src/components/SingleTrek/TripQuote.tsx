@@ -24,7 +24,7 @@ const TripQuote:React.FC<trekProps> = ({title,slug}) => {
                 </div>
             </section>
             <Button onPress={handleQuote} className='bg-primary rounded-sm px-12 text-white'>
-                Trip Quote
+                Customize this Trek
             </Button>
             <QuoteModal isOpen={isOpen} onClose={() => setIsOpen(false)} text={text} trekTitle={title} slug={slug}/>
         </main>

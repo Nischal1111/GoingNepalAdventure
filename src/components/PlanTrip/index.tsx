@@ -63,22 +63,29 @@ const PlanTrip = () => {
     })
 
         const submitPlanTrip = () => {
-    const data = {
+            if(!agree){
+                setAlertMessage("Please agree to our terms and conditions");
+                setTimeout(()=>{
+                    setAlertMessage(null);
+                },2000)
+                return false;
+            }else{
+        const data = {
         destination: capitalizeFirstLetter(destination),
         isTrek: trekActivity,
         isTour: tourActivity,
-        ...(trekActivity && selectedTrek && selectedTrek._id ? {
-            trek: [{
-                trekId: selectedTrek._id,
-                trekName: selectedTrek.title,
-            }]
-        } : {}),
-        ...(tourActivity && selectedTour && selectedTour._id ? {
-            tour: [{
-                tourId: selectedTour._id,
-                tourName: selectedTour.title,
-            }]
-        } : {}),
+        ...(trekActivity && selectedTrek!.length > 0 ? {
+                trek: selectedTrek!.map(trek => ({
+                    trekId: trek._id,
+                    trekName: trek.title,
+                }))
+            } : {}),
+            ...(tourActivity && selectedTour!.length > 0 ? {
+                tour: selectedTour!.map(tour => ({
+                    tourId: tour._id,
+                    tourName: tour.title,
+                }))
+            } : {}),
         specialPlan: specialPlan || "",
         duration: stayDays,
         travelType: trip,
@@ -95,7 +102,7 @@ const PlanTrip = () => {
         note: message || "",
     }
     createPlanTrip(data)
-}
+}}
 
     const handleNext = () => {
         if(!cantProceed()){
@@ -178,13 +185,6 @@ const PlanTrip = () => {
         if(selected === "5. Info"){
             if(!fullname || !address || !email || !phone || !country){
                 setAlertMessage("Please fill out all the required fields");
-                return false;
-            }
-            if(!agree){
-                setAlertMessage("Please agree to our terms and conditions");
-                setTimeout(()=>{
-                    setAlertMessage(null);
-                },2000)
                 return false;
             }
         }

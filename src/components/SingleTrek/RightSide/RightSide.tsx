@@ -11,6 +11,7 @@ import { useQuery } from '@tanstack/react-query'
 import { getBlogsByViews } from '@/services/blogs'
 import { excludeTrek } from '@/services/treks'
 import { GoDotFill } from 'react-icons/go'
+import { getAllActivitys } from '@/services/activities'
 
 
 export const rowdies=Rowdies({
@@ -52,6 +53,10 @@ const RightSide: React.FC<RightSideProps> = ({ price, title,_id,downloadPDF,slug
         enabled:!!_id
     })
 
+    const {data:activityData}=useQuery({
+        queryKey: ['activityDatainTrek'],
+        queryFn:()=>getAllActivitys()
+    })
     const handleQuote = () => {
         setIsQuote(true);
         setIsCustomize(false);
@@ -210,6 +215,32 @@ const RightSide: React.FC<RightSideProps> = ({ price, title,_id,downloadPDF,slug
                         <p className='flex gap-2 items-center font-semibold text-sm'><span className='text-gray-500 text-light'>Whatsapp</span>+977 98757382933</p>
                     </div>
             </div>
+
+            <div className='px-8 max-w-[800px] w-[440px] my-4'>
+                <div className='bg-white shadow-md rounded-md'>
+                    <div className='flex w-full flex-col gap-6 py-4 mt-4 rounded-md shadow-md items-center justify-center'>
+                        <h1 className={`${rowdies.className} text-2xl text-primary`}>Add activities to your trek</h1>
+                        <div className='flex flex-col w-full items-center justify-center gap-4 mt-4'>
+                            {activityData?.data?.map((item:any)=>(//eslint-disable-line @typescript-eslint/no-explicit-any
+                                <Link href={`/activities/${item?.slug}`} key={item?.id} className='w-full'>
+                                    <div className='flex px-4 w-full  items-center gap-4'>
+                                        <div className='w-[25%] h-[70px]'>
+                                            <Image src={item?.thumbnail} alt='tour' height={1000} width={1000} className='object-cover h-full w-full rounded-md'/>
+                                        </div>
+                                        <div className='w-[70%]'>
+                                            <h1 className='font-semibold text-lg leading-5 '>{item?.title}</h1>
+                                        </div>
+                                    </div>
+                                </Link>
+                            ))}
+                        </div>
+                        <Link href={"/activities"}>
+                            <Button className='bg-transparent hover:underline hover:underline-offset-2 -my-2 text-primary text-sm'>View all activities</Button>
+                        </Link>
+                    </div>
+                </div>
+            </div>
+
             <div className='px-8 max-w-[800px] w-[440px] my-4'>
                 <div className='bg-white shadow-md rounded-md'>
                     <div className='flex w-full flex-col gap-6 py-4 mt-4 rounded-md shadow-md items-center justify-center'>
@@ -240,6 +271,7 @@ const RightSide: React.FC<RightSideProps> = ({ price, title,_id,downloadPDF,slug
                     </div>
                 </div>
             </div>
+
             <div className='px-8 max-w-[800px] w-[440px] my-4'>
                 <div className='bg-white shadow-md rounded-md'>
                     <div className='flex w-full flex-col gap-6 py-4 mt-4 rounded-md shadow-md items-center justify-center'>

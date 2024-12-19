@@ -46,10 +46,10 @@ interface PlanContextProps {
     setTrekActivity:Dispatch<SetStateAction<boolean>>,
     tourActivity?:boolean
     setTourActivity:Dispatch<SetStateAction<boolean>>,
-    selectedTrek:trekProps|null,
-    setSelectedTrek:Dispatch<SetStateAction<trekProps|null>>,
-    selectedTour:tourProps|null,
-    setSelectedTour:Dispatch<SetStateAction<tourProps|null>>
+    selectedTrek:trekProps[]|null,
+    setSelectedTrek:Dispatch<SetStateAction<trekProps[]|null>>,
+    selectedTour:tourProps[]|null,
+    setSelectedTour:Dispatch<SetStateAction<tourProps[]|null>>
     specialPlan:string,
     setSpecialPlan:Dispatch<SetStateAction<string>>,
     stayDays:string
@@ -78,8 +78,8 @@ const PlanContextProvider:React.FC<PlanProviderProps> = ({ children }) => {
     const [destination, setDestination] = useState<string>("")
     const [trekActivity, setTrekActivity] = useState<boolean>(false)
     const [tourActivity, setTourActivity] = useState<boolean>(false)
-    const [selectedTrek, setSelectedTrek] = useState<trekProps | null>({title:null,_id:null})
-    const [selectedTour, setSelectedTour] = useState<tourProps |null>({title:null,_id:null})
+    const [selectedTrek, setSelectedTrek] = useState<trekProps[] | null>([])
+    const [selectedTour, setSelectedTour] = useState<tourProps[]|null>([])
     const [specialPlan, setSpecialPlan] = useState<string>("")
     const [stayDays, setStayDays] = useState<string>("YYYY-MM-DD")
     const [alertMessage, setAlertMessage] = useState<string | null>(null);

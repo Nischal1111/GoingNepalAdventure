@@ -34,7 +34,7 @@ const Trips = () => {
             <p className='px-16'>We offer a range of tour options, including cultural, luxury, wildlife, pilgrimage, day trips, and climbing and expeditions. These options cater to various interests and preferences, ensuring unforgettable experiences in the Himalayas, with personalized services.We offer a range of tour options, including cultural, luxury, wildlife, pilgrimage, day trips, and climbing and expeditions. These options cater to various interests and preferences, ensuring unforgettable experiences in the Himalayas, with personalized services.</p>
             <section className='w-[90%] grid grid-cols-2 gap-x-8 gap-y-4 my-12 place-content-center'>
                 {tourTypesData?.data?.map((item:any) => ( //eslint-disable-line @typescript-eslint/no-explicit-any
-                    <div key={item._id} className='h-[150px] w-full relative group overflow-hidden cursor-pointer'>
+                    <div key={item._id} className='h-[250px] w-full relative group overflow-hidden cursor-pointer'>
                         <div className='absolute inset-0 bg-black/40 rounded-md z-10 transition-opacity duration-300'></div>
                         <Image 
                             src={item.coverImage} 
