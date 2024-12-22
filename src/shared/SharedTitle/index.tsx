@@ -12,10 +12,10 @@ interface titleProps{
 }
 const SharedTitle:React.FC<titleProps>= ({title,subTitle}) => {
   return (
-    <div className='w-full relative flex items-center justify-center my-8'>
-        <div className='flex flex-col items-center'>
-            <h1 className={`${rowdies.className} text-7xl text-[#DFDCDC]`}>{title}</h1>
-            <p className={`${rowdies.className} text-4xl absolute top-10 antialiased`}>{subTitle}</p>
+    <div className='w-full relative flex items-center justify-center lg:my-8 my-4'>
+        <div className='flex flex-col items-center w-full'>
+            <h1 className={`${rowdies.className} lg:text-7xl text-4xl text-[#DFDCDC]`}>{title}</h1>
+            <p className={`${rowdies.className} lg:text-4xl text-3xl absolute lg:top-10 top-4 antialiased`}>{subTitle}</p>
         </div>
     </div>
   )

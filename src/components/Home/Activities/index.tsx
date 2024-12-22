@@ -96,7 +96,7 @@ const Activities = () => {
     };
 
     return (
-        <main className="px-16 my-16 mt-24">
+        <main className="lg:px-16 px-4 my-16 lg:mt-24 mt-12">
             <SharedTitle title="Activities" subTitle="Explore thrilling activities" />
             <Slider {...settings} className='mt-20'>
                 {activityData?.data?.map((activity:any) => ( //eslint-disable-line @typescript-eslint/no-explicit-any

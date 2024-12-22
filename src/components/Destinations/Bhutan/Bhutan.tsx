@@ -30,8 +30,8 @@ const Bhutan = () => {
     return (
         <div>
             <SharedSection title={"Bhutan"} link={'/destinations/bhutan'} img='/assets/bhutan/b3.avif'/>
-            <div className='px-16 w-full'>
-                <h1 className={`${rowdies.className} my-8 text-4xl`}>Introducing Bhutan</h1>
+            <div className='lg:px-16 px-4 w-full'>
+                <h1 className={`${rowdies.className} my-8 lg:text-4xl text-2xl`}>Introducing Bhutan</h1>
                 <p className='font-semibold my-4'> Bhutan: The Last Shangri-La</p>
                 <p ref={tourRef} className='text-justify'>
 
@@ -50,9 +50,9 @@ Whether you&apos;re seeking spiritual enlightenment, awe-inspiring adventures, o
 
 
                 </p>
-                <h1 className={`${rowdies.className} my-8 text-4xl`}>Recommended trips in Bhutan</h1>
+                <h1 className={`${rowdies.className} my-8 lg:text-4xl text-2xl`}>Recommended trips in Bhutan</h1>
                 {isLoading ? <Loader/>:
-                <div className='grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3 gap-6 my-4'>
+                <div className='grid grid-cols-1 sm:grid-cols-1 lg:grid-cols-3 xl:grid-cols-3 gap-6 my-4'>
                     {tourData?.data?.data?.map((item:TourDetails,index:number)=>{
                         return(
                             <TourCard {...item} key={index}/>

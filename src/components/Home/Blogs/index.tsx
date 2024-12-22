@@ -5,7 +5,7 @@ import BlogSection from './BlogSection'
 const Blogs = () => {
     const trekbg = "/assets/mountBG.png";
     return (
-        <div className='px-20 flex flex-col gap-8 relative'>
+        <div className='lg:px-20 px-4 flex flex-col gap-8 relative'>
             <div 
                 className='absolute inset-0 z-0'
                 style={{

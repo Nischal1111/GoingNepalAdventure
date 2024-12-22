@@ -14,15 +14,15 @@ const SearchSection = () => {
     }
   }
   return (
-    <div className='z-[100] relative top-1/5 w-full flex items-center justify-center'>
-        <section className='bg-gray-200 w-[90%] p-10 shadow-xl rounded-md flex items-center justify-between'>
-            <div className='flex gap-4 items-center w-2/5'>
-                <h1 className='text-4xl text-primary/80 font-semibold'>Find your trip</h1>
+    <div className='z-[100] relative top-1/5 w-full flex flex-col lg:flex-row items-center justify-center'>
+        <section className='bg-gray-200 w-[90%] lg:p-10 p-4 shadow-xl rounded-md flex flex-col lg:flex-row lg:gap-0 gap-4 items-center justify-between'>
+            <div className='flex gap-4 items-center lg:w-2/5 w-full'>
+                <h1 className='lg:text-4xl text-xl text-primary/80 font-semibold'>Find your trip</h1>
                 <div className='bg-primary h-[2.5px] w-32'></div>
             </div>
 
-            <form className='flex gap-4 w-3/5 items-center' onSubmit={handleSearch}>
-              <Input className='shadow-md' value={search} onChange={(e)=>setSearch(e.target.value)} size='lg' type="text" label="Search treks, tours or activities"/>
+            <form className='flex gap-4 lg:w-3/5 w-full items-center' onSubmit={handleSearch}>
+              <Input className='shadow-md' value={search} onChange={(e)=>setSearch(e.target.value)} type="text" label="Search treks, tours or activities"/>
               <Button type='submit' className='bg-primary rounded-sm px-10 text-white'>Search</Button>
             </form>
         </section>

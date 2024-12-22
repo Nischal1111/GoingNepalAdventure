@@ -20,8 +20,8 @@ const Activities = () => {
     return (
         <div>
             <SharedSection title='Activities' link='/activities' img='https://images.unsplash.com/photo-1709810953776-ee6027ff8104?q=80&w=2940&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'/>
-            <section className='px-16 my-12'>
-                <h1 className={`${rowdies.className} text-4xl `}>Adventure Activites in Nepal</h1>
+            <section className='lg:px-16 px-4 my-12'>
+                <h1 className={`${rowdies.className} lg:text-4xl text-2xl `}>Adventure Activites in Nepal</h1>
                 <p className='text-gray-700 text-justify my-8'>
                     Nepal is a premier destination for adventure seekers, offering a diverse array of thrilling activities set against breathtaking backdrops. From the soaring peaks of the Himalayas to deep river gorges, dense forests, and sprawling plains, Nepal provides both challenging and exhilarating experiences for adrenaline enthusiasts. <br /><br />
 
@@ -31,12 +31,12 @@ const Activities = () => {
                 </p>
 
             </section>
-            <h1 className={`${rowdies.className} text-3xl  mt-4 px-16`}>All Activities</h1>
-            <div className='grid grid-cols-4 gap-8 px-16 mt-8'>
+            <h1 className={`${rowdies.className} lg:text-3xl text-2xl  mt-4 lg:px-16 px-4`}>All Activities</h1>
+            <div className='grid lg:grid-cols-4 grid-cols-2 gap-8 lg:px-16 px-4 mt-8'>
                 {activityData?.data?.map((activity:activityProps)=>{
                     return(
                         <Link key={activity.slug} href={`/activities/${activity.slug}`}>
-                            <div  className="relative h-[300px] mx-auto max-w-[280px] rounded-lg shadow-md group cursor-pointer">
+                            <div  className="relative lg:h-[300px] h-[230px] mx-auto lg:max-w-[280px] w-full rounded-lg shadow-md group cursor-pointer">
                                 <div className="h-full w-full overflow-hidden rounded-lg">
                                     <img
                                         src={activity.thumbnail}

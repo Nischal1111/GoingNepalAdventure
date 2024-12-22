@@ -45,8 +45,8 @@ const Nepal = () => {
     return (
         <div>
             <SharedSection title={"Nepal"} link={'/nepal'} img='/assets/aboutBG.jpg'/>
-            <div className='px-16 w-full'>
-                <h1 className={`${rowdies.className} my-8 text-4xl`}>Introducing Nepal</h1>
+            <div className='lg:px-16 px-4 w-full'>
+                <h1 className={`${rowdies.className} my-8 lg:text-4xl text-2xl`}>Introducing Nepal</h1>
                 <p className='font-semibold my-4'> Nepal: A Land of Breathtaking Beauty and Rich Heritage </p>
                 <p ref={trekRef} className='text-justify'>
 
@@ -63,9 +63,9 @@ const Nepal = () => {
                     Whether you seek the solace of spiritual retreats, the thrill of mountain adventures, or the discovery of ancient cultures, Nepal promises an unforgettable journey in the heart of the Himalayas.
 
                 </p>
-                <h1 className={`${rowdies.className} my-8 text-4xl`}>Recommended Treks</h1>
+                <h1 className={`${rowdies.className} my-8 lg:text-4xl text-2xl`}>Recommended Treks</h1>
                 {isLoading ? <Loader/>:
-                <div className='grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3 gap-6 my-4'>
+                <div className='grid grid-cols-1 sm:grid-cols-1 lg:grid-cols-3 xl:grid-cols-3 gap-6 my-4'>
                     {trekData?.data?.data?.map((item:TrekDetails,index:number)=>{
                         return(
                             <PackageCard {...item} key={index}/>
@@ -88,9 +88,9 @@ const Nepal = () => {
                     </div>
                 )}
 
-                <h1 className={`${rowdies.className} my-8 text-4xl`}>Best trips in Nepal</h1>
+                <h1 className={`${rowdies.className} my-8 lg:text-4xl text-2xl`}>Best trips in Nepal</h1>
                 {isLoading ? <Loader/>:
-                <div className='grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3 gap-6 my-4'>
+                <div className='grid grid-cols-1 sm:grid-cols-1 lg:grid-cols-3 xl:grid-cols-3 gap-6 my-4'>
                     {tourData?.data?.data?.map((item:TourDetails,index:number)=>{
                         return(
                             <TourCard {...item} key={index}/>

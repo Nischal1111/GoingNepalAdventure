@@ -30,7 +30,7 @@ const Plan = () => {
   const mountainbg = "/assets/mountBG.png";
   
   return (
-    <div className='relative w-full px-32 py-12 overflow-hidden'>
+    <div className='relative w-full lg:px-32 px-4 lg:py-12 py-4 overflow-hidden'>
       <div 
         className='absolute inset-0 z-0'
         style={{
@@ -44,13 +44,13 @@ const Plan = () => {
       ></div>
       <div className='relative z-10'>
         <SharedTitle title='Plan with us' subTitle='Plan with us'/>
-        <section className='w-full flex gap-16 items-center relative justify-center mt-24 mb-16'>
+        <section className='w-full flex flex-col lg:flex-row lg:gap-16 gap-4 items-center relative justify-center lg:mt-24 mt-12 mb-16'>
           {planCards.map((plan, index) => {
             return (
               <PlanCard
                 key={plan.id}
                 {...plan}
-                className={index === 1 ? 'transform -translate-y-8' : ''}
+                className={index === 1 ? 'transform lg:-translate-y-8 -translate-y-0' : ''}
               />
             );
           })}

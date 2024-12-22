@@ -40,15 +40,15 @@ const Info = () => {
     }, [inView])
 
     return (
-        <div className="relative w-[600px] mt-16 h-[500px]" ref={ref}>
-            <section className='flex relative w-full h-[400px]'>
+        <div className="relative lg:w-[600px] w-full lg:mt-16 mt-0 lg:h-[500px] lg:px-0 px-4 h-[300px] " ref={ref}>
+            <section className='flex relative w-full lg:h-[400px] h-[300px] '>
                 <AnimatePresence mode='wait'>
                     <motion.div 
                         variants={slideVariants}
                         initial="hidden"
                         animate={inView ? "visible" : "hidden"}
                         transition={{ duration: 0.5,delay:.3 }} 
-                        className='absolute top-8 -left-4 rounded-md overflow-hidden h-[400px] w-full'
+                        className='absolute top-8 -left-4 rounded-md overflow-hidden lg:h-[400px] h-[300px] w-full'
                     >
                         <Image src="/assets/trek.jpeg" alt='Why-Going' height={1000} width={1000} className='z-[997] h-full object-cover' />
                     </motion.div>
@@ -58,7 +58,7 @@ const Info = () => {
                         initial="hidden"
                         animate={inView ? "visible" : "hidden"}
                         transition={{ duration: 0.5,delay:.6 }} 
-                        className='absolute -top-8 left-4 rounded-md overflow-hidden h-[400px] w-full'
+                        className='absolute -top-8 left-4 rounded-md overflow-hidden lg:h-[400px] h-[300px] w-full'
                     >
                         <Image src="/assets/hero.jpg" alt='Why-Going' height={1000} width={1000} className='z-[998] h-full object-cover' />
                     </motion.div>
@@ -68,13 +68,13 @@ const Info = () => {
                         initial="hidden"
                         animate={inView ? "visible" : "hidden"}
                         transition={{ duration: 0.5 ,delay:1}} 
-                        className='absolute top-0 left-16 rounded-md overflow-hidden h-[400px] w-full'
+                        className='absolute lg:flex hidden top-0 left-16 rounded-md overflow-hidden lg:h-[400px] h-[300px] w-full'
                     >
                         <Image src="/assets/why.jpg" alt='Why-Going' height={1000} width={1000} className='z-[999] h-full object-cover' />
                     </motion.div>
                 </AnimatePresence>
 
-                <div className='absolute top-[25%] -left-20 w-fit'>
+                <div className='absolute top-[25%] lg:-left-20 left-0 w-fit'>
                     <AnimatePresence>
                         {inView && (
                             <motion.div

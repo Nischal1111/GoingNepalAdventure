@@ -85,10 +85,10 @@ const FAQs = () => {
       }
     ]
     const itemClasses = {
-        title: "font-semibold text-xl",
+        title: "font-semibold lg:text-xl text-base",
         trigger: "px-2 py-0 data-[hover=true]:bg-default-100 rounded-lg h-14 flex items-center",
         indicator: "text-medium",
-        content: "text-base px-8",
+        content: "text-base lg:px-8 px-0 text-justify",
       };
 
 
@@ -96,7 +96,7 @@ const FAQs = () => {
     <main>
         <SharedSection title='FAQs' link='/faqs' img='/assets/faqBG.jpeg'/>
         <SharedTitle title='Get Info' subTitle='Frequently Asked Questions'/>
-        <div className='my-16 px-52'>
+        <div className='my-16 lg:px-52 px-4'>
           
           <Accordion defaultExpandedKeys={["0"]}>
             {FAQs.map((item,index)=>{
@@ -117,7 +117,7 @@ const FAQs = () => {
             })}
             
           </Accordion>
-          <div className='bg-primary/30 px-12 py-6 rounded-md flex items-center justify-between my-16'>
+          <div className='bg-primary/30 lg:px-12 px-4 py-6 rounded-md flex lg:flex-row flex-col items-center justify-between my-16'>
             <section className='flex flex-col items-start h-full text-white'>
                   <div className='flex items-center gap-6 mb-2'>
                     <FaCircleQuestion size={52} className='text-primary'/>

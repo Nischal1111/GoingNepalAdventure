@@ -31,9 +31,9 @@ const BlogSection = () => {
     const pathname=usePathname()as string
 
   return (
-    <main className='flex gap-12 items-stretch w-full pb-12 z-[999]'>
+    <main className='flex lg:flex-row flex-col lg:gap-12 gap-4 items-stretch w-full pb-12 z-[999]'>
 
-            <section className='w-3/5 flex flex-col gap-2'>
+            <section className='lg:w-3/5 w-full flex flex-col gap-2'>
                 <Image src={blogsData?.data[0]?.blogImage} alt={blogsData?.data[0]?.title} height={1000} width={1000} className='object-cover shadow-md rounded-md w-full h-[400px]'/>
                 <div className='text-gray-600 flex items-center gap-2 text-sm'>
                     <p>By Admin</p>
@@ -54,7 +54,7 @@ const BlogSection = () => {
                 </div>
             </section>
         
-        <section className='w-2/5 flex flex-col gap-6'>
+        <section className='lg:w-2/5 w-full flex flex-col lg:gap-6 gap-4'>
             {blogsData?.data?.slice(1,4).map((blog:Blogs, index:number) => (
                 
                 <div key={index} className='flex gap-4'>

@@ -24,7 +24,7 @@ const Breadcrumb:React.FC<breadCrumbProps> = ({title,link}) => {
                     <BreadcrumbItem href={link} className='text-white'>{title}</BreadcrumbItem>
                 </Breadcrumbs>
             </div>
-            <h1 className={`${rowdies.className} font-semibold text-6xl tracking-wider`}>{title}</h1>
+            <h1 className={`${rowdies.className} font-semibold lg:text-6xl text-2xl tracking-wider`}>{title}</h1>
         </div>
     )
 }

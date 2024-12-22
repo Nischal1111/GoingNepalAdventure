@@ -6,7 +6,7 @@ const PrivacyPolicy = () => {
     return (
         <div>
             <SharedSection title='Privacy Policy' link='#' img='https://images.pexels.com/photos/7063767/pexels-photo-7063767.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2'/>
-            <div className='px-24'>
+            <div className='lg:px-24 px-4'>
                 <SharedTitle title='Privacy Policy' subTitle='Privacy Policy'/>
                 <p className='text-justify my-8'>This Privacy Policy governs the manner in which Going Nepal Pvt. Ltd. collects, uses, maintains and discloses information collected from users (each, a &quot;User&quot;) of the https://www.goingnepaladventure.com website (&quot;Site&quot;). This privacy policy applies to the Site and all products and services offered by Going Nepal Pvt. Ltd.</p>
                 <h1 className='font-bold text-xl mt-12 mb-8'>Personal identification information</h1>

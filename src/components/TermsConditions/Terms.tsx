@@ -6,9 +6,9 @@ const Terms = () => {
     return (
         <div >
             <SharedSection title='Terms and Conditions' link='/terms-and-conditions' img='https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?q=80&w=2940&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'/>
-            <section className='my-16 px-24'>
+            <section className='my-16 lg:px-24 px-4'>
                 <SharedTitle title='Please remember' subTitle='Terms and Conditions'/>
-                <p className='text-justify text-lg text-gray-700 my-4'>Going Nepal Pvt. Ltd. is a DMC (Destination Management Company) and B2B tourism partner based in Nepal. 
+                <p className='text-justify text-lg lg:mt-0 mt-8 text-gray-700 my-4'>Going Nepal Pvt. Ltd. is a DMC (Destination Management Company) and B2B tourism partner based in Nepal. 
                     Despite being a new entrant in the industry, we have achieved remarkable success and are now seeking to partner with successful companies that share our 
                     understanding and appreciation for the potential of tourism in Nepal. Our goal is to establish tourism as a thriving 
                     industry that can positively impact and improve lives. Nepal is a country with rich natural beauty, historic cultural practices, and diverse 

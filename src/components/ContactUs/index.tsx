@@ -56,13 +56,13 @@ const ContactUs = () => {
     ]
     return (
         <main className='relative w-full'>
-            <section className='relative h-[70vh] w-full' style={{background:"url('/assets/contactBG.jpg')",backgroundSize:"cover",backgroundPosition:"center",backgroundAttachment:"fixed"}}>
+            <section className='relative lg:h-[70vh] h-[50vh] w-full' style={{background:"url('/assets/contactBG.jpg')",backgroundSize:"cover",backgroundPosition:"center",backgroundAttachment:"fixed"}}>
                 <div className='absolute inset-0 bg-black/20 w-full'></div>
                 <Breadcrumb title={"Contact Us"} link='/contact-us'/>
             </section>
 
             <section className='relative flex items-center justify-center top-[-5rem] '>
-                <div className='w-[90%] bg-primary/80 flex items-start justify-between rounded-md px-12 py-8 text-white'>
+                <div className='w-[90%] bg-primary/80 flex lg:gap-0 gap-6 lg:flex-row flex-col items-start justify-between rounded-md lg:px-12 px-4 py-8 text-white'>
                     <section className='flex flex-col gap-4 font-light z-[999]'>
                         <div className='flex items-center gap-4'>
                             <h1 className='font-semibold text-xl tracking-wide'>Visit us at</h1>
@@ -140,12 +140,12 @@ const ContactUs = () => {
                 </div>
             </section>
 
-            <section className='px-16 h-[600px]'>
-                <div className='flex items-start justify-between gap-12 w-full'>
-                    <div className='w-1/2 px-12'>
+            <section className='lg:px-16 px-4 h-[600px]'>
+                <div className='flex lg:flex-row flex-col items-start justify-between gap-12 w-full'>
+                    <div className='lg:w-1/2 w-full lg:px-12 px-4 lg:flex hidden'>
                         <section className='w-full h-[600px] rounded-xl' style={{background:"url('/assets/contactFormBg.jpg')",backgroundSize:"cover",backgroundPosition:"center",backgroundAttachment:"fixed"}}></section>
                     </div>
-                    <div className='flex flex-col gap-8 w-1/2 items-center justify-center'>
+                    <div className='flex flex-col gap-8 lg:w-1/2 w-full items-center justify-center'>
                         <h1 className={`${rowdies.className} font-semibold text-2xl tracking-wider`}>Feel free to reach out to us</h1>
                         <form action="" className='flex flex-col gap-8 w-full px-8'>
                             <Input type='text' size='lg' label="Name" labelPlacement='outside' radius='sm' required placeholder='Enter your name' variant='bordered' className='bg-white' />
@@ -169,7 +169,7 @@ const ContactUs = () => {
                 </div>
             </section>
 
-            <div className="w-full h-[90vh] my-16">
+            <div className="w-full lg:h-[90vh] h-[70vh] my-16">
                 <iframe
                     src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3531.9927385581045!2d85.32190857546776!3d27.717510476176777!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x39eb19da434dc251%3A0x9f38fff86882064b!2sGoing%20Nepal%20Pvt%20Ltd%2C%20Tailor-Made%20Luxury%20DMC!5e0!3m2!1sen!2snp!4v1728413039018!5m2!1sen!2snp"
                     width="100%"
@@ -181,9 +181,9 @@ const ContactUs = () => {
                 />
             </div>
 
-            <section className=' bg-white px-12 py-8'>
+            <section className=' bg-white lg:px-12 px-4 py-8'>
                 <SharedTitle title='Our Contacts Abroad' subTitle='Our Contacts Abroad'/>
-                <div className='grid grid-cols-3 items-start gap-12 my-12'>
+                <div className='grid lg:grid-cols-3 grid-cols-1 items-start lg:gap-12 gap-4 my-12'>
                     {details.map((item,index)=>{
                         return(
                             <div key={index} className='flex flex-col gap-4 rounded-md border border-primary/20 p-4 '>

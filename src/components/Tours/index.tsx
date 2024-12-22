@@ -146,8 +146,8 @@ const Tours = () => {
         <div>
             <SharedSection title='Trips and Tours' link='/tours' img='https://images.unsplash.com/photo-1526712318848-5f38e2740d44?q=80&w=2940&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'/>
 
-            <section className='px-16 my-12'>
-                <h1 className={`${rowdies.className} text-4xl `}>Trips and Tours in Nepal, Bhutan and Tibet</h1>
+            <section className='lg:px-16 px-4 my-12'>
+                <h1 className={`${rowdies.className} lg:text-4xl text-2xl `}>Trips and Tours in Nepal, Bhutan and Tibet</h1>
                 <p className='text-gray-700 text-justify my-8'>
                     Nepal, a country steeped in ancient traditions, rugged landscapes, and awe-inspiring natural beauty, is known worldwide as a trekking and adventure haven. Nestled between the peaks of the mighty Himalayas, Nepal offers unparalleled experiences for explorers, nature lovers, and cultural enthusiasts alike. With trekking trails that range from gentle paths to challenging high-altitude circuits, the country is home to world-famous routes like the Everest Base Camp, Annapurna Circuit, and Langtang Valley. Beyond trekking, Nepal is a place of deep cultural heritage, with historic temples, vibrant festivals, and warm local hospitality. <br /><br />
 
@@ -169,9 +169,9 @@ const Tours = () => {
                 Tours in Tibet provide an opportunity to experience its rich monastic culture, meet warm and welcoming Tibetans, and appreciate the region&apos;s unspoiled natural beauty. The landscape, rich in unique flora and fauna, creates an unforgettable backdrop for trekking, sightseeing, and cultural exploration. A journey through Tibet is both a challenging and spiritually enriching experience, ideal for those seeking a deeper connection to Himalayan culture and spirituality. <br /><br />
 
                 </p>
-                <h1 ref={first} className={`${rowdies.className} text-4xl mt-8`}>Trips and Tours packages</h1>
+                <h1 ref={first} className={`${rowdies.className} lg:text-4xl text-2xl mt-8`}>Trips and Tours packages</h1>
 
-                <div className='my-8 pl-8 flex items-center gap-8'>
+                <div className='my-8 pl-8 flex lg:flex-row flex-col items-center lg:gap-8 gap-4'>
                     <Dropdown>
                         <div className='flex items-center gap-4'>
                             <h1 className='font-bold text-sm text-primary'>Select by Country</h1>

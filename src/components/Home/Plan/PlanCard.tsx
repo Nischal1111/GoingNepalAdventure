@@ -12,7 +12,7 @@ interface PlanProps {
 const PlanCard: React.FC<PlanProps> = ({ title, img, button, className,link }) => {
     return (
         <div
-            className={`custom-card cursor-pointer size-[400px] flex items-end rounded-lg overflow-hidden relative group ${className}`}
+            className={`custom-card cursor-pointer lg:w-[400px] lg:h-[400px] w-full h-[280px]  flex items-end rounded-lg overflow-hidden relative group ${className}`}
         >
             <div
                 className="absolute cursor-pointer inset-0 transition-transform duration-500 ease-in-out group-hover:scale-110"

@@ -88,7 +88,7 @@ const MainSection = () => {
     ];
 
     return (
-        <main className='px-16 flex items-center justify-center flex-col'>
+        <main className='lg:px-16 px-4 flex items-center justify-center flex-col gap-6 lg:mt-8 mt-4'>
             <SharedTitle title='We are' subTitle='Going Nepal Adventure'/>
             <div className='flex flex-col gap-4'>
                 <div className='flex items-center justify-center font-bold text-lg text-primary'>
@@ -97,8 +97,8 @@ const MainSection = () => {
                 <p className='text-justify text-base'>Going Nepal Adventure is a premier trekking company that specializes in curating unique, personalized trekking experiences across Nepal&apos;s most iconic and hidden trails. With years of expertise, we bring adventurers closer to the natural beauty of Nepal, from the towering peaks of the Himalayas to the lush, green valleys. Our approach combines adventure with cultural immersion, offering treks that showcase not just the physical grandeur of Nepal, but also its rich traditions and local way of life. Whether you&apos;re an experienced trekker or a beginner, we provide custom itineraries that ensure you experience the best of what Nepal has to offer.</p>
             </div>
 
-            <section className='flex gap-12 items-center w-full mt-16'>
-                <div className='relative group overflow-hidden w-2/5 h-[400px]'>
+            <section className='flex lg:gap-12 gap-4 lg:flex-row flex-col-reverse items-center w-full mt-16'>
+                <div className='relative group overflow-hidden lg:w-2/5 w-full lg:h-[400px] h-[300px]'>
                     <div className='w-full h-full transition-transform duration-500 ease-in-out group-hover:scale-110'>
                         <Image 
                             src="/assets/about1.jpg" 
@@ -109,7 +109,7 @@ const MainSection = () => {
                         />
                     </div>
                 </div>
-                <div className='flex flex-col w-3/5 gap-4 py-8'>
+                <div className='flex flex-col lg:w-3/5 w-full gap-4 lg:py-8 py-0'>
                     <h1 className={`${rowdies.className} text-4xl w-full flex `}>Our Story</h1>
                     <div className='flex items-center justify-start font-bold text-lg text-primary'>
                         <p>{'"From the Foothills to the Peaks: Our Journey"'}</p>
@@ -118,7 +118,7 @@ const MainSection = () => {
                 </div>
             </section>
 
-            <div   className='w-full relative my-20 items-center justify-center flex flex-col gap-4'>
+            <div   className='w-full relative lg:my-20 my-4 items-center justify-center flex flex-col gap-4'>
                 <div className='flex items-center justify-center'>
                     <h1 className={`${rowdies.className} text-4xl w-full`}>Why Going Nepal Adenture</h1>
                 </div>
@@ -131,7 +131,7 @@ const MainSection = () => {
                     variants={containerVariants}
                     initial="hidden"
                     animate={sectionsInView ? "visible" : "hidden"}
-                    className='grid grid-cols-3 gap-x-8 gap-y-4 mt-8'
+                    className='grid lg:grid-cols-3 grid-cols-1 gap-x-8 gap-y-4 mt-8'
                 >
                     {sections.map((section, index) => (
                         <motion.div
@@ -149,8 +149,8 @@ const MainSection = () => {
                 </motion.div>
             </div>
 
-            <section className='flex flex-row-reverse gap-12 items-center w-full mt-16'>
-                <div className='relative group overflow-hidden w-2/5 h-[400px]'>
+            <section className='flex lg:flex-row-reverse flex-col-reverse lg:gap-12 gap-4 items-center w-full lg:mt-16 mt-4'>
+                <div className='relative group overflow-hidden lg:w-2/5 w-full lg:h-[400px] h-[300px]'>
                     <div className='w-full h-full transition-transform duration-500 ease-in-out group-hover:scale-110'>
                         <Image 
                             src="/assets/about2.jpg" 
@@ -161,7 +161,7 @@ const MainSection = () => {
                         />
                     </div>
                 </div>
-                <div className='flex flex-col w-3/5 gap-4 py-8'>
+                <div className='flex flex-col lg:w-3/5 w-full gap-4 py-8'>
                     <h1 className={`${rowdies.className} text-4xl w-full flex `}>Our Mission</h1>
                     <div className='flex items-center justify-start font-bold text-lg text-primary'>
                         <p>{'"Bringing You Closer to Nature, One Trek at a Time"'}</p>
@@ -170,7 +170,7 @@ const MainSection = () => {
                 </div>
             </section>
 
-            <div className='w-full relative my-20 items-center justify-center flex flex-col gap-4'>
+            <div className='w-full relative lg:my-20 my-4 items-center justify-center flex flex-col gap-4'>
                 <div className='flex items-center justify-center'>
                     <h1 className={`${rowdies.className} text-4xl w-full`}>Meet Our Team of Travel Experts</h1>
                 </div>
@@ -185,7 +185,7 @@ const MainSection = () => {
                     variants={containerVariants}
                     initial="hidden"
                     animate={teamInView ? "visible" : "hidden"}
-                    className='grid grid-cols-3 gap-x-32 gap-y-4 mt-12'
+                    className='grid lg:grid-cols-3 grid-cols-1 gap-x-32 gap-y-4 lg:mt-12 mt-4'
                 >
                     {teamMembers.map((member, index) => (
                         <motion.div 
@@ -207,16 +207,16 @@ const MainSection = () => {
                 </motion.div>
             </div>
 
-            <main className='h-full mt-12 w-full flex flex-row mb-12'>
-                <div className='relative w-1/2 flex px-8 '>
-                    <section className='relative h-[500px] w-[600px] p-2 rounded-md bg-white shadow-md'>
+            <main className='h-full mt-12 w-full flex lg:flex-row flex-col mb-12'>
+                <div className='lg:flex hidden relative lg:w-1/2 w-full flex px-8 '>
+                    <section className='relative lg:h-[500px] h-[400px] lg:w-[600px] w-full p-2 rounded-md bg-white shadow-md'>
                         <Image src={"/assets/achievement1.jpg"} alt='Ach' height={1000} width={1000} className='object-cover rounded-md h-full w-full'/>
                     </section>
                     <section className='relative h-[250px] w-[250px] p-2 rounded-md bg-white shadow-m -bottom-[19rem] right-20'>
                         <Image src={"/assets/achievement2.jpg"} alt='Ach' height={1000} width={1000} className='object-cover rounded-md h-full w-full'/>
                     </section>
                 </div>
-                <div className='relative w-1/2 flex items-start justify-start flex-col gap-4'>
+                <div className='relative lg:w-1/2 w-full flex items-start justify-start flex-col gap-4'>
                         <h1 className={`${rowdies.className} text-4xl w-full flex `}>Achievements</h1>
                         <div className='flex items-center justify-start font-bold text-lg text-primary'>
                             <p>{'"Epic Milestones, Unforgettable Journeys"'}</p>
@@ -235,7 +235,7 @@ const MainSection = () => {
                             <p className='text-base'><span className='font-semibold'>2024</span> Travellers&apos; choice - <span className='font-bold'>Trip Advisor</span></p>
                         </div>
 
-                        <div className='flex w-full items-center justify-between mt-4'>
+                        <div className='grid lg:grid-cols-4 grid-cols-2 w-full items-center justify-between mt-4'>
                             <div className='flex flex-col'>
                                 <h1 className='font-bold text-5xl text-primary'>13+</h1>
                                 <p className='text-lg text-gray-500 mt-2'>Years of </p>

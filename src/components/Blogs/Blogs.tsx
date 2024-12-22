@@ -44,13 +44,13 @@ const Blogs = () => {
         <div className='w-full'>
             <SharedSection title='Blogs' link='/blogs' img="https://images.unsplash.com/photo-1665575070545-5be57b8142be?q=80&w=2874&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"/>
             <SharedTitle title="Travel Blogs" subTitle='Insipration for you'/>
-            <div className='px-20 py-12'>
+            <div className='lg:px-20 px-4 py-12'>
                 <BlogSection/>
-                <div className='w-full flex items-center justify-between my-4'>
-                    <h1 className={`w-3/5 font-semibold text-4xl ${rowdies.className} text-primary`}>All Blogs</h1>
-                    <Input placeholder='Search Blogs' value={search} onChange={(e)=>setSearch(e.target.value)} className='w-[30%] py-4' size='lg' radius='sm' classNames={{inputWrapper:"bg-white border border-gray-200 group-data-[focus=true]:bg-white"}} startContent={<FaSearch className='text-gray-500 mr-2' size={20}/>}></Input>
+                <div className='w-full flex lg:flex-row flex-col gap-4 items-center justify-between my-4'>
+                    <h1 className={`lg:w-3/5 font-semibold text-4xl ${rowdies.className} text-primary`}>All Blogs</h1>
+                    <Input placeholder='Search Blogs' value={search} onChange={(e)=>setSearch(e.target.value)} className='lg:w-[30%] w-full py-4' size='lg' radius='sm' classNames={{inputWrapper:"bg-white border border-gray-200 group-data-[focus=true]:bg-white"}} startContent={<FaSearch className='text-gray-500 mr-2' size={20}/>}></Input>
                 </div>
-                <div className='grid grid-cols-4 gap-x-10 gap-y-10 my-6'>
+                <div className='grid lg:grid-cols-4 grid-cols-1 gap-x-10 lg:gap-y-10 gap-y-4 my-6'>
                     {allblogs?.map((blog:Blogs,index:number)=>(
                         <div key={index} className='w-full flex flex-col gap-2 pb-2 shadow-sm'>
                             <div className='w-full h-[200px]'>

@@ -30,8 +30,8 @@ const Tibet = () => {
     return (
         <div>
             <SharedSection title={"Tibet"} link={'/destinations/tibet'} img='/assets/tibet/t2.avif'/>
-            <div className='px-16 w-full'>
-                <h1 className={`${rowdies.className} my-8 text-4xl`}>Introducing Tibet</h1>
+            <div className='lg:px-16 px-4 w-full'>
+                <h1 className={`${rowdies.className} my-8 lg:text-4xl text-2xl`}>Introducing Tibet</h1>
                 <p className='font-semibold my-4'> Tibet: The Roof of the World</p>
                 <p ref={tourRef} className='text-justify'>
                     Tibet, often called the Roof of the World, is a land of dramatic landscapes, ancient traditions, and profound spirituality. Nestled on the world&apos;s highest plateau, Tibet is surrounded by towering Himalayan peaks, including the majestic Mount Everest. This mystical region is not only a paradise for nature lovers but also a sacred destination for those seeking spiritual awakening.
@@ -49,9 +49,9 @@ Whether you seek to connect with nature, delve into spiritual practices, or expl
 
 
                 </p>
-                <h1 className={`${rowdies.className} my-8 text-4xl`}>Recommended trips in Tibet</h1>
+                <h1 className={`${rowdies.className} my-8 lg:text-4xl text-2xl`}>Recommended trips in Tibet</h1>
                 {isLoading ? <Loader/>:
-                <div className='grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3 gap-6 my-4'>
+                <div className='grid grid-cols-1 sm:grid-cols-1 lg:grid-cols-3 xl:grid-cols-3 gap-6 my-4'>
                     {tourData?.data?.data?.map((item:TourDetails,index:number)=>{
                         return(
                             <TourCard {...item} key={index}/>

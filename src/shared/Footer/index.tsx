@@ -39,29 +39,29 @@ const Footer = () => {
         <>
             <main className='flex flex-col my-4 mt-20 gap-4 w-full items-center justify-center'>
                 <div className='flex flex-col gap-12 w-full items-center justify-center'>
-                    <h1 className={`text-4xl ${rowdies.className}`}>National Affiliates</h1>
-                    <div className='flex items-center flex-wrap justify-between px-[12rem] w-full'>
+                    <h1 className={`text-4xl md:text-3xl sm:text-2xl ${rowdies.className}`}>National Affiliates</h1>
+                    <div className='flex items-center flex-wrap justify-center md:justify-evenly gap-6 px-4 md:px-8 lg:px-[12rem] w-full'>
                         {national?.map((item,index)=>{
                             return(
-                                <Image key={index} src={item} alt="image" height={1000} width={1000} className='object-contain size-24 rounded-md'/>
+                                <Image key={index} src={item} alt="image" height={1000} width={1000} className='object-contain size-20 md:size-24 rounded-md'/>
                             )
                         })}
                     </div>
                 </div>
                 <div className='flex flex-col gap-12 mt-12 w-full items-center justify-center'>
-                    <h1 className={`text-4xl ${rowdies.className}`}>International Affiliates</h1>
-                    <div className='flex items-center flex-wrap justify-between px-[8rem] w-full'>
+                    <h1 className={`text-4xl md:text-3xl sm:text-2xl ${rowdies.className}`}>International Affiliates</h1>
+                    <div className='flex items-center flex-wrap justify-center md:justify-evenly gap-6 px-4 md:px-8 lg:px-[8rem] w-full'>
                         {international?.map((item,index)=>{
                             return(
-                                <Image key={index} src={item} alt="image" height={1000} width={1000} className='object-contain size-24 rounded-md'/>
+                                <Image key={index} src={item} alt="image" height={1000} width={1000} className='object-contain size-20 md:size-24 rounded-md'/>
                             )
                         })}
                     </div>
                 </div>
             </main>
-            <main className='bg-[#161D6F]/90 px-32 mt-12 py-8 pt-16 flex flex-col gap-8 '>
-                <main className='flex items-start justify-between'>
-                    <section className='text-white flex flex-col gap-6'>
+            <main className='bg-[#161D6F]/90 px-4 sm:px-8 md:px-16 lg:px-32 mt-12 py-8 pt-16 flex flex-col gap-8'>
+                <main className='flex flex-col md:flex-row items-start justify-between gap-12 md:gap-8'>
+                    <section className='text-white flex flex-col gap-6 w-full md:w-auto'>
                         <div className='text-white flex flex-col gap-2'>
                             <h1 className='font-semibold text-lg'>Need Help ?</h1>
                             <div className='w-24 bg-white h-[1px]'></div>
@@ -79,22 +79,22 @@ const Footer = () => {
                             <p className='font-medium text-lg'>Follow Us On</p>
                             <div className='flex gap-4 mt-2'>
                                 <Button isIconOnly size='sm' className='bg-primary text-white'>
-                                    <FiFacebook size={22} className='transition duration-300 '/>
+                                    <FiFacebook size={22} className='transition duration-300'/>
                                 </Button>
                                 <Button isIconOnly size='sm' className='bg-pink-400 text-white'>
-                                    <FaInstagram size={20} className='transition duration-300 '/>      
+                                    <FaInstagram size={20} className='transition duration-300'/>      
                                 </Button>
                                 <Button isIconOnly size='sm' className='bg-black text-white'>
-                                    <FaXTwitter size={20} className='transition duration-300 '/>
+                                    <FaXTwitter size={20} className='transition duration-300'/>
                                 </Button>
                                 <Button isIconOnly size='sm' className='bg-blue-700 text-white'>
-                                    <FaLinkedin size={20} className='transition duration-300 '/>
+                                    <FaLinkedin size={20} className='transition duration-300'/>
                                 </Button>
                             </div>
                         </div>
                     </section>
 
-                    <section className='text-white flex flex-col gap-6'>
+                    <section className='text-white flex flex-col gap-6 w-full md:w-auto'>
                         <div className='text-white flex flex-col gap-2'>
                             <h1 className='font-semibold text-lg'>Quick Links</h1>
                             <div className='w-24 bg-white h-[1px]'></div>
@@ -111,7 +111,7 @@ const Footer = () => {
                         </div>
                     </section>
 
-                    <section className='text-white flex flex-col gap-6'>
+                    <section className='text-white flex flex-col gap-6 w-full md:w-auto'>
                         <div className='text-white flex flex-col gap-2'>
                             <h1 className='font-semibold text-lg'>Extra Links</h1>
                             <div className='w-24 bg-white h-[1px]'></div>
@@ -125,7 +125,8 @@ const Footer = () => {
                             <FooterLink>Privacy Policy</FooterLink>
                         </div>
                     </section>
-                    <section className='text-white flex flex-col gap-6'>
+
+                    <section className='text-white flex flex-col gap-6 w-full md:w-auto'>
                         <div className='text-white flex flex-col gap-2'>
                             <h1 className='font-semibold text-lg'>Our Services</h1>
                             <div className='w-24 bg-white h-[1px]'></div>
@@ -140,7 +141,7 @@ const Footer = () => {
                 </main>
                 <main className='flex flex-col w-full gap-4 mt-4 items-center justify-center'>
                     <Divider className='bg-gray-400'/>
-                    <div className='flex items-center w-full justify-between text-gray-400'>
+                    <div className='flex flex-col sm:flex-row items-center w-full justify-between text-gray-400 gap-2 text-center sm:text-left'>
                         <p>Copyright © {date} by Going Nepal Adventures</p>
                         <p>© Powered by SBN Innovation PVT. LTD.</p>
                     </div>

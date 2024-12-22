@@ -55,15 +55,15 @@ const HeroSection = () => {
         <>
             <main className='custom-main relative text-white'>
                 <div className="absolute inset-0 bg-black opacity-20 z-[1]"></div>
-                <Image src="/assets/hero.jpg" alt='hero-section' height={1000} width={1000} className='object-cover h-[90vh] w-screen z-[0]' />
+                <Image src="/assets/hero.jpg" alt='hero-section' height={1000} width={1000} className='object-cover lg:h-[90vh] h-[65vh] w-screen z-[0]' />
                 
-                <div className='px-20 flex gap-8 z-[1000] absolute top-[15%]'>
-                    <div className='relative h-[50vh] flex gap-1'>
+                <div className='lg:px-20 px-4 flex gap-8 z-[1000] absolute top-[15%]'>
+                    <div className='relative lg:h-[50vh] h-[35vh] flex gap-1'>
                         <div className='bg-white w-[1px] h-full'></div>
                         <div className='bg-white w-[1px] h-full relative top-3'></div>
                     </div>
                     
-                    <div className='text-2xl relative mt-20 text-white flex flex-col gap-4'>
+                    <div className='lg:text-2xl text-lg relative mt-20 text-white flex flex-col gap-4'>
                         <AnimatePresence mode="wait">
                             <motion.div
                                 className='flex flex-col gap-4'
@@ -80,11 +80,11 @@ const HeroSection = () => {
                                     animate={{ opacity: 1, y: 0 }}
                                     transition={{ delay: 0.2 }}
                                 >
-                                    <h1 className='text-lg font-bold'>{descSlider[currentSlide].title}</h1>
+                                    <h1 className='lg:text-lg text-sm font-bold'>{descSlider[currentSlide].title}</h1>
                                     <div className='bg-white h-[2px] w-32'></div>
                                 </motion.div>
                                 <motion.h1 
-                                    className='font-semibold text-4xl w-[80%]'
+                                    className='font-semibold lg:text-4xl text-xl lg:w-[80%] w-full'
                                     initial={{ opacity: 0, y: 20 }}
                                     animate={{ opacity: 1, y: 0 }}
                                     transition={{ delay: 0.4 }}
@@ -99,15 +99,15 @@ const HeroSection = () => {
                                 >
                                     <div className='flex gap-2 items-center'>
                                         <PiStarFourFill size={20} />
-                                        <p>Mountain Vibes</p>
+                                        <p className='lg:text-base text-xs'>Mountain Vibes</p>
                                     </div>
                                     <div className='flex gap-2 items-center'>
                                         <PiStarFourFill size={20} />
-                                        <p>Into The Wild</p>
+                                        <p className='lg:text-base text-xs'>Into The Wild</p>
                                     </div>
                                     <div className='flex gap-2 items-center'>
                                         <PiStarFourFill size={20} />
-                                        <p>Wander Lust</p>
+                                        <p className='lg:text-base text-xs'>Wander Lust</p>
                                     </div>
                                 </motion.div>
                                 <motion.div
@@ -116,7 +116,7 @@ const HeroSection = () => {
                                     transition={{ delay: 0.8 }}
                                 >
                                     <Link href={descSlider[currentSlide].link}>
-                                        <Button className='rounded-sm mt-10 px-12 z-[100] w-fit text-white border hover:bg-primary hover:border-primary border-white bg-transparent'>
+                                        <Button className='rounded-sm lg:mt-10 mt-6 px-12 z-[100] w-fit text-white border hover:bg-primary hover:border-primary border-white bg-transparent'>
                                             {descSlider[currentSlide].button}
                                         </Button>
                                     </Link>
@@ -131,7 +131,7 @@ const HeroSection = () => {
                     </div>
                 </div>
 
-                <div className='absolute top-8 right-8 bg-primary/50 px-3 py-4 rounded-full flex flex-col gap-6 z-[100]'>
+                <div className='absolute top-8 right-8 bg-primary/50 px-3 py-4 rounded-full lg:flex hidden flex-col gap-6 z-[100]'>
                     <Link href={"https://www.facebook.com/going2nepal/"} target='_blank'>
                         <FiFacebook size={22} className='transition duration-300 hover:scale-[1.3]'/>
                     </Link>

@@ -26,11 +26,11 @@ const Journey = () => {
     }, []);
 
     return (
-        <main className='px-16 flex flex-col gap-12'>
+        <main className='lg:px-16 px-4 flex flex-col gap-12'>
             <SharedTitle title='Plan your Trips' subTitle='Plan your Trips'/>
-            <section className='px-12 flex flex-col gap-4 w-full'>
-                <div className='w-full flex items-start h-[220px] gap-4'>
-                    <div className='w-1/3 h-full relative flex items-center justify-center overflow-hidden rounded-md'>
+            <section className='lg:px-12 px-4 flex flex-col gap-4 w-full'>
+                <div className='w-full flex lg:flex-row flex-col items-start lg:h-[220px] h-[660px] gap-4'>
+                    <div className='lg:w-1/3 w-full h-full relative flex items-center justify-center overflow-hidden rounded-md'>
                         {bhutanImages.map((img, index) => (
                             <Image 
                                 key={img}
@@ -44,16 +44,16 @@ const Journey = () => {
                             />
                         ))}
                         <div className='absolute inset-0 bg-black/40 z-20'></div>
-                        <p className={`${rowdies.className} text-5xl tracking-widest absolute text-white z-30`}>Bhutan</p>
+                        <p className={`${rowdies.className} lg:text-5xl text-xl lg:tracking-widest tracking-normal absolute text-white z-30`}>Bhutan</p>
                     </div>
-                    <div className='w-1/3 h-full relative flex flex-col gap-2 items-center justify-start'>
-                        <h1 className='font-semibold text-xl'>Exploring Hidden Trails: Unforgettable Treks in the Himalayas</h1>
-                        <p>Nepal, Bhutan and Tibet are Himalayan gems, offering stunning landscapes, rich cultural heritage and unique trekking adventures through some of the world&apos;s most majestic mountain ranges.</p>
+                    <div className='lg:w-1/3 w-full h-full relative flex flex-col gap-2 items-center justify-start'>
+                        <h1 className='font-semibold lg:text-xl text-lg'>Exploring Hidden Trails: Unforgettable Treks in the Himalayas</h1>
+                        <p className='lg:text-base text-xs'>Nepal, Bhutan and Tibet are Himalayan gems, offering stunning landscapes, rich cultural heritage and unique trekking adventures through some of the world&apos;s most majestic mountain ranges.</p>
                         <Link href={"/plan-trip"}>
-                            <Button className='rounded-md bg-primary px-10 text-white mt-2'>Plan your trip</Button>
+                            <Button className='rounded-md bg-primary px-10 text-white lg:mt-2 mt-4'>Plan your trip</Button>
                         </Link>
                     </div>
-                    <div className='w-1/3 h-full relative flex items-center justify-center rounded-md overflow-hidden'>
+                    <div className='lg:w-1/3 w-full h-full relative flex items-center justify-center rounded-md overflow-hidden'>
                         {tibetImages.map((img, index) => (
                             <Image 
                                 key={img}
@@ -67,21 +67,21 @@ const Journey = () => {
                             />
                         ))}
                         <div className='absolute inset-0 bg-black/40'></div>
-                        <p className={`${rowdies.className} text-5xl tracking-widest absolute text-white z-10`}>Tibet</p>
+                        <p className={`${rowdies.className} lg:text-5xl text-xl lg:tracking-widest tracking-normalt absolute text-white z-10`}>Tibet</p>
                     </div>
                 </div>
                 <div className='w-full flex items-start h-[220px] gap-4'>
-                    <div className='w-1/3 h-full relative flex items-center justify-center'>
+                    <div className='lg:w-1/3 w-full flex h-full relative items-center justify-center'>
                         <Image src={"/assets/why.jpg"} alt='Bhutan' height={1000} width={1000} className='w-full h-full object-cover rounded-md' />
                         <div className='h-full w-full bg-black/40 rounded-md inset-0 absolute'></div>
-                        <p className={`${rowdies.className} text-5xl tracking-widest absolute text-white`}>Nepal</p>
+                        <p className={`${rowdies.className} lg:text-5xl text-xl lg:tracking-widest tracking-normal absolute text-white`}>Nepal</p>
                     </div>
-                    <div className='w-1/3 h-full relative flex items-center justify-center'>
+                    <div className='w-1/3 h-full relative lg:flex hidden items-center justify-center'>
                         <Image src={"/assets/hero.jpg"} alt='Bhutan' height={1000} width={1000} className='w-full h-full object-cover rounded-md' />
                         <div className='h-full w-full bg-black/40 rounded-md inset-0 absolute'></div>
                         <p className={`${rowdies.className} text-5xl tracking-widest absolute text-white`}>Nepal</p>
                     </div>
-                    <div className='w-1/3 h-full relative flex items-center justify-center'>
+                    <div className='w-1/3 h-full relative lg:flex hidden items-center justify-center'>
                         <Image src={"/assets/tour.avif"} alt='Bhutan' height={1000} width={1000} className='w-full h-full object-cover rounded-md' />
                         <div className='h-full w-full bg-black/40 rounded-md inset-0 absolute'></div>
                         <p className={`${rowdies.className} text-5xl tracking-widest absolute text-white`}>Nepal</p>

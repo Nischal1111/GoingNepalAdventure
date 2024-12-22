@@ -151,14 +151,14 @@ const Trekking = () => {
     return (
         <main>
             <SharedSection title='Trekking' link='/trekking' img="/assets/trekBG.avif"/>
-            <div className='px-16 my-12'>
-                <h1 className={`${rowdies.className} text-4xl`}>Trekking in Nepal</h1>
+            <div className='lg:px-16 px-4 my-12'>
+                <h1 className={`${rowdies.className} lg:text-4xl text-2xl`}>Trekking in Nepal</h1>
                 <p className='text-justify text-gray-700 my-8'>
                     {/* ... existing description text ... */}
                 </p>
-                <h1 ref={first} className={`${rowdies.className} text-4xl mt-20`}>Trekking packages</h1>
+                <h1 ref={first} className={`${rowdies.className} lg:text-4xl text-2xl mt-20`}>Trekking packages</h1>
                 
-                <div className='my-8 pl-8 flex items-center gap-8'>
+                <div className='my-8 pl-8 flex lg:flex-row flex-col items-center lg:gap-8 gap-4'>
                     <Dropdown>
                         <div className='flex items-center gap-4'>
                             <h1 className='font-bold text-sm text-primary'>Filter by Region</h1>
