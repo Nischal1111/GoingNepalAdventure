@@ -16,7 +16,7 @@ const TripQuote:React.FC<trekProps> = ({title,slug}) => {
         setIsOpen(true);
     };
     return (
-        <main className='bg-primary/30 px-8 py-4 rounded-md flex items-center justify-between my-16'>
+        <main className='bg-primary/30 lg:flex hidden lg:px-8 px-4 py-4 rounded-md items-center justify-between lg:my-16 my-4'>
             <section className='flex flex-col items-start h-full text-white'>
                 <div className='flex items-center gap-4 mb-2'>
                     <FaCircleQuestion size={52} className='text-primary'/>

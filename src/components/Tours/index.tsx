@@ -6,11 +6,12 @@ import { rowdies } from '@/utility/font'
 import { Button, Dropdown, DropdownItem, DropdownMenu, DropdownTrigger, Pagination } from '@nextui-org/react'
 import { useQuery } from '@tanstack/react-query'
 import React, { useEffect, useRef, useState } from 'react'
-import { IoIosArrowDown } from 'react-icons/io'
+import { IoIosArrowDown, IoMdClose } from 'react-icons/io'
 import type { Selection } from "@nextui-org/react";
 import { TourDetails } from '../SingleTrek/types'
 import PackageCard from './TourCard'
 import NoData from '@/shared/NoData/NoData'
+import { FiFilter } from 'react-icons/fi'
 
 const DURATION_RANGES = [
     'All Durations',
@@ -21,6 +22,7 @@ const DURATION_RANGES = [
 ];
 
 const Tours = () => {
+    const [isSidebarOpen, setIsSidebarOpen] = useState(false);
     const [page, setPage] = useState(1)
     const ITEMS_PER_PAGE = 8
 
@@ -115,6 +117,7 @@ const Tours = () => {
         if (selection instanceof Set && selection.size > 0) {
             const selectedValue = Array.from(selection)[0];
             setSelectedCountry(String(selectedValue));
+            setIsSidebarOpen(false);
         }
     };
 
@@ -122,6 +125,7 @@ const Tours = () => {
         if (selection instanceof Set && selection.size > 0) {
             const selectedValue = Array.from(selection)[0];
             setSelectedTripType(String(selectedValue));
+            setIsSidebarOpen(false);
         }
     };
 
@@ -129,6 +133,7 @@ const Tours = () => {
         if (selection instanceof Set && selection.size > 0) {
             const selectedValue = Array.from(selection)[0];
             setSelectedDuration(String(selectedValue));
+            setIsSidebarOpen(false);
         }
     };
 
@@ -140,14 +145,99 @@ const Tours = () => {
     // Calculate total pages
     const totalPages = Math.ceil(filteredPackages.length / ITEMS_PER_PAGE);
 
-    if(isLoading) return <Loader/>
+    const FilterSection = () => (
+        <div className="flex flex-col gap-6">
+            <Dropdown>
+                <div className="flex flex-col gap-2">
+                    <h1 className="font-bold text-sm text-primary">Select by Country</h1>
+                    <DropdownTrigger>
+                        <Button 
+                            variant="bordered" 
+                            className="rounded-sm w-full flex justify-between"
+                            endContent={<IoIosArrowDown />}
+                        >
+                            {selectedCountry || 'Select Country'}
+                        </Button>
+                    </DropdownTrigger>
+                </div>
+                <DropdownMenu 
+                    aria-label="Country Selection" 
+                    selectionMode="single" 
+                    selectedKeys={new Set([selectedCountry])}
+                    onSelectionChange={handleCountryChange}
+                >
+                    {countries.map((country) => (
+                        <DropdownItem key={country}>{country}</DropdownItem>
+                    ))}
+                </DropdownMenu>
+            </Dropdown>
+
+            <Dropdown>
+                <div className="flex flex-col gap-2">
+                    <h1 className="font-bold text-sm text-primary">Select by Trip Type</h1>
+                    <DropdownTrigger>
+                        <Button 
+                            variant="bordered" 
+                            className="rounded-sm w-full flex justify-between"
+                            endContent={<IoIosArrowDown />}
+                        >
+                            {selectedTripType || 'Select Trip Type'}
+                        </Button>
+                    </DropdownTrigger>
+                </div>
+                <DropdownMenu 
+                    aria-label="Trip Type Selection" 
+                    selectionMode="single" 
+                    selectedKeys={new Set([selectedTripType])}
+                    onSelectionChange={handleTripTypeChange}
+                >
+                    {tripTypes.map((type) => (
+                        <DropdownItem key={type}>{type}</DropdownItem>
+                    ))}
+                </DropdownMenu>
+            </Dropdown>
+
+            <Dropdown>
+                <div className="flex flex-col gap-2">
+                    <h1 className="font-bold text-sm text-primary">Filter by Duration</h1>
+                    <DropdownTrigger>
+                        <Button 
+                            variant="bordered" 
+                            className="rounded-sm w-full flex justify-between"
+                            endContent={<IoIosArrowDown />}
+                        >
+                            {selectedDuration || 'Select Duration'}
+                        </Button>
+                    </DropdownTrigger>
+                </div>
+                <DropdownMenu 
+                    aria-label="Duration Selection" 
+                    selectionMode="single" 
+                    selectedKeys={new Set([selectedDuration])}
+                    onSelectionChange={handleDurationChange}
+                >
+                    {DURATION_RANGES.map((duration) => (
+                        <DropdownItem key={duration}>{duration}</DropdownItem>
+                    ))}
+                </DropdownMenu>
+            </Dropdown>
+        </div>
+    );
+
+    if (isLoading) return <Loader />;
 
     return (
         <div>
-            <SharedSection title='Trips and Tours' link='/tours' img='https://images.unsplash.com/photo-1526712318848-5f38e2740d44?q=80&w=2940&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'/>
+            <SharedSection 
+                title='Trips and Tours' 
+                link='/tours' 
+                img='https://images.unsplash.com/photo-1526712318848-5f38e2740d44?q=80&w=2940&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'
+            />
 
-            <section className='lg:px-16 px-4 my-12'>
-                <h1 className={`${rowdies.className} lg:text-4xl text-2xl `}>Trips and Tours in Nepal, Bhutan and Tibet</h1>
+            <section className="lg:px-16 px-4 my-12">
+                <h1 className={`${rowdies.className} lg:text-4xl text-2xl`}>
+                    Trips and Tours in Nepal, Bhutan and Tibet
+                </h1>
                 <p className='text-gray-700 text-justify my-8'>
                     Nepal, a country steeped in ancient traditions, rugged landscapes, and awe-inspiring natural beauty, is known worldwide as a trekking and adventure haven. Nestled between the peaks of the mighty Himalayas, Nepal offers unparalleled experiences for explorers, nature lovers, and cultural enthusiasts alike. With trekking trails that range from gentle paths to challenging high-altitude circuits, the country is home to world-famous routes like the Everest Base Camp, Annapurna Circuit, and Langtang Valley. Beyond trekking, Nepal is a place of deep cultural heritage, with historic temples, vibrant festivals, and warm local hospitality. <br /><br />
 
@@ -169,118 +259,87 @@ const Tours = () => {
                 Tours in Tibet provide an opportunity to experience its rich monastic culture, meet warm and welcoming Tibetans, and appreciate the region&apos;s unspoiled natural beauty. The landscape, rich in unique flora and fauna, creates an unforgettable backdrop for trekking, sightseeing, and cultural exploration. A journey through Tibet is both a challenging and spiritually enriching experience, ideal for those seeking a deeper connection to Himalayan culture and spirituality. <br /><br />
 
                 </p>
-                <h1 ref={first} className={`${rowdies.className} lg:text-4xl text-2xl mt-8`}>Trips and Tours packages</h1>
 
-                <div className='my-8 pl-8 flex lg:flex-row flex-col items-center lg:gap-8 gap-4'>
-                    <Dropdown>
-                        <div className='flex items-center gap-4'>
-                            <h1 className='font-bold text-sm text-primary'>Select by Country</h1>
-                            <DropdownTrigger>
-                                <Button 
-                                    variant="bordered" 
-                                    className='rounded-sm w-[200px] flex justify-between'
-                                    endContent={<IoIosArrowDown/>}
-                                >
-                                    {selectedCountry || 'Select Country'}
-                                </Button>
-                            </DropdownTrigger>
-                        </div>
-                        <DropdownMenu 
-                            aria-label="Country Selection" 
-                            selectionMode="single" 
-                            selectedKeys={new Set([selectedCountry])}
-                            onSelectionChange={handleCountryChange}
-                        >
-                            {countries.map((country) => (
-                                <DropdownItem key={country}>
-                                    {country}
-                                </DropdownItem>
-                            ))}
-                        </DropdownMenu>
-                    </Dropdown>
-
-                    <Dropdown>
-                        <div className='flex items-center gap-4'>
-                            <h1 className='font-bold text-sm text-primary'>Select by Trip Type</h1>
-                            <DropdownTrigger>
-                                <Button 
-                                    variant="bordered" 
-                                    className='rounded-sm w-[200px] flex justify-between'
-                                    endContent={<IoIosArrowDown/>}
-                                >
-                                    {selectedTripType || 'Select Trip Type'}
-                                </Button>
-                            </DropdownTrigger>
-                        </div>
-                        <DropdownMenu 
-                            aria-label="Trip Type Selection" 
-                            selectionMode="single" 
-                            selectedKeys={new Set([selectedTripType])}
-                            onSelectionChange={handleTripTypeChange}
-                        >
-                            {tripTypes.map((type) => (
-                                <DropdownItem key={type}>
-                                    {type}
-                                </DropdownItem>
-                            ))}
-                        </DropdownMenu>
-                    </Dropdown>
-
-                    <Dropdown>
-                        <div className='flex items-center gap-4'>
-                            <h1 className='font-bold text-sm text-primary'>Filter by Duration</h1>
-                            <DropdownTrigger>
-                                <Button 
-                                    variant="bordered" 
-                                    className='rounded-sm w-[200px] flex justify-between'
-                                    endContent={<IoIosArrowDown/>}
-                                >
-                                    {selectedDuration || 'Select Duration'}
-                                </Button>
-                            </DropdownTrigger>
-                        </div>
-                        <DropdownMenu 
-                            aria-label="Duration Selection" 
-                            selectionMode="single" 
-                            selectedKeys={new Set([selectedDuration])}
-                            onSelectionChange={handleDurationChange}
-                        >
-                            {DURATION_RANGES.map((duration) => (
-                                <DropdownItem key={duration}>
-                                    {duration}
-                                </DropdownItem>
-                            ))}
-                        </DropdownMenu>
-                    </Dropdown>
+                <div className="flex justify-between items-center mt-8">
+                    <h1 ref={first} className={`${rowdies.className} lg:text-4xl text-2xl`}>
+                        Trips and Tours packages
+                    </h1>
+                    <Button
+                        className="lg:hidden flex items-center gap-2"
+                        variant="bordered"
+                        onClick={() => setIsSidebarOpen(true)}
+                    >
+                        <FiFilter />
+                        Filters
+                    </Button>
                 </div>
-                {paginatedPackages?.length > 0 ? (
-                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 my-4">
-                        {paginatedPackages.map((trek, index) => (
-                        <div key={index}>
-                            <PackageCard {...trek} />
-                        </div>
-                        ))}
+
+                <div className="flex gap-8 relative mt-8">
+                    {/* Desktop Filters */}
+                    <div className="hidden lg:block w-72">
+                        <FilterSection />
                     </div>
-                    ) : (
-                    <NoData title="packages" />
+
+                    {/* Mobile Sidebar */}
+                    <div className={`
+                        lg:hidden fixed top-0 right-0 h-full w-80 bg-white z-50 
+                        transform transition-transform duration-300 ease-in-out
+                        ${isSidebarOpen ? 'translate-x-0' : 'translate-x-full'}
+                        shadow-xl p-6
+                    `}>
+                        <div className="flex justify-between items-center mb-6">
+                            <h2 className="text-xl font-bold">Filters</h2>
+                            <Button
+                                isIconOnly
+                                variant="light"
+                                onClick={() => setIsSidebarOpen(false)}
+                            >
+                                <IoMdClose className="text-xl" />
+                            </Button>
+                        </div>
+                        <FilterSection />
+                    </div>
+
+                    {/* Overlay */}
+                    {isSidebarOpen && (
+                        <div
+                            className="lg:hidden fixed inset-0 bg-black bg-opacity-50 z-40"
+                            onClick={() => setIsSidebarOpen(false)}
+                        />
                     )}
 
-                {totalPages > 1 && (
-                    <div className="flex justify-center my-12">
-                        <Pagination
-                            isCompact
-                            showControls
-                            initialPage={1}
-                            className='text-primary'
-                            total={totalPages}
-                            page={page}
-                            onChange={handlePageChange}
-                        />
+                    {/* Main Content */}
+                    <div className="flex-1">
+                        {paginatedPackages?.length > 0 ? (
+                            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3 gap-6">
+                                {paginatedPackages.map((trek, index) => (
+                                    <div key={index}>
+                                        <PackageCard {...trek} />
+                                    </div>
+                                ))}
+                            </div>
+                        ) : (
+                            <NoData title="packages" />
+                        )}
+
+                        {totalPages > 1 && (
+                            <div className="flex justify-center my-12">
+                                <Pagination
+                                    isCompact
+                                    showControls
+                                    initialPage={1}
+                                    className="text-primary"
+                                    total={totalPages}
+                                    page={page}
+                                    onChange={handlePageChange}
+                                />
+                            </div>
+                        )}
                     </div>
-                )}
+                </div>
             </section>
         </div>
-    )
-}
+    );
+};
 
 export default Tours

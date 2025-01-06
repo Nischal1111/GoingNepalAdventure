@@ -32,11 +32,11 @@ const Activities = () => {
 
             </section>
             <h1 className={`${rowdies.className} lg:text-3xl text-2xl  mt-4 lg:px-16 px-4`}>All Activities</h1>
-            <div className='grid lg:grid-cols-4 grid-cols-2 gap-8 lg:px-16 px-4 mt-8'>
+            <div className='grid lg:grid-cols-4 grid-cols-1 lg:gap-8 gap-4 lg:px-16 px-4 mt-8'>
                 {activityData?.data?.map((activity:activityProps)=>{
                     return(
                         <Link key={activity.slug} href={`/activities/${activity.slug}`}>
-                            <div  className="relative lg:h-[300px] h-[230px] mx-auto lg:max-w-[280px] w-full rounded-lg shadow-md group cursor-pointer">
+                            <div  className="relative h-[300px]  mx-auto lg:max-w-[280px] w-full rounded-lg shadow-md group cursor-pointer">
                                 <div className="h-full w-full overflow-hidden rounded-lg">
                                     <img
                                         src={activity.thumbnail}

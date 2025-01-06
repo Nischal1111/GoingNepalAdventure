@@ -11,8 +11,8 @@ const Services:React.FC<Props> = ({servicesIncluded}) => {
         <main>
             <SharedTitle2 title='Services'/>
             <LinedContainer>
-                <div className='bg-[#06D001]/10 text-[#10C042] rounded-sm my-8 px-8 py-4 flex items-center'>
-                    <h1 className='font-semibold text-2xl'>Costs included in your package.</h1>
+                <div className='bg-[#06D001]/10 text-[#10C042] rounded-sm my-8 lg:px-8 px-4 py-4 flex items-center'>
+                    <h1 className='font-semibold lg:text-2xl text-lg'>Costs included in your package.</h1>
                 </div>
                 <div className='flex flex-col gap-4'>
                         {servicesIncluded?.map((item,index)=>{

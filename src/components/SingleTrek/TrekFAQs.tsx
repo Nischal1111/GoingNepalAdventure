@@ -44,7 +44,7 @@ const TrekFAQs: React.FC<TrekFAQsProps> = ({ FAQs }) => {
 
     return (
         <main>
-            <SharedTitle2 title='Frequently Asked Questions' />
+            <SharedTitle2 title='FAQs' />
             <LinedContainer>
                 <div className='mt-8 -ml-4'>
                     <Button 

@@ -9,12 +9,12 @@ import { CiLocationOn } from 'react-icons/ci'
 const WellnessCard:React.FC<WellnessProps> = ({name,country,slug,overview,thumbnail,price}) => {
     return (
         <Link href={`/wellness/${slug}`}>
-            <div className='w-full flex gap-8 h-[180px] shadow-md p-4 border border-gray-200 relative'>
-                <div className='w-2/5 h-full '>
+            <div className='w-full flex lg:flex-row flex-col gap-8 lg:h-[180px] h-auto shadow-md p-4 border border-gray-200 relative'>
+                <div className='lg:w-2/5 w-full h-full '>
                     <Image src={thumbnail} alt={name}height={1000} width={1000} className='object-cover h-full w-full rounded-sm'/>
                 </div>
-                <div className='w-3/5 flex flex-col gap-2 text-justify'>
-                    <div className='flex items-center justify-between'>
+                <div className='lg:w-3/5 w-full flex flex-col gap-2 text-justify'>
+                    <div className='flex items-center justify-between gap-4'>
                         <h1 className='text-xl font-bold'>{name}</h1>
                         <p className='text-sm font-semibold text-primary'>From ${price}</p>
                     </div>

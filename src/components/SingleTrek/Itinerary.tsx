@@ -77,14 +77,14 @@ const Itinerary: React.FC<trekProps> = ({ itinerary }) => {
                             <AccordionItem
                                 key={item?.day}
                                 aria-label={item.title}
-                                title={<div className='flex gap-2 '><span className='text-primary'>Day {item?.day}</span><p>: {item?.title}</p></div>}
+                                title={<div className='flex gap-2 '><span className='text-primary'>Day {item?.day}</span><p className='text-sm lg:text-base'>: {item?.title}</p></div>}
                                 startContent={<Dot />}
                                 indicator={({ isOpen }) => (isOpen ? <RxCross1 className='text-primary' /> : <FaPlus className='text-primary' />)}
                                 classNames={itemClasses}
                                 className='py-2'
                             >
                                 <p>{parseContentWithLinks(item.details, Array.isArray(item.links) ? item.links : [item.links])}</p>
-                                <div className='my-4 px-8 py-4 rounded-md bg-[#5d83c4]/20 flex items-center gap-12 w-fit'>
+                                <div className='my-4 lg:px-8 px-4 lg:py-4 py-2 rounded-md bg-[#5d83c4]/20 flex items-center gap-12 w-fit'>
                                     <div className='flex items-center gap-4'>
                                         <FaBed className='text-primary' size={20} />
                                         <p className='text-sm'>{item?.accommodations}</p>

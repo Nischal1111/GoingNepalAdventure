@@ -175,26 +175,26 @@ const SingleTrek:React.FC<paramsProps> = ({id}) => {
     }
 
     return (
-        <main className='relative px-16'>
+        <main className='relative lg:px-16 px-4 lg:pt-0 pt-12'>
             <Button
-                className='absolute top-0 left-4 z-50 rounded-full bg-primary p-0 text-white'
+                className='absolute lg:flex hidden lg:top-0 top-32 left-4 z-50 rounded-full bg-primary p-0 text-white'
                 isIconOnly
                 onClick={() => window.history.back()}
             >
                 <FaChevronCircleLeft />
             </Button>
-            <section className='relative h-[75vh] mt-4 w-full rounded-md' style={{background:`url(${SingleTrekData?.data?.data?.thumbnail})`,backgroundSize:"cover",backgroundPosition:"center",backgroundAttachment:"fixed"}}>
+            <section className='relative lg:h-[75vh] h-[40vh] lg:mt-4 mt-12 w-full rounded-md' style={{background:`url(${SingleTrekData?.data?.data?.thumbnail})`,backgroundSize:"cover",backgroundPosition:"center",backgroundAttachment:"fixed"}}>
                 <div className='absolute inset-0 bg-black/20 w-full'></div>
                 <div className='w-fit relative flex items-center justify-start top-[70%] left-[5%] '>
                     <div className='flex flex-col items-start'>
-                        <h1 className={`${rowdies.className} text-7xl w-fit text-[#DFDCDC]/70`}>{trek.title}</h1>
-                        <p className={`${rowdies.className} text-5xl absolute top-10 antialiased text-white`}>{trek.title}</p>
+                        <h1 className={`${rowdies.className} lg:text-7xl text-3xl w-fit text-[#DFDCDC]/70`}>{trek.title}</h1>
+                        <p className={`${rowdies.className} lg:text-5xl text-2xl absolute top-10 antialiased text-white`}>{trek.title}</p>
                     </div>
                 </div>
             </section>
-            <section  className='flex gap-12 w-full my-12 justify-between'>
-                <div className='w-[65%]'>
-                    <section className='grid grid-cols-3 gap-4 bg-[#5D83C4]/20 rounded-md px-8 py-6 shadow-md'>
+            <section  className='flex lg:flex-row flex-col lg:gap-12 gap-4 w-full lg:my-12 my-4 justify-between'>
+                <div className='lg:w-[65%] w-full'>
+                    <section className='grid lg:grid-cols-3 grid-cols-2 gap-4 bg-[#5D83C4]/20 rounded-md px-8 py-6 shadow-md'>
                         {
                             minitrekDetails.map((item,index)=>(
                                 <div className='w-full flex items-center justify-start gap-2' key={index}>
@@ -218,7 +218,7 @@ const SingleTrek:React.FC<paramsProps> = ({id}) => {
                     <TrekFAQs FAQs={FAQs}/>
                     <Gallery title={trek?.title} gallery={gallery}/>
                 </div>
-                <div className='w-[35%] flex justify-start flex-col items-center'>
+                <div className='lg:w-[35%] w-full flex justify-start flex-col items-center'>
                     <RightSide slug={SingleTrekData?.data?.data?.slug} price={trek?.price} title={trek?.title} trekPdf={SingleTrekData?.data?.data?.trekPdf} _id={SingleTrekData?.data?.data?._id} downloadPDF={downloadPDF}/>
                 </div>
             </section>

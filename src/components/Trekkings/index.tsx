@@ -5,13 +5,14 @@ import { rowdies } from '@/utility/font'
 import React, { useEffect, useRef, useState } from 'react'
 import PackageCard from './PackageCard'
 import { Button, Dropdown, DropdownItem, DropdownMenu, DropdownTrigger, Pagination } from '@nextui-org/react'
-import { IoIosArrowDown } from 'react-icons/io'
+import { IoIosArrowDown, IoMdClose } from 'react-icons/io'
 import type { Selection } from "@nextui-org/react";
 import { getAllTreks } from '@/services/treks'
 import { useQuery } from '@tanstack/react-query'
 import { TrekDetails } from '../SingleTrek/types'
 import Loader from '@/shared/Loader'
 import NoData from '@/shared/NoData/NoData'
+import { FiFilter } from 'react-icons/fi'
 
 const DURATION_RANGES = [
     'All Durations',
@@ -22,6 +23,7 @@ const DURATION_RANGES = [
 ];
 
 const Trekking = () => {
+    const [isSidebarOpen, setIsSidebarOpen] = useState(false);
     const [page, setPage] = useState(1)
     const ITEMS_PER_PAGE = 8
 
@@ -121,6 +123,7 @@ const Trekking = () => {
         if (selection instanceof Set && selection.size > 0) {
             const selectedValue = Array.from(selection)[0];
             setSelectedRegion(String(selectedValue));
+            setIsSidebarOpen(false);
         }
     };
 
@@ -128,6 +131,8 @@ const Trekking = () => {
         if (selection instanceof Set && selection.size > 0) {
             const selectedValue = Array.from(selection)[0];
             setSelectedDifficulty(String(selectedValue));
+            setIsSidebarOpen(false);
+
         }
     };
 
@@ -135,6 +140,8 @@ const Trekking = () => {
         if (selection instanceof Set && selection.size > 0) {
             const selectedValue = Array.from(selection)[0];
             setSelectedDuration(String(selectedValue));
+            setIsSidebarOpen(false);
+
         }
     };
 
@@ -146,129 +153,176 @@ const Trekking = () => {
     // Calculate total pages
     const totalPages = Math.ceil(filteredPackages.length / ITEMS_PER_PAGE);
 
-    if(isLoading) return <Loader/>
+    const FilterSection = () => (
+        <div className="flex flex-col gap-6">
+            <Dropdown>
+                <div className="flex flex-col gap-2">
+                    <h1 className="font-bold text-sm text-primary">Filter by Region</h1>
+                    <DropdownTrigger>
+                        <Button 
+                            variant="bordered" 
+                            className="rounded-sm w-full flex justify-between"
+                            endContent={<IoIosArrowDown />}
+                        >
+                            {selectedRegion || 'Select Region'}
+                        </Button>
+                    </DropdownTrigger>
+                </div>
+                <DropdownMenu 
+                    aria-label="Region Selection" 
+                    selectionMode="single" 
+                    selectedKeys={new Set([selectedRegion])}
+                    onSelectionChange={handleRegionChange}
+                >
+                    {regions.map((region) => (
+                        <DropdownItem key={region}>{region}</DropdownItem>
+                    ))}
+                </DropdownMenu>
+            </Dropdown>
+
+            <Dropdown>
+                <div className="flex flex-col gap-2">
+                    <h1 className="font-bold text-sm text-primary">Filter by Difficulty</h1>
+                    <DropdownTrigger>
+                        <Button 
+                            variant="bordered" 
+                            className="rounded-sm w-full flex justify-between"
+                            endContent={<IoIosArrowDown />}
+                        >
+                            {selectedDifficulty || 'Select Difficulty'}
+                        </Button>
+                    </DropdownTrigger>
+                </div>
+                <DropdownMenu 
+                    aria-label="Difficulty Selection" 
+                    selectionMode="single" 
+                    selectedKeys={new Set([selectedDifficulty])}
+                    onSelectionChange={handleDifficultyChange}
+                >
+                    {difficulties.map((difficulty) => (
+                        <DropdownItem key={difficulty}>{difficulty}</DropdownItem>
+                    ))}
+                </DropdownMenu>
+            </Dropdown>
+
+            <Dropdown>
+                <div className="flex flex-col gap-2">
+                    <h1 className="font-bold text-sm text-primary">Filter by Duration</h1>
+                    <DropdownTrigger>
+                        <Button 
+                            variant="bordered" 
+                            className="rounded-sm w-full flex justify-between"
+                            endContent={<IoIosArrowDown />}
+                        >
+                            {selectedDuration || 'Select Duration'}
+                        </Button>
+                    </DropdownTrigger>
+                </div>
+                <DropdownMenu 
+                    aria-label="Duration Selection" 
+                    selectionMode="single" 
+                    selectedKeys={new Set([selectedDuration])}
+                    onSelectionChange={handleDurationChange}
+                >
+                    {DURATION_RANGES.map((duration) => (
+                        <DropdownItem key={duration}>{duration}</DropdownItem>
+                    ))}
+                </DropdownMenu>
+            </Dropdown>
+        </div>
+    );
+
+    if (isLoading) return <Loader />;
 
     return (
         <main>
-            <SharedSection title='Trekking' link='/trekking' img="/assets/trekBG.avif"/>
-            <div className='lg:px-16 px-4 my-12'>
+            <SharedSection title="Trekking" link="/trekking" img="/assets/trekBG.avif" />
+            <div className="lg:px-16 px-4 my-12">
                 <h1 className={`${rowdies.className} lg:text-4xl text-2xl`}>Trekking in Nepal</h1>
-                <p className='text-justify text-gray-700 my-8'>
+                <p className="text-justify text-gray-700 my-8">
                     {/* ... existing description text ... */}
                 </p>
-                <h1 ref={first} className={`${rowdies.className} lg:text-4xl text-2xl mt-20`}>Trekking packages</h1>
                 
-                <div className='my-8 pl-8 flex lg:flex-row flex-col items-center lg:gap-8 gap-4'>
-                    <Dropdown>
-                        <div className='flex items-center gap-4'>
-                            <h1 className='font-bold text-sm text-primary'>Filter by Region</h1>
-                            <DropdownTrigger>
-                                <Button 
-                                    variant="bordered" 
-                                    className='rounded-sm w-[200px] flex justify-between'
-                                    endContent={<IoIosArrowDown/>}
-                                >
-                                    {selectedRegion || 'Select Region'}
-                                </Button>
-                            </DropdownTrigger>
-                        </div>
-                        <DropdownMenu 
-                            aria-label="Region Selection" 
-                            selectionMode="single" 
-                            selectedKeys={new Set([selectedRegion])}
-                            onSelectionChange={handleRegionChange}
-                        >
-                            {regions.map((region) => (
-                                <DropdownItem key={region}>
-                                    {region}
-                                </DropdownItem>
-                            ))}
-                        </DropdownMenu>
-                    </Dropdown>
-
-                    <Dropdown>
-                        <div className='flex items-center gap-4'>
-                            <h1 className='font-bold text-sm text-primary'>Filter by Difficulty</h1>
-                            <DropdownTrigger>
-                                <Button 
-                                    variant="bordered" 
-                                    className='rounded-sm w-[200px] flex justify-between'
-                                    endContent={<IoIosArrowDown/>}
-                                >
-                                    {selectedDifficulty || 'Select Difficulty'}
-                                </Button>
-                            </DropdownTrigger>
-                        </div>
-                        <DropdownMenu 
-                            aria-label="Difficulty Selection" 
-                            selectionMode="single" 
-                            selectedKeys={new Set([selectedDifficulty])}
-                            onSelectionChange={handleDifficultyChange}
-                        >
-                            {difficulties.map((difficulty) => (
-                                <DropdownItem key={difficulty}>
-                                    {difficulty}
-                                </DropdownItem>
-                            ))}
-                        </DropdownMenu>
-                    </Dropdown>
-
-                    <Dropdown>
-                        <div className='flex items-center gap-4'>
-                            <h1 className='font-bold text-sm text-primary'>Filter by Duration</h1>
-                            <DropdownTrigger>
-                                <Button 
-                                    variant="bordered" 
-                                    className='rounded-sm w-[200px] flex justify-between'
-                                    endContent={<IoIosArrowDown/>}
-                                >
-                                    {selectedDuration || 'Select Duration'}
-                                </Button>
-                            </DropdownTrigger>
-                        </div>
-                        <DropdownMenu 
-                            aria-label="Duration Selection" 
-                            selectionMode="single" 
-                            selectedKeys={new Set([selectedDuration])}
-                            onSelectionChange={handleDurationChange}
-                        >
-                            {DURATION_RANGES.map((duration) => (
-                                <DropdownItem key={duration}>
-                                    {duration}
-                                </DropdownItem>
-                            ))}
-                        </DropdownMenu>
-                    </Dropdown>
+                <div className="flex justify-between items-center mt-20">
+                    <h1 ref={first} className={`${rowdies.className} lg:text-4xl text-2xl`}>
+                        Trekking packages
+                    </h1>
+                    <Button
+                        className="lg:hidden flex items-center gap-2"
+                        variant="bordered"
+                        onClick={() => setIsSidebarOpen(true)}
+                    >
+                        <FiFilter />
+                        Filters
+                    </Button>
                 </div>
 
-                {paginatedPackages?.length > 0 ? (
-                    <div className='grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 my-4'>
-                        {paginatedPackages.map((trek, index) => (
-                            <div key={index}>
-                                <PackageCard {...trek}/>
-                            </div>
-                        ))}
+                <div className="flex gap-8 relative mt-8">
+                    {/* Desktop Filters */}
+                    <div className="hidden lg:block w-72">
+                        <FilterSection />
                     </div>
-                ) : (
-                    <NoData title="trekking packages" />
-                )}
 
-                {totalPages > 1 && (
-                    <div className="flex justify-center my-12">
-                        <Pagination
-                            isCompact
-                            showControls
-                            initialPage={1}
-                            className='text-primary'
-                            total={totalPages}
-                            page={page}
-                            onChange={handlePageChange}
-                        />
+                    {/* Mobile Sidebar */}
+                    <div className={`
+                        lg:hidden fixed top-0 right-0 h-full w-80 bg-white z-50 
+                        transform transition-transform duration-300 ease-in-out
+                        ${isSidebarOpen ? 'translate-x-0' : 'translate-x-full'}
+                        shadow-xl p-6
+                    `}>
+                        <div className="flex justify-between items-center mb-6">
+                            <h2 className="text-xl font-bold">Filters</h2>
+                            <Button
+                                isIconOnly
+                                variant="light"
+                                onClick={() => setIsSidebarOpen(false)}
+                            >
+                                <IoMdClose className="text-xl" />
+                            </Button>
+                        </div>
+                        <FilterSection />
                     </div>
-                )}
+
+                    {/* Overlay */}
+                    {isSidebarOpen && (
+                        <div
+                            className="lg:hidden fixed inset-0 bg-black bg-opacity-50 z-40"
+                            onClick={() => setIsSidebarOpen(false)}
+                        />
+                    )}
+
+                    {/* Main Content */}
+                    <div className="flex-1">
+                        {paginatedPackages?.length > 0 ? (
+                            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3 gap-6">
+                                {paginatedPackages.map((trek, index) => (
+                                    <div key={index}>
+                                        <PackageCard {...trek} />
+                                    </div>
+                                ))}
+                            </div>
+                        ) : (
+                            <NoData title="trekking packages" />
+                        )}
+
+                        {totalPages > 1 && (
+                            <div className="flex justify-center my-12">
+                                <Pagination
+                                    isCompact
+                                    showControls
+                                    initialPage={1}
+                                    className="text-primary"
+                                    total={totalPages}
+                                    page={page}
+                                    onChange={handlePageChange}
+                                />
+                            </div>
+                        )}
+                    </div>
+                </div>
             </div>
         </main>
-    )
-}
+    );
+};
 
 export default Trekking

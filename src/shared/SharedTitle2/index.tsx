@@ -9,7 +9,7 @@ const SharedTitle2:React.FC<sharedProps> = ({title}) => {
             <div className='h-auto bg-primary w-[4px] rounded-md'>
                 
             </div>
-            <h1 className='font-semibold text-3xl'>{title}</h1>
+            <h1 className='font-semibold lg:text-3xl text-xl'>{title}</h1>
         </div>
     )
 }

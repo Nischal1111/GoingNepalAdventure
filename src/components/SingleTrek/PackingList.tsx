@@ -22,7 +22,7 @@ const PackingList:React.FC<trekProps> = ({trekkingEquipment}) => {
                                         <div className='rounded-full flex items-center justify-center p-2 size-[2rem] bg-primary/50 text-white'>
                                             <Icon size={22}/>
                                         </div>
-                                        <h1 className='font-semibold text-xl'>{item?.category}</h1>
+                                        <h1 className='font-semibold lg:text-xltext-base'>{item?.category}</h1>
                                     </div>
                                     <div className='flex flex-col gap-2'>
                                         {item?.items?.map((item,index)=>{
