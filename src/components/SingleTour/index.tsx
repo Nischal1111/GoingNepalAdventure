@@ -110,7 +110,7 @@ const SingleTour:React.FC<pageProps> = ({id}) => {
                     </div>
                 </div>
             </section>
-            <section className='lg:flex-row flex-col lg:gap-12 gap-4 w-full lg:my-12 my-4 justify-between'>
+            <section className='flex lg:flex-row flex-col w-full lg:my-12 my-4 justify-between'>
                 <div className='lg:w-[65%] w-full'>
                     <section className='grid lg:grid-cols-3 grid-cols-2 gap-4 bg-[#5D83C4]/20 rounded-md px-8 py-6 shadow-md'>
                         {

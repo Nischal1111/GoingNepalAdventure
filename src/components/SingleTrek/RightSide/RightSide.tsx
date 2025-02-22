@@ -197,7 +197,9 @@ const RightSide: React.FC<RightSideProps> = ({ price, title,_id,downloadPDF,slug
                                 <span>${finalPrice}</span>
                             </div>
                         </div>
-                        <Button className='-mb-4 mt-4 bg-primary rounded-sm text-white w-[90%] flex self-center'>Book Now</Button>
+                        <Link href={`/payment`}>
+                            <Button className='-mb-4 mt-4 bg-primary rounded-sm text-white w-[90%] flex self-center'>Book Now</Button>
+                        </Link>
 
                         
                     </div>

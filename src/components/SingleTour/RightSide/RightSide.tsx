@@ -5,7 +5,7 @@ import QuoteModal from './QuoteModal'
 import Image from 'next/image'
 import Link from 'next/link'
 import { Rowdies } from "next/font/google";
-import {today, getLocalTimeZone} from "@internationalized/date";
+import {today, getLocalTimeZone, CalendarDate} from "@internationalized/date";
 import { FaMinus, FaPlus, FaRegEye } from 'react-icons/fa6'
 import { Tour } from '@/components/SingleTrek/types'
 import { useQuery } from '@tanstack/react-query'
@@ -13,6 +13,7 @@ import { getBlogsByViews } from '@/services/blogs'
 import { excludeTour } from '@/services/tour'
 import { GoDotFill } from 'react-icons/go'
 import { getAllActivitys } from '@/services/activities'
+import { useRouter } from 'next/navigation'
 
 
 export const rowdies=Rowdies({
@@ -30,6 +31,7 @@ const RightSide: React.FC<Tour> = ({ price,name,_id,slug,category }) => {
     const [guide,setGuide]=useState(false)
     const [potter,setPotter]=useState(false)
     const [fullboard,setFullboard]=useState(false)
+    const [selectedDate, setSelectedDate] = useState<CalendarDate>(today(getLocalTimeZone()))
     const GUIDE_SERVICE_PRICE = 100;
     const POTTER_SERVICE_PRICE = 150;
     const FULLBOARD_SERVICE_PRICE = 200;
@@ -75,6 +77,29 @@ const RightSide: React.FC<Tour> = ({ price,name,_id,slug,category }) => {
     const totalPrice = basePrice * quantity
     const finalPrice =totalPrice + (guide?(GUIDE_SERVICE_PRICE*quantity):0) + (potter?POTTER_SERVICE_PRICE*quantity:0) + (fullboard?FULLBOARD_SERVICE_PRICE*quantity:0);
 
+    const router=useRouter()
+
+    const handleBookNow = () => {
+            const bookingDetails = {
+                name,
+                price: basePrice,
+                quantity,
+                bookingDate: selectedDate,
+                extraServices: {
+                guide,
+                potter,
+                fullboard
+                }
+            };
+            
+            // Using searchParams for Next.js 13+
+            const searchParams = new URLSearchParams();
+            searchParams.set('details', JSON.stringify(bookingDetails));
+            
+            router.push(`/checkout?${searchParams.toString()}`);
+            };
+
+
     return (
         <>
         <div className='px-12'>
@@ -103,6 +128,8 @@ const RightSide: React.FC<Tour> = ({ price,name,_id,slug,category }) => {
                                     input: 'w-full bg-white border border-primary',
                                 }}
                                 defaultValue={today(getLocalTimeZone())}
+                                value={selectedDate}
+                                onChange={(date) => setSelectedDate(date)}
                                 minValue={today(getLocalTimeZone())}
                                 labelPlacement='outside'
                                 radius='sm'
@@ -186,7 +213,7 @@ const RightSide: React.FC<Tour> = ({ price,name,_id,slug,category }) => {
                                 <span>${finalPrice}</span>
                             </div>
                         </div>
-                        <Button className='-mb-4 mt-4 bg-primary rounded-sm text-white w-[90%] flex self-center'>Book Now</Button>
+                        <Button className='-mb-4 mt-4 bg-primary rounded-sm text-white w-[90%] flex self-center' onPress={handleBookNow}>Book Now</Button>
 
                         
                     </div>
