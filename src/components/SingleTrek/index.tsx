@@ -226,6 +226,7 @@ const SingleTrek:React.FC<paramsProps> = ({id}) => {
                 ref={pdfContentRef}
                 className="hidden-pdf bg-white text-gray-800 p-6 rounded-md shadow-md"
             >
+                <img src="/assets/logo.png" alt={trek.title} className="w-[300px] mb-6 h-[200px]" />
                 <h1 className="text-3xl font-bold mb-4">{trek.title} Trek Details</h1>
                 <p className="text-base mb-6">{trek.desc}</p>
 
