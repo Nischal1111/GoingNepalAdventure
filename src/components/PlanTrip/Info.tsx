@@ -70,11 +70,11 @@ const Info = () => {
   };
 
   return (
-    <div className="flex w-full flex-col items-center justify-center px-16">
-      <h1 className="text-2xl text-primary font-semibold py-16 tracking-wide">
+    <div className="flex w-full flex-col items-center justify-center px-4  md:px-12 lg:px-16">
+      <h1 className="text-xl md:text-2xl text-primary font-semibold py-6 md:py-10 lg:py-16 tracking-wide text-center">
         Personal Information
       </h1>
-      <div className="w-full grid grid-cols-2 gap-x-20 gap-y-12">
+      <div className="w-full grid grid-cols-1 lg:grid-cols-2 gap-x-6 sm:gap-x-10 md:gap-x-16 lg:gap-x-20 gap-y-6 sm:gap-y-8 md:gap-y-12">
         <Input
           radius="none"
           className="w-full shadow-sm"
@@ -86,7 +86,7 @@ const Info = () => {
           classNames={{
             inputWrapper:
               "text-black font-medium bg-white group-data-[focus=true]:bg-white",
-            label: "text-black text-lg font-medium",
+            label: "text-black text-base md:text-lg font-medium",
           }}
         />
         <Input
@@ -99,8 +99,8 @@ const Info = () => {
           onChange={(e) => handleChange("address", e.target.value)}
           classNames={{
             inputWrapper:
-              "text-black font-medium bg-white  group-data-[focus=true]:bg-white",
-            label: "text-black text-lg font-medium",
+              "text-black font-medium bg-white group-data-[focus=true]:bg-white",
+            label: "text-black text-base md:text-lg font-medium",
           }}
         />
         <Input
@@ -115,7 +115,7 @@ const Info = () => {
           classNames={{
             inputWrapper:
               "text-black font-medium bg-white group-data-[focus=true]:bg-white",
-            label: "text-black text-lg font-medium",
+            label: "text-black text-base md:text-lg font-medium",
           }}
         />
         <Input
@@ -130,11 +130,11 @@ const Info = () => {
           classNames={{
             inputWrapper:
               "text-black font-medium bg-white group-data-[focus=true]:bg-white",
-            label: "text-black text-lg font-medium",
+            label: "text-black text-base md:text-lg font-medium",
           }}
         />
-        <div className="flex flex-col gap-2">
-          <h1 className="text-black text-lg font-medium">Select your country</h1>
+        <div className="flex flex-col gap-2 sm:col-span-2">
+          <h1 className="text-black text-base md:text-lg font-medium">Select your country</h1>
           <Autocomplete
             label="Select a country"
             radius="none"
@@ -159,34 +159,36 @@ const Info = () => {
         placeholder="Enter your message"
         value={message || ""}
         onChange={(e) => handleChange("message", e.target.value)}
-        className="h-[300px] mt-8 w-full shadow-sm"
+        className="h-[200px] md:h-[250px] lg:h-[300px] mt-6 md:mt-8 w-full shadow-sm"
         classNames={{
           inputWrapper:
             "text-black font-medium bg-white group-data-[focus=true]:bg-white",
-          label: "text-black text-lg font-medium ",
-          input: " min-h-[200px]",
+          label: "text-black text-base md:text-lg font-medium",
+          input: "min-h-[150px] md:min-h-[200px]",
         }}
       />
 
-      <div className="flex items-center justify-start w-full">
+      <div className="flex items-center justify-start w-full mt-4 md:mt-6">
         <Checkbox isSelected={agree} onChange={(e) => setAgree(e.target.checked)}>
-          I agree to the{" "}
-          <Link
-            href={"/terms-and-conditions"}
-            target="_blank"
-            className={"text-primary underline underline-offset-2"}
-          >
-            terms and conditions
-          </Link>{" "}
-          and understand the{" "}
-          <Link
-            target="_blank"
-            href={"/privacy-policy"}
-            className={"text-primary underline underline-offset-2"}
-          >
-            privacy policy
-          </Link>
-          .
+          <span className="text-sm sm:text-base">
+            I agree to the{" "}
+            <Link
+              href={"/terms-and-conditions"}
+              target="_blank"
+              className={"text-primary underline underline-offset-2"}
+            >
+              terms and conditions
+            </Link>{" "}
+            and understand the{" "}
+            <Link
+              target="_blank"
+              href={"/privacy-policy"}
+              className={"text-primary underline underline-offset-2"}
+            >
+              privacy policy
+            </Link>
+            .
+          </span>
         </Checkbox>
       </div>
     </div>

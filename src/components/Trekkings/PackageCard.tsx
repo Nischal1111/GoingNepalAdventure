@@ -5,7 +5,6 @@ import { IoSpeedometerOutline } from 'react-icons/io5'
 import { TrekDetails } from '../SingleTrek/types'
 import Link from 'next/link'
 
-
 const PackageCard: React.FC<TrekDetails> = ({
     name,
     overview,
@@ -13,8 +12,14 @@ const PackageCard: React.FC<TrekDetails> = ({
     price,
     days,
     slug,
-    difficulty
+    difficulty,
+    discount
 }) => {
+
+    const basePrice = Number(price) || 0;
+    const discountPercent = Number(discount) || 0;
+    const discountedPrice = basePrice * (1 - discountPercent / 100);
+    
     return (
         <Link href={`/trekking/${slug}`}>
             <div className="w-full max-w-sm mx-auto">
@@ -60,9 +65,23 @@ const PackageCard: React.FC<TrekDetails> = ({
                     </div>
 
                     {/* Price Tag */}
-                    <div className="absolute -left-4 top-4 bg-primary/90 text-white px-4 py-2 rounded-md text-sm shadow-md">
-                        From ${price}
-                    </div>
+                    {discountPercent > 0 ? (
+                        <>
+                            <div className="absolute -left-4 top-4 ">
+                                <div className="flex gap-2 bg-primary/90 text-white px-4 py-2 rounded-md shadow-md">
+                                    <div className="text-xs flex items-center gap-1">
+                                        From
+                                        <span className="line-through text-white/80">${basePrice}</span>
+                                    </div>
+                                    <div className="text-sm font-medium">${discountedPrice.toFixed(0)}</div>
+                                </div>
+                            </div>
+                        </>
+                    ) : (
+                        <div className="absolute -left-4 top-4 bg-primary/90 text-white px-4 py-2 rounded-md text-sm shadow-md">
+                            From ${price}
+                        </div>
+                    )}
                 </div>
             </div>
         </Link>

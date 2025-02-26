@@ -61,8 +61,9 @@ export interface TrekDetails {
     min: number; // Minimum number of days
     max: number; // Maximum number of days
   };
+  discount?: string;
   difficulty?: string; // Difficulty level of the trek
-  price: number; // Cost of the trek
+  price: string; // Cost of the trek
   overview: string; // Overview or summary of the trek
   thumbnail: string; // Thumbnail image URL
 }
@@ -71,6 +72,7 @@ export interface TourDetails{
     name: string;
     slug: string;
     country: string;
+    discount: string;
     days:{
       min: number;
       max: number;
@@ -117,6 +119,7 @@ export interface Tour {
     max: number;
   };
   _id?: string;
+  discount?: string;
   name?: string;
   slug?: string;
   price?: string;

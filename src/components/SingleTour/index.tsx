@@ -34,7 +34,8 @@ const SingleTour:React.FC<pageProps> = ({id}) => {
         title:tourData?.data?.data?.name,
         price:JSON.stringify(tourData?.data?.data?.price),
         img:tourData?.data?.data?.thumbnail,
-        desc:tourData?.data?.data?.overview
+        desc:tourData?.data?.data?.overview,
+        discount:tourData?.data?.data?.discount
     }
 
     const minitourDetails = [
@@ -153,7 +154,7 @@ const SingleTour:React.FC<pageProps> = ({id}) => {
                     <Gallery title={tour?.title} gallery={gallery}/>
                 </div>
                 <div className='lg:w-[35%] w-full flex justify-start flex-col items-center'>
-                    <RightSide price={tour?.price} name={tour?.title} _id={tourData?.data?.data?._id} slug={tourData?.data?.data?.slug} category={tourData?.data?.data?.category}/>
+                    <RightSide price={tour?.price} discount={tour?.discount} name={tour?.title} _id={tourData?.data?.data?._id} slug={tourData?.data?.data?.slug} category={tourData?.data?.data?.category}/>
                 </div>
             </section>
             

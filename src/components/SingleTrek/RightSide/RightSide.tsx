@@ -1,6 +1,6 @@
 "use client"
 import React, { useState } from 'react'
-import { Avatar, Button, Checkbox, CheckboxGroup, DatePicker, Divider } from '@nextui-org/react'
+import { Avatar, Button, DatePicker, Divider } from '@nextui-org/react'
 import QuoteModal from './QuoteModal'
 import Image from 'next/image'
 import Link from 'next/link'
@@ -12,7 +12,6 @@ import { getBlogsByViews } from '@/services/blogs'
 import { excludeTrek } from '@/services/treks'
 import { GoDotFill } from 'react-icons/go'
 import { getAllActivitys } from '@/services/activities'
-
 
 export const rowdies=Rowdies({
     weight: '400',
@@ -26,21 +25,16 @@ interface RightSideProps {
     trekPdf: string;
     _id: string;
     downloadPDF: () => void;
-    slug:string
+    slug: string;
+    discount: string;
 }
 
-const RightSide: React.FC<RightSideProps> = ({ price, title,_id,downloadPDF,slug }) => {
-    const [isQuote, setIsQuote] = useState(false); // eslint-disable-line @typescript-eslint/no-unused-vars
-    const [isCustomize, setIsCustomize] = useState(false); // eslint-disable-line @typescript-eslint/no-unused-vars
+const RightSide: React.FC<RightSideProps> = ({ price, title, _id, downloadPDF, slug, discount }) => {
+    const [isQuote, setIsQuote] = useState(false); //eslint-disable-line @typescript-eslint/no-unused-vars
+    const [isCustomize, setIsCustomize] = useState(false);//eslint-disable-line @typescript-eslint/no-unused-vars
     const [isOpen, setIsOpen] = useState(false);
     const [text, setText] = useState("");
-    const [quantity, setQuantity] = useState(1)
-    const [guide,setGuide]=useState(false)
-    const [potter,setPotter]=useState(false)
-    const [fullboard,setFullboard]=useState(false)
-    const GUIDE_SERVICE_PRICE = 100;
-    const POTTER_SERVICE_PRICE = 150;
-    const FULLBOARD_SERVICE_PRICE = 200;
+    const [quantity, setQuantity] = useState(1);
 
     const {data:exploreBlogsData}=useQuery({
         queryKey: ['exploreBlogsData'],
@@ -57,6 +51,7 @@ const RightSide: React.FC<RightSideProps> = ({ price, title,_id,downloadPDF,slug
         queryKey: ['activityDatainTrek'],
         queryFn:()=>getAllActivitys()
     })
+    
     const handleQuote = () => {
         setIsQuote(true);
         setIsCustomize(false);
@@ -75,16 +70,15 @@ const RightSide: React.FC<RightSideProps> = ({ price, title,_id,downloadPDF,slug
         setQuantity(prev => prev + 1)
     }
 
-    
-
     const decreaseQuantity = () => {
         setQuantity(prev => prev > 1 ? prev - 1 : 1)
     }
 
-
-    const basePrice = Number(price?.replace(/[^0-9]/g, '')) || 0
-    const totalPrice = basePrice * quantity
-    const finalPrice =totalPrice + (guide?GUIDE_SERVICE_PRICE:0) + (potter?POTTER_SERVICE_PRICE:0) + (fullboard?FULLBOARD_SERVICE_PRICE:0);
+    // Parse the base price and calculate discounted price
+    const basePrice = Number(price?.replace(/[^0-9]/g, '')) || 0;
+    const discountPercent = Number(discount) || 0;
+    const discountedPrice = basePrice * (1 - discountPercent / 100);
+    const totalPrice = discountedPrice * quantity;
 
     return (
         <>
@@ -103,7 +97,18 @@ const RightSide: React.FC<RightSideProps> = ({ price, title,_id,downloadPDF,slug
                 <div className='px-8'>
                     <div className='w-full bg-white shadow-md mt-4 rounded-sm pt-6 pb-8 flex flex-col items-center justify-center gap-4'>
                         <h1 className={`${rowdies.className} text-2xl text-primary`}>Book your trek</h1>
-                        <h1 className='text-xl font-bold'>${price} <span className='text-gray-600 text-sm font-light'>/ person</span></h1>
+                        
+                        {discountPercent > 0 ? (
+                            <div className="flex flex-col items-center">
+                                <h1 className='text-xl font-bold text-primary'>${discountedPrice.toFixed(0)} <span className='text-gray-600 text-sm font-light'>/ person</span></h1>
+                                <div className="flex items-center gap-2">
+                                    <span className='text-gray-600 text-sm line-through'>${basePrice}</span>
+                                    <span className='text-green-600 text-sm font-medium'>Save {discountPercent}%</span>
+                                </div>
+                            </div>
+                        ) : (
+                            <h1 className='text-xl font-bold'>${price} <span className='text-gray-600 text-sm font-light'>/ person</span></h1>
+                        )}
                         
                         <div className="flex w-full px-4 mt-4">
                             <DatePicker 
@@ -122,7 +127,7 @@ const RightSide: React.FC<RightSideProps> = ({ price, title,_id,downloadPDF,slug
                         </div>
 
                         {/* Quantity selector */}
-                        <div className="flex items-center w-full  justify-between px-6 mt-4">
+                        <div className="flex items-center w-full justify-between px-6 mt-4">
                             <h1 className='font-bold text-lg'>Person</h1>
                             <section className='flex items-center justify-between'>
                                 <Button 
@@ -151,57 +156,25 @@ const RightSide: React.FC<RightSideProps> = ({ price, title,_id,downloadPDF,slug
                                 </Button>
                             </section>
                         </div>
-                        <div className='flex flex-col justify-start gap-2 w-full px-6'>
-                            <CheckboxGroup label="Select extra services">
-                                {/* Guide Service Checkbox */}
-                                <Checkbox
-                                    isSelected={guide}
-                                    onChange={(e) => setGuide(e.target.checked)}
-                                    value="guide-service"
-                                    isDisabled={potter || fullboard}
-                                >
-                                    Guide service (+${GUIDE_SERVICE_PRICE})
-                                </Checkbox>
-
-                                {/* Potter Service Checkbox */}
-                                <Checkbox
-                                    isSelected={potter}
-                                    onChange={(e) => {
-                                            setPotter(e.target.checked);
-                                    }}
-                                    value="potter-service"
-                                    isDisabled={guide || fullboard} // Disable unless Guide service is selected
-                                >
-                                    Guide with Potter service (+${POTTER_SERVICE_PRICE})
-                                </Checkbox>
-
-                                {/* Fullboard Service Checkbox */}
-                                <Checkbox
-                                    isSelected={fullboard}
-                                    onChange={(e) => {
-                                            setFullboard(e.target.checked);
-                                        
-                                    }}
-                                    value="fullboard-service"
-                                    isDisabled={guide || potter} // Disable unless Guide service is selected
-                                >
-                                    Fullboard service (+${FULLBOARD_SERVICE_PRICE})
-                                </Checkbox>
-                            </CheckboxGroup>
+                        
+                        {/* Service Note */}
+                        <div className="w-full px-6 mt-2">
+                            <p className="text-sm text-gray-600 bg-gray-50 p-3 rounded-md border border-gray-200">
+                                <span className="font-semibold">Note:</span> Trek cost includes guide service, potter service, and full board service.
+                            </p>
                         </div>
-                        <Divider className='w-full'/>
+                        
+                        <Divider className='w-full mt-4'/>
                         <div className="w-full font-bold text-lg flex items-center justify-between px-6">
                             <h1>Total:</h1> 
                             <div className='flex gap-2 items-center'>
-                                <span className='text-xs text-gray-400'>{quantity} x ${basePrice} = </span>
-                                <span>${finalPrice}</span>
+                                <span className='text-xs text-gray-400'>{quantity} x ${discountedPrice.toFixed(0)} = </span>
+                                <span>${totalPrice.toFixed(0)}</span>
                             </div>
                         </div>
                         <Link href={`/payment`}>
                             <Button className='-mb-4 mt-4 bg-primary rounded-sm text-white w-[90%] flex self-center'>Book Now</Button>
                         </Link>
-
-                        
                     </div>
                 </div>
             </div>
@@ -305,4 +278,3 @@ const RightSide: React.FC<RightSideProps> = ({ price, title,_id,downloadPDF,slug
 };
 
 export default RightSide;
-

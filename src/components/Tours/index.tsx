@@ -32,6 +32,11 @@ const Tours = () => {
     const [countries, setCountries] = useState<string[]>([])
     const [tripTypes, setTripTypes] = useState<(string|undefined)[]>([])
     const [filteredPackages, setFilteredPackages] = useState<TourDetails[]>([])
+    const [full,setFull]=useState(false)
+
+    const handleDetailsClick = () => {
+        setFull(!full)
+    }
 
     const first = useRef<HTMLDivElement>(null)
 
@@ -238,6 +243,7 @@ const Tours = () => {
                 <h1 className={`${rowdies.className} lg:text-4xl text-2xl`}>
                     Trips and Tours in Nepal, Bhutan and Tibet
                 </h1>
+                {full ? 
                 <p className='text-gray-700 text-justify my-8'>
                     Nepal, a country steeped in ancient traditions, rugged landscapes, and awe-inspiring natural beauty, is known worldwide as a trekking and adventure haven. Nestled between the peaks of the mighty Himalayas, Nepal offers unparalleled experiences for explorers, nature lovers, and cultural enthusiasts alike. With trekking trails that range from gentle paths to challenging high-altitude circuits, the country is home to world-famous routes like the Everest Base Camp, Annapurna Circuit, and Langtang Valley. Beyond trekking, Nepal is a place of deep cultural heritage, with historic temples, vibrant festivals, and warm local hospitality. <br /><br />
 
@@ -259,6 +265,15 @@ const Tours = () => {
                 Tours in Tibet provide an opportunity to experience its rich monastic culture, meet warm and welcoming Tibetans, and appreciate the region&apos;s unspoiled natural beauty. The landscape, rich in unique flora and fauna, creates an unforgettable backdrop for trekking, sightseeing, and cultural exploration. A journey through Tibet is both a challenging and spiritually enriching experience, ideal for those seeking a deeper connection to Himalayan culture and spirituality. <br /><br />
 
                 </p>
+                :
+                <p className='text-gray-700 text-justify my-8'>
+                    Nepal, a country steeped in ancient traditions, rugged landscapes, and awe-inspiring natural beauty, is known worldwide as a trekking and adventure haven. Nestled between the peaks of the mighty Himalayas, Nepal offers unparalleled experiences for explorers, nature lovers, and cultural enthusiasts alike. With trekking trails that range from gentle paths to challenging high-altitude circuits, the country is home to world-famous routes like the Everest Base Camp, Annapurna Circuit, and Langtang Valley. Beyond trekking, Nepal is a place of deep cultural heritage, with historic temples, vibrant festivals, and warm local hospitality. <br /><br />
+
+                Every year, adventurers are drawn to Nepal&apos;s trails, not only to witness the breathtaking mountain vistas but to immerse in a unique blend of Hindu and Buddhist traditions. Trekkers can explore pristine national parks, walk through ancient villages, and witness unique wildlife in sanctuaries like Sagarmatha and Annapurna Conservation Area. Whether it&apos;s a spiritual journey to the birthplace of Buddha in Lumbini or a thrilling whitewater rafting experience in Nepal&apos;s rivers, this country promises a journey filled with diversity and discovery.
+                </p>
+                }
+                <Button className='bg-transparent -ml-4 text-primary' onPress={()=>handleDetailsClick()}>View <span>{full ? 'less' : 'more'}</span> detail</Button>
+                
 
                 <div className="flex justify-between items-center mt-8">
                     <h1 ref={first} className={`${rowdies.className} lg:text-4xl text-2xl`}>
