@@ -80,7 +80,7 @@ const RightSide: React.FC<Tour> = ({ price, name, _id, slug, category, discount 
     const discountedPrice = basePrice * (1 - discountPercent / 100);
     
     // Calculate total prices based on quantity and services
-    const totalBasePrice = basePrice * quantity;
+    const totalBasePrice = basePrice * quantity; //eslint-disable-line @typescript-eslint/no-unused-vars
     const totalDiscountedPrice = discountedPrice * quantity;
     const finalPrice = totalDiscountedPrice + 
                     (guide ? (GUIDE_SERVICE_PRICE * quantity) : 0) + 

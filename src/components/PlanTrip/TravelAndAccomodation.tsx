@@ -43,17 +43,17 @@ const TravelAndAccommodation = () => {
         setAlertMessage(null)
       }
   return (
-    <div className="flex w-full flex-col items-center justify-center px-16">
-      <h1 className="text-2xl text-primary font-semibold py-16 tracking-wide">
+    <div className="flex w-full flex-col items-center justify-center lg:px-16 px-4">
+      <h1 className="lg:text-2xl text-xl text-primary font-semibold py-16 tracking-wide">
         Travellers and Accommodations
       </h1>
-      <div className="flex items-center justify-between w-3/5 mb-12">
+      <div className="flex lg:flex-row flex-col items-center justify-between lg:w-3/5 w-full mb-12 lg:gap-0 gap-4">
         {[
           {type:"Solo",label:"Solo Trip",icon:<FaUser className="text-5xl text-primary" />},
           {type:"Couple",label:"Couple Trip",icon:<FaUserGroup className="text-5xl text-primary" />},
           {type:"Family/Group",label:"Family/Group Trip",icon:<FaUsers className="text-6xl text-primary"/>},
         ].map((item) => (
-          <div key={item.type} className="w-1/4 flex items-center flex-col gap-2">
+          <div key={item.type} className="lg:w-1/4 w-3/4 flex items-center flex-col gap-2">
             <div className="w-full h-[150px] bg-primary/10 rounded-sm flex items-center justify-center">
               {item.icon}
             </div>
@@ -106,7 +106,7 @@ const TravelAndAccommodation = () => {
         <h1 className="text-lg text-primary font-semibold pt-16 pb-4 tracking-wide">
           Preferred Accommodation
         </h1>
-        <div className="grid grid-cols-4 gap-10 my-4">
+        <div className="grid lg:grid-cols-4 grid-cols-2 gap-10 my-4">
           {[
             { type: "3 Star", label: "3 Star Standard Hotels", image: "https://images.unsplash.com/photo-1663194815198-3e3183f9d9eb?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8MyUyMHN0YXIlMjBob3RlbHxlbnwwfHwwfHx8MA%3D%3D" },
             { type: "4 Star", label: "4 Star Standard Hotels", image: "https://images.unsplash.com/photo-1445019980597-93fa8acb246c?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTB8fDQlMjBzdGFyJTIwaG90ZWx8ZW58MHx8MHx8fDI%3D" },
@@ -139,7 +139,7 @@ const TravelAndAccommodation = () => {
         <h1 className="text-lg text-primary font-semibold pt-16 pb-4 tracking-wide">
           Meal Plan
         </h1>
-        <div className="flex items-center justify-center gap-2 my-4 w-4/5">
+        <div className="flex lg:flex-row flex-col items-center justify-center gap-2 my-4 w-4/5">
           {[
             { type: "bb", label: "B&B (Bread & Breakfast)" },
             { type: "map", label: "MAP (Half Board / Breakfast and Lunch or Dinner)" },

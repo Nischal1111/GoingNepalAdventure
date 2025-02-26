@@ -18,6 +18,7 @@ interface CardProps {
     days:{min:string,max:string}
     difficulty:string
     slug:string
+    discount:string
 }
 interface CustomArrowComponentProps extends CustomArrowProps {
     onClick?: () => void;
@@ -81,7 +82,7 @@ const CardSlider: React.FC = () => {
         <div className="relative lg:px-12 px-4 py-8">
             <Slider {...settings} className='pr-12 pl-16'>
                 {trekData?.data?.data?.map((item:CardProps, index:number) => (
-                    <div key={index} className="px-4"><Card name={item?.name} link={item?.slug} overview={item?.overview} image={item?.thumbnail} price={item?.price} days={`${item?.days?.min} - ${item?.days?.max}`} difficulty={item?.difficulty}/></div>
+                    <div key={index} className="px-4"><Card discount={item?.discount} name={item?.name} link={item?.slug} overview={item?.overview} image={item?.thumbnail} price={item?.price} days={`${item?.days?.min} - ${item?.days?.max}`} difficulty={item?.difficulty}/></div>
                 ))}
             </Slider>
         </div>

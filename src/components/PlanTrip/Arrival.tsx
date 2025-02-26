@@ -31,12 +31,12 @@ const parsedValue = stayDays !== "YYYY-MM-DD"
 
 
     return (
-        <div className="flex w-full flex-col items-center justify-center px-16">
+        <div className="flex w-full flex-col items-center justify-center lg:px-16 px-4">
             <h1 className="text-2xl text-primary font-semibold py-8 tracking-wide">
                 Arrival and Departure
             </h1>
             <div className="flex w-full flex-col  justify-between">
-                <h1 className="text-base font-semibold tracking-wide">
+                <h1 className="text-base mb-4 font-semibold tracking-wide">
                     Select your arrival and departure dates
                 </h1>
                 <DateRangePicker 
