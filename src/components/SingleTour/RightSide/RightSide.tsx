@@ -22,15 +22,15 @@ export const rowdies=Rowdies({
     display: 'swap',
 })
 
-const RightSide: React.FC<Tour> = ({ price,name,_id,slug,category }) => {
+const RightSide: React.FC<Tour> = ({ price, name, _id, slug, category, discount }) => {
     const [isQuote, setIsQuote] = useState(false); // eslint-disable-line @typescript-eslint/no-unused-vars
     const [isCustomize, setIsCustomize] = useState(false); // eslint-disable-line @typescript-eslint/no-unused-vars
     const [isOpen, setIsOpen] = useState(false);
     const [text, setText] = useState("");
     const [quantity, setQuantity] = useState(1)
-    const [guide,setGuide]=useState(false)
-    const [potter,setPotter]=useState(false)
-    const [fullboard,setFullboard]=useState(false)
+    const [guide, setGuide] = useState(false)
+    const [potter, setPotter] = useState(false)
+    const [fullboard, setFullboard] = useState(false)
     const [selectedDate, setSelectedDate] = useState<CalendarDate>(today(getLocalTimeZone()))
     const GUIDE_SERVICE_PRICE = 100;
     const POTTER_SERVICE_PRICE = 150;
@@ -43,15 +43,15 @@ const RightSide: React.FC<Tour> = ({ price,name,_id,slug,category }) => {
         setIsOpen(true);
     };
 
-    const {data:exploreBlogsData}=useQuery({
+    const {data:exploreBlogsData} = useQuery({
         queryKey: ['exploreBlogsData'],
-        queryFn:()=>getBlogsByViews(),
+        queryFn:() => getBlogsByViews(),
     })
 
-    const {data:excludeData}=useQuery({
+    const {data:excludeData} = useQuery({
         queryKey: ['excludeDataTour'],
-        queryFn:()=>excludeTour(_id!),
-        enabled:!!_id
+        queryFn:() => excludeTour(_id!),
+        enabled: !!_id
     })
     
     const handleCustomize = () => {
@@ -60,9 +60,10 @@ const RightSide: React.FC<Tour> = ({ price,name,_id,slug,category }) => {
         setText(`I need to customize this quotation for the trek: ${name}`);
         setIsOpen(true);
     };
-    const {data:activityData}=useQuery({
+    
+    const {data:activityData} = useQuery({
         queryKey: ['activityDatainTrek'],
-        queryFn:()=>getAllActivitys()
+        queryFn:() => getAllActivitys()
     })
 
     const increaseQuantity = () => {
@@ -73,32 +74,40 @@ const RightSide: React.FC<Tour> = ({ price,name,_id,slug,category }) => {
         setQuantity(prev => prev > 1 ? prev - 1 : 1)
     }
 
-    const basePrice = Number(price?.replace(/[^0-9]/g, '')) || 0
-    const totalPrice = basePrice * quantity
-    const finalPrice =totalPrice + (guide?(GUIDE_SERVICE_PRICE*quantity):0) + (potter?POTTER_SERVICE_PRICE*quantity:0) + (fullboard?FULLBOARD_SERVICE_PRICE*quantity:0);
+    // Parse the base price and calculate discounted price
+    const basePrice = Number(price?.replace(/[^0-9]/g, '')) || 0;
+    const discountPercent = Number(discount) || 0;
+    const discountedPrice = basePrice * (1 - discountPercent / 100);
+    
+    // Calculate total prices based on quantity and services
+    const totalBasePrice = basePrice * quantity;
+    const totalDiscountedPrice = discountedPrice * quantity;
+    const finalPrice = totalDiscountedPrice + 
+                    (guide ? (GUIDE_SERVICE_PRICE * quantity) : 0) + 
+                    (potter ? (POTTER_SERVICE_PRICE * quantity) : 0) + 
+                    (fullboard ? (FULLBOARD_SERVICE_PRICE * quantity) : 0);
 
     const router=useRouter()
 
     const handleBookNow = () => {
-            const bookingDetails = {
-                name,
-                price: basePrice,
-                quantity,
-                bookingDate: selectedDate,
-                extraServices: {
+        const bookingDetails = {
+            name,
+            price: discountPercent > 0 ? discountedPrice : basePrice,
+            quantity,
+            bookingDate: selectedDate,
+            extraServices: {
                 guide,
                 potter,
                 fullboard
-                }
-            };
-            
-            // Using searchParams for Next.js 13+
-            const searchParams = new URLSearchParams();
-            searchParams.set('details', JSON.stringify(bookingDetails));
-            
-            router.push(`/checkout?${searchParams.toString()}`);
-            };
-
+            }
+        };
+        
+        // Using searchParams for Next.js 13+
+        const searchParams = new URLSearchParams();
+        searchParams.set('details', JSON.stringify(bookingDetails));
+        
+        router.push(`/checkout?${searchParams.toString()}`);
+    };
 
     return (
         <>
@@ -117,7 +126,18 @@ const RightSide: React.FC<Tour> = ({ price,name,_id,slug,category }) => {
                 <div className='px-8'>
                     <div className='w-full bg-white shadow-md mt-4 rounded-sm pt-6 pb-8 flex flex-col items-center justify-center gap-4'>
                         <h1 className={`${rowdies.className} text-2xl text-primary`}>Book your tour</h1>
-                        <h1 className='text-xl font-bold'>${price} <span className='text-gray-600 text-sm font-light'>/ person</span></h1>
+                        
+                        {discountPercent > 0 ? (
+                            <div className="flex flex-col items-center">
+                                <h1 className='text-xl font-bold text-primary'>${discountedPrice.toFixed(0)} <span className='text-gray-600 text-sm font-light'>/ person</span></h1>
+                                <div className="flex items-center gap-2">
+                                    <span className='text-gray-600 text-sm line-through'>${basePrice}</span>
+                                    <span className='text-green-600 text-sm font-medium'>Save {discountPercent}%</span>
+                                </div>
+                            </div>
+                        ) : (
+                            <h1 className='text-xl font-bold'>${price} <span className='text-gray-600 text-sm font-light'>/ person</span></h1>
+                        )}
                         
                         <div className="flex w-full px-4 mt-4">
                             <DatePicker 
@@ -138,7 +158,7 @@ const RightSide: React.FC<Tour> = ({ price,name,_id,slug,category }) => {
                         </div>
 
                         {/* Quantity selector */}
-                        <div className="flex items-center w-full  justify-between px-6 mt-4">
+                        <div className="flex items-center w-full justify-between px-6 mt-4">
                             <h1 className='font-bold text-lg'>Person</h1>
                             <section className='flex items-center justify-between'>
                                 <Button 
@@ -209,13 +229,15 @@ const RightSide: React.FC<Tour> = ({ price,name,_id,slug,category }) => {
                         <div className="w-full font-bold text-lg flex items-center justify-between px-6">
                             <h1>Total:</h1> 
                             <div className='flex gap-2 items-center'>
-                                <span className='text-xs text-gray-400'>{quantity} x ${basePrice} = </span>
-                                <span>${finalPrice}</span>
+                                {discountPercent > 0 ? (
+                                    <span className='text-xs text-gray-400'>{quantity} x ${discountedPrice.toFixed(0)} = </span>
+                                ) : (
+                                    <span className='text-xs text-gray-400'>{quantity} x ${basePrice} = </span>
+                                )}
+                                <span>${finalPrice.toFixed(0)}</span>
                             </div>
                         </div>
                         <Button className='-mb-4 mt-4 bg-primary rounded-sm text-white w-[90%] flex self-center' onPress={handleBookNow}>Book Now</Button>
-
-                        
                     </div>
                 </div>
             </div>

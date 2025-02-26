@@ -35,15 +35,17 @@ const HeroSection = () => {
         }
     ];
 
+    const homeImages = ["/assets/hero.jpg", "/assets/hero2.jpg", "/assets/aboutBG.jpg"];
+    
     const [currentSlide, setCurrentSlide] = useState(0);
-
+    
     useEffect(() => {
         const interval = setInterval(() => {
-            setCurrentSlide((prevSlide) => (prevSlide + 1) % descSlider.length);
+            setCurrentSlide((prevSlide) => (prevSlide + 1) % homeImages.length);
         }, 7000);
 
         return () => clearInterval(interval);
-    }, [descSlider.length]);
+    }, []);
 
     const slideVariants = {
         enter: { opacity: 0, y: 20 },
@@ -53,9 +55,20 @@ const HeroSection = () => {
 
     return (
         <>
-            <main className='custom-main relative text-white'>
+            <main className='custom-main relative text-white lg:h-[90vh] h-[65vh] overflow-hidden'>
                 <div className="absolute inset-0 bg-black opacity-20 z-[1]"></div>
-                <Image src="/assets/hero.jpg" alt='hero-section' height={1000} width={1000} className='object-cover lg:h-[90vh] h-[65vh] w-screen z-[0]' />
+                {homeImages.map((img, index) => (
+                    <Image 
+                        key={img} 
+                        src={img} 
+                        alt='hero-section' 
+                        height={1000} 
+                        width={1000} 
+                        className={`object-cover lg:h-[90vh] h-[65vh] w-screen z-[0] absolute top-0 left-0 transition-opacity duration-1000 ease-in-out ${
+                            index === currentSlide ? 'opacity-100' : 'opacity-0'
+                        }`} 
+                    />       
+                ))}
                 
                 <div className='lg:px-20 px-4 flex gap-8 z-[1000] absolute top-[15%]'>
                     <div className='relative lg:h-[50vh] h-[35vh] flex gap-1'>
@@ -123,7 +136,6 @@ const HeroSection = () => {
                                 </motion.div>
                             </motion.div>
                         </AnimatePresence>
-
                     </div>
                     <div className='absolute -bottom-6 ml-6'>
                         <div className='bg-white w-[40vw] h-[1px]'></div>
@@ -147,7 +159,7 @@ const HeroSection = () => {
                 </div>
             </main>
 
-            <div className='relative top-[-4rem]'>
+            <div className='relative z-10 mt-[-4rem]'>
                 <SearchSection />
             </div>
         </>

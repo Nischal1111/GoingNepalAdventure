@@ -45,7 +45,8 @@ const SingleTrek:React.FC<paramsProps> = ({id}) => {
         title:SingleTrekData?.data?.data?.name,
         price:JSON.stringify(SingleTrekData?.data?.data?.price),
         img:"/assets/contactBG.jpg",
-        desc:SingleTrekData?.data?.data?.overview
+        desc:SingleTrekData?.data?.data?.overview,
+        discount:SingleTrekData?.data?.data?.discount
     }
 
     const minitrekDetails = [
@@ -185,10 +186,9 @@ const SingleTrek:React.FC<paramsProps> = ({id}) => {
             </Button>
             <section className='relative lg:h-[75vh] h-[40vh] lg:mt-4 mt-12 w-full rounded-md' style={{background:`url(${SingleTrekData?.data?.data?.thumbnail})`,backgroundSize:"cover",backgroundPosition:"center",backgroundAttachment:"fixed"}}>
                 <div className='absolute inset-0 bg-black/20 w-full'></div>
-                <div className='w-fit relative flex items-center justify-start top-[70%] left-[5%] '>
+                <div className='w-full relative flex items-center justify-start top-[70%] left-[5%] '>
                     <div className='flex flex-col items-start'>
-                        <h1 className={`${rowdies.className} lg:text-7xl text-3xl w-fit text-[#DFDCDC]/70`}>{trek.title}</h1>
-                        <p className={`${rowdies.className} lg:text-5xl text-2xl absolute top-10 antialiased text-white`}>{trek.title}</p>
+                        <p className={`${rowdies.className} lg:text-7xl text-2xl absolute antialiased text-white`}>{trek.title}</p>
                     </div>
                 </div>
             </section>
@@ -219,7 +219,7 @@ const SingleTrek:React.FC<paramsProps> = ({id}) => {
                     <Gallery title={trek?.title} gallery={gallery}/>
                 </div>
                 <div className='lg:w-[35%] w-full flex justify-start flex-col items-center'>
-                    <RightSide slug={SingleTrekData?.data?.data?.slug} price={trek?.price} title={trek?.title} trekPdf={SingleTrekData?.data?.data?.trekPdf} _id={SingleTrekData?.data?.data?._id} downloadPDF={downloadPDF}/>
+                    <RightSide slug={SingleTrekData?.data?.data?.slug} price={trek?.price} discount={trek?.discount} title={trek?.title} trekPdf={SingleTrekData?.data?.data?.trekPdf} _id={SingleTrekData?.data?.data?._id} downloadPDF={downloadPDF}/>
                 </div>
             </section>
             <div

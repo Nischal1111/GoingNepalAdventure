@@ -104,11 +104,11 @@ const Destination = () => {
     }
 
     return (
-        <div className="flex w-full flex-col items-center justify-center px-16">
-            <h1 className="text-2xl text-primary font-semibold py-8 tracking-wide">
+        <div className="flex w-full flex-col items-center justify-center lg:px-16 px-4">
+            <h1 className="lg:text-2xl text-xl text-primary font-semibold py-8 tracking-wide">
                 Choose your Destination
             </h1>
-            <div className="flex items-center justify-center gap-6 my-4 w-full">
+            <div className="flex lg:flex-row flex-col items-center justify-center gap-6 my-4 w-full">
                 {[
                     { type: "Nepal", label: "Nepal", image: "/assets/aboutBG.jpg" },
                     { type: "Bhutan", label: "Bhutan", image: "/assets/bhutan/b2.avif" },
@@ -136,12 +136,12 @@ const Destination = () => {
             <div className="flex items-center justify-center gap-6 my-4 w-full">
                 {["Nepal", "Bhutan", "Tibet"].includes(destination) && (
                     <div className='flex flex-col gap-6 w-full items-center'>
-                        <h1 className="text-2xl text-primary font-semibold py-8 tracking-wide">
+                        <h1 className="lg:text-2xl text-xl text-primary font-semibold py-8 tracking-wide">
                             Select your preferred activity
                         </h1>
-                        <div className="flex items-center justify-center gap-6 w-full">
+                        <div className="flex lg:flex-row flex-col items-center justify-center gap-6 w-full">
                             {destination === "Nepal" && (
-                                <div className="flex flex-col gap-2 w-1/2">
+                                <div className="flex flex-col gap-2 lg:w-1/2 w-full">
                                     <div className="h-[160px] w-full">
                                         <Image
                                             src="/assets/trek.jpeg"
@@ -159,7 +159,7 @@ const Destination = () => {
                                     </Checkbox>
                                 </div>
                             )}
-                            <div className="flex flex-col gap-2 w-1/2">
+                            <div className="flex flex-col gap-2 lg:w-1/2 w-full">
                                 <div className="h-[160px] w-full">
                                     <Image
                                         src={destination === "Nepal" ? "/assets/hiking.avif" : destination === "Bhutan" ? "/assets/bhutan/b4.avif" : "/assets/tibet/t4.avif"}
@@ -182,10 +182,10 @@ const Destination = () => {
             </div>
             {trekActivity && (
                 <div className="flex items-center flex-col justify-center gap-2 my-4 w-full">
-                    <h1 className="text-2xl text-primary font-semibold py-8 tracking-wide">
+                    <h1 className="lg:text-2xl text-xl text-primary font-semibold py-8 tracking-wide">
                         Select up to 2 trekking packages of your choice
                     </h1>
-                    <div className="grid grid-cols-3 gap-4 w-full">
+                    <div className="grid lg:grid-cols-3 grid-cols-1 gap-4 w-full">
                         {!isLoading &&
                             trekData?.data?.data?.map((trek: TrekDropDown) => (
                                 <div key={trek._id} className="flex flex-col gap-2">
@@ -202,10 +202,10 @@ const Destination = () => {
             )}
             {tourActivity && (
                 <div className="flex items-center flex-col justify-center gap-2 my-4 w-full">
-                    <h1 className="text-2xl text-primary font-semibold py-8 tracking-wide">
+                    <h1 className="lg:text-2xl text-xl text-primary font-semibold py-8 tracking-wide">
                         Select up to 2 tour packages of your choice
                     </h1>
-                    <div className="grid grid-cols-3 gap-4 w-full">
+                    <div className="grid lg:grid-cols-3 grid-cols-1 gap-4 w-full">
                         {!tourLoading &&
                             tourData?.data?.data?.map((tour: TrekDropDown) => (
                                 <div key={tour._id} className="flex flex-col gap-2">
