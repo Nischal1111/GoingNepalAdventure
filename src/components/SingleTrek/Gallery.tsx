@@ -86,8 +86,15 @@ const Gallery:React.FC<props> = ({title,gallery,className}) => {
 
             <main className={`mt-8 ${className}`}>
                 <SharedTitle2 title={`${title} Video`}/>
-                <div className='w-[90%] h-[60vh] bg-primary my-12'>
-
+                <div className="w-[90%] h-[50vh] bg-primary my-12 relative overflow-hidden">
+                    <iframe
+                    className="w-full h-full"
+                    src={`https://www.youtube.com/embed/19g66ezsKAg`}
+                    title="YouTube video player"
+                    frameBorder="0"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                    allowFullScreen
+                    />
                 </div>
             </main>
         </>
