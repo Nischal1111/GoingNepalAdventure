@@ -104,12 +104,11 @@ const SingleTour:React.FC<pageProps> = ({id}) => {
             </Button>
             <section className='relative lg:h-[75vh] h-[40vh] lg:mt-4 mt-12 w-full rounded-md' style={{background:`url(${tourData?.data?.data?.thumbnail})`,backgroundSize:"cover",backgroundPosition:"center",backgroundAttachment:"fixed"}}>
                 <div className='absolute inset-0 bg-black/20 w-full'></div>
-                <div className='w-fit relative flex items-center justify-start top-[70%] left-[5%] '>
-                    <div className='flex flex-col items-start'>
-                        <h1 className={`${rowdies.className} lg:text-7xl text-3xl w-fit text-[#DFDCDC]/70`}>{tour.title}</h1>
-                        <p className={`${rowdies.className} lg:text-5xl text-2xl absolute top-10 antialiased text-white`}>{tour.title}</p>
-                    </div>
-                </div>
+                <div className='w-full relative flex items-center justify-start top-[70%] left-[5%] '>
+                                    <div className='flex flex-col items-start'>
+                                        <p className={`${rowdies.className} lg:text-7xl text-2xl absolute antialiased text-white`}>{tour.title}</p>
+                                    </div>
+                                </div>
             </section>
             <section className='flex lg:flex-row flex-col w-full lg:my-12 my-4 justify-between'>
                 <div className='lg:w-[65%] w-full'>
@@ -151,7 +150,7 @@ const SingleTour:React.FC<pageProps> = ({id}) => {
                     </div>
                     <TrekFAQs FAQs={FAQs}/>
                     
-                    <Gallery title={tour?.title} gallery={gallery}/>
+                    <Gallery title={tour?.title} gallery={gallery} video={tourData?.data?.data?.video}/>
                 </div>
                 <div className='lg:w-[35%] w-full flex justify-start flex-col items-center'>
                     <RightSide price={tour?.price} discount={tour?.discount} name={tour?.title} _id={tourData?.data?.data?._id} slug={tourData?.data?.data?.slug} category={tourData?.data?.data?.category}/>

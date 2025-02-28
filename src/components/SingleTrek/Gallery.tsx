@@ -37,9 +37,10 @@ interface props{
     title:string
     gallery:trekProps["gallery"]
     className?:string
+    video:string
 }
 
-const Gallery:React.FC<props> = ({title,gallery,className}) => {
+const Gallery:React.FC<props> = ({title,gallery,className,video}) => {
     const settings = {
         infinite: true,
         speed: 500,
@@ -67,6 +68,13 @@ const Gallery:React.FC<props> = ({title,gallery,className}) => {
             }
         ]
     };
+
+    const getEmbedUrl = (url: string) => {
+        const videoIdMatch = url?.match(/(?:youtu\.be\/|youtube\.com\/(?:watch\?v=|embed\/|v\/|.+\?v=))([^&]+)/);
+        return videoIdMatch ? `https://www.youtube.com/embed/${videoIdMatch[1]}` : url;
+    };
+
+    console.log(video)
     return (
         <>
             <main className={`mt-16 ${className}`}>
@@ -85,15 +93,15 @@ const Gallery:React.FC<props> = ({title,gallery,className}) => {
             </main>
 
             <main className={`mt-8 ${className}`}>
-                <SharedTitle2 title={`${title} Video`}/>
+                <SharedTitle2 title={`${title} Video`} />
                 <div className="w-[90%] h-[50vh] bg-primary my-12 relative overflow-hidden">
                     <iframe
-                    className="w-full h-full"
-                    src={`https://www.youtube.com/embed/19g66ezsKAg`}
-                    title="YouTube video player"
-                    frameBorder="0"
-                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                    allowFullScreen
+                        className="w-full h-full"
+                        src={getEmbedUrl(video)}
+                        title="YouTube video player"
+                        frameBorder="0"
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                        allowFullScreen
                     />
                 </div>
             </main>

@@ -105,12 +105,11 @@ const SingleWellness: React.FC<wellnessProps> = ({id}) => {
             </Button>
             <section className='relative lg:h-[75vh] h-[40vh] lg:mt-4 mt-12 w-full rounded-md' style={{background:`url(${wellnessData?.data?.data?.thumbnail})`,backgroundSize:"cover",backgroundPosition:"center",backgroundAttachment:"fixed"}}>
                 <div className='absolute inset-0 bg-black/20 w-full'></div>
-                <div className='w-fit relative flex items-center justify-start top-[70%] left-[5%] '>
-                    <div className='flex flex-col items-start'>
-                        <h1 className={`${rowdies.className} lg:text-7xl text-3xl w-fit text-[#DFDCDC]/70`}>{wellness.title}</h1>
-                        <p className={`${rowdies.className} lg:text-5xl text-2xl absolute top-10 antialiased text-white`}>{wellness.title}</p>
-                    </div>
-                </div>
+                <div className='w-full relative flex items-center justify-start top-[70%] left-[5%] '>
+                                    <div className='flex flex-col items-start'>
+                                        <p className={`${rowdies.className} lg:text-7xl text-2xl absolute antialiased text-white`}>{wellness.title}</p>
+                                    </div>
+                                </div>
             </section>
             <section className='flex lg:flex-row flex-col lg:gap-12 gap-4 w-full lg:my-12 my-4 justify-between'>
                 <div className='lg:w-[65%] w-full'>
@@ -151,7 +150,7 @@ const SingleWellness: React.FC<wellnessProps> = ({id}) => {
                         </LinedContainer>
                     </div>
                     <TrekFAQs FAQs={FAQs}/>
-                    <Gallery title={wellness?.title} gallery={gallery}/>
+                    <Gallery title={wellness?.title} gallery={gallery} video={wellnessData?.data?.data?.video}/>
                 </div>
                 <div className='lg:w-[35%] w-full flex justify-start flex-col items-center'>
                     <RightSide price={wellness?.price} name={wellness?.title}/>

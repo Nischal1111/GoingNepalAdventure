@@ -124,6 +124,7 @@ const SingleTrek:React.FC<paramsProps> = ({id}) => {
 ];
 
     const gallery=SingleTrekData?.data?.data?.images
+    const video=SingleTrekData?.data?.data?.video
 
     const FAQs=SingleTrekData?.data?.data?.faq
 
@@ -216,7 +217,7 @@ const SingleTrek:React.FC<paramsProps> = ({id}) => {
                     <TripQuote title={trek?.title} desc={trek.desc} slug={SingleTrekData?.data?.data?.slug}/>
                     <PackingList trekkingEquipment={trekkingEquipment}/>
                     <TrekFAQs FAQs={FAQs}/>
-                    <Gallery title={trek?.title} gallery={gallery}/>
+                    <Gallery title={trek?.title} gallery={gallery} video={video}/>
                 </div>
                 <div className='lg:w-[35%] w-full flex justify-start flex-col items-center'>
                     <RightSide slug={SingleTrekData?.data?.data?.slug} price={trek?.price} discount={trek?.discount} title={trek?.title} trekPdf={SingleTrekData?.data?.data?.trekPdf} _id={SingleTrekData?.data?.data?._id} downloadPDF={downloadPDF}/>
