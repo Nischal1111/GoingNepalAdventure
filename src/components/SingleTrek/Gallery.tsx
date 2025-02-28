@@ -37,7 +37,7 @@ interface props{
     title:string
     gallery:trekProps["gallery"]
     className?:string
-    video:string
+    video?:string
 }
 
 const Gallery:React.FC<props> = ({title,gallery,className,video}) => {
@@ -69,7 +69,7 @@ const Gallery:React.FC<props> = ({title,gallery,className,video}) => {
         ]
     };
 
-    const getEmbedUrl = (url: string) => {
+    const getEmbedUrl = (url: string|undefined) => {
         const videoIdMatch = url?.match(/(?:youtu\.be\/|youtube\.com\/(?:watch\?v=|embed\/|v\/|.+\?v=))([^&]+)/);
         return videoIdMatch ? `https://www.youtube.com/embed/${videoIdMatch[1]}` : url;
     };

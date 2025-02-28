@@ -116,7 +116,7 @@ const SingleAct:React.FC<Props> = ({id}) => {
                         </LinedContainer>
                     </div>
                     <TrekFAQs FAQs={FAQs}/>
-                    <Gallery title={activityData?.data?.title} gallery={gallery}/>
+                    <Gallery title={activityData?.data?.title} gallery={gallery} video={activityData?.data?.video}/>
                 </div>
                 <div className='lg:w-[35%] w-full flex justify-start flex-col items-center'>
                     <RightSide price={activityData?.data?.price} name={activityData?.data?.title}/>
