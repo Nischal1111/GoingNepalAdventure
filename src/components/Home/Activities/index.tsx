@@ -1,5 +1,6 @@
 "use client"
 import { getAllActivitys } from '@/services/activities';
+import Loader from '@/shared/Loader';
 import SharedTitle from '@/shared/SharedTitle';
 import { Button } from '@nextui-org/react';
 import { useQuery } from '@tanstack/react-query';
@@ -61,7 +62,7 @@ const ActivityCard: React.FC<ActivityProps> = ({ activity }) => {
 
 const Activities = () => {
 
-    const {data:activityData}=useQuery({
+    const {data:activityData,isLoading}=useQuery({
         queryKey: ['all-activities-home-slider'],
         queryFn:()=>getAllActivitys(),
     })
@@ -98,6 +99,7 @@ const Activities = () => {
     return (
         <main className="lg:px-16 px-4 my-16 lg:mt-24 mt-12">
             <SharedTitle title="Activities" subTitle="Explore thrilling activities" />
+            {isLoading && <Loader/>}
             <Slider {...settings} className='mt-20'>
                 {activityData?.data?.map((activity:any) => ( //eslint-disable-line @typescript-eslint/no-explicit-any
                     <div key={activity._id} className="px-2">

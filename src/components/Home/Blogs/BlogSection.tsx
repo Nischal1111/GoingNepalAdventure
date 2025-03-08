@@ -9,6 +9,7 @@ import { useQuery } from '@tanstack/react-query';
 import {getBlogsByViews } from '@/services/blogs';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
+import Loader from '@/shared/Loader';
 
 interface Blogs{
     blogImage:string
@@ -21,7 +22,7 @@ interface Blogs{
 
 const BlogSection = () => {
     
-    const {data:blogsData}=useQuery({
+    const {data:blogsData,isLoading}=useQuery({
         queryKey:["popularblogs"],
         queryFn:()=>getBlogsByViews()
     })
@@ -29,6 +30,8 @@ const BlogSection = () => {
 
 
     const pathname=usePathname()as string
+    
+    if(isLoading) return <Loader/>
 
   return (
     <main className='flex lg:flex-row flex-col lg:gap-12 gap-4 items-stretch w-full pb-12 z-[999]'>

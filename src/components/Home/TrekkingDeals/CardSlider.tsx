@@ -9,6 +9,7 @@ import { Button } from '@nextui-org/react';
 import Card from './Card';
 import { useQuery } from '@tanstack/react-query';
 import { getTreksSlider } from '@/services/treks';
+import Loader from '@/shared/Loader';
 
 interface CardProps {
     name: string;
@@ -45,7 +46,7 @@ const CustomNextArrow: React.FC<CustomArrowComponentProps> = ({ onClick }) => (
 )
 
 const CardSlider: React.FC = () => {
-    const {data:trekData}=useQuery({
+    const {data:trekData,isLoading}=useQuery({
         queryKey: ['trekData'],
         queryFn:()=>getTreksSlider(),
     })
@@ -77,6 +78,8 @@ const CardSlider: React.FC = () => {
             }
         ]
     };
+
+    if(isLoading) return <Loader/>
 
     return (
         <div className="relative lg:px-12 px-4 py-8">
