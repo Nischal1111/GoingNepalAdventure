@@ -60,7 +60,7 @@ const Itinerary: React.FC<trekProps> = ({ itinerary }) => {
         <main className='w-full my-16'>
             <SharedTitle2 title='Itinerary' />
             <LinedContainer>
-                <div className='mt-8 -ml-4'>
+                <div className='mt-8 ml-0'>
                     <Button 
                         onClick={handleExpandAll}
                         className="mb-4 text-primary bg-transparent absolute right-0 -top-[4.5rem]"
@@ -84,7 +84,7 @@ const Itinerary: React.FC<trekProps> = ({ itinerary }) => {
                                 className='py-2'
                             >
                                 <p>{parseContentWithLinks(item.details, Array.isArray(item.links) ? item.links : [item.links])}</p>
-                                <div className='my-4 lg:px-8 px-4 lg:py-4 py-2 rounded-md bg-[#5d83c4]/20 flex items-center gap-12 w-fit'>
+                                <div className='my-4 lg:px-8 px-2 lg:py-4 py-2 rounded-md bg-[#5d83c4]/20 flex items-center gap-12 w-fit'>
                                     <div className='flex items-center gap-4'>
                                         <FaBed className='text-primary' size={20} />
                                         <p className='text-sm'>{item?.accommodations}</p>

@@ -83,7 +83,7 @@ const CardSlider: React.FC = () => {
 
     return (
         <div className="relative lg:px-12 px-4 py-8">
-            <Slider {...settings} className='pr-12 pl-16'>
+            <Slider {...settings} className='lg:pr-12 pr-0 lg:pl-16 pl-0'>
                 {trekData?.data?.data?.map((item:CardProps, index:number) => (
                     <div key={index} className="px-4"><Card discount={item?.discount} name={item?.name} link={item?.slug} overview={item?.overview} image={item?.thumbnail} price={item?.price} days={`${item?.days?.min} - ${item?.days?.max}`} difficulty={item?.difficulty}/></div>
                 ))}

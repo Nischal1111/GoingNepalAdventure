@@ -46,7 +46,7 @@ const TrekFAQs: React.FC<TrekFAQsProps> = ({ FAQs }) => {
         <main>
             <SharedTitle2 title='FAQs' />
             <LinedContainer>
-                <div className='mt-8 -ml-4'>
+                <div className='mt-8 ml-0'>
                     <Button 
                         onClick={handleExpandAll}
                         className="mb-4 text-primary bg-transparent absolute right-0 -top-[4.5rem]"
