@@ -70,7 +70,7 @@ const HeroSection = () => {
                     />       
                 ))}
                 
-                <div className='lg:px-20 px-4 flex gap-8 z-[1000] absolute top-[15%]'>
+                <div className='lg:px-20 px-4 flex gap-8 z-[100] absolute top-[15%]'>
                     <div className='relative lg:h-[50vh] h-[35vh] flex gap-1'>
                         <div className='bg-white w-[1px] h-full'></div>
                         <div className='bg-white w-[1px] h-full relative top-3'></div>
@@ -159,7 +159,7 @@ const HeroSection = () => {
                 </div>
             </main>
 
-            <div className='relative z-10 mt-[-4rem]'>
+            <div className='relative mt-[-4rem]'>
                 <SearchSection />
             </div>
         </>
