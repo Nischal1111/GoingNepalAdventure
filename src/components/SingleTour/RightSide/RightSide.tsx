@@ -31,10 +31,14 @@ const RightSide: React.FC<Tour> = ({ price, name, _id, slug, category, discount 
     const [guide, setGuide] = useState(false)
     const [potter, setPotter] = useState(false)
     const [fullboard, setFullboard] = useState(false)
+    const [second,setSecond]=useState(false)                                                                                                                            
+    const [third,setThird]=useState(false)                                                                                                                                                  
     const [selectedDate, setSelectedDate] = useState<CalendarDate>(today(getLocalTimeZone()))
     const GUIDE_SERVICE_PRICE = 100;
     const POTTER_SERVICE_PRICE = 150;
     const FULLBOARD_SERVICE_PRICE = 200;
+    const Second_Stay=400;
+    const Third_Stay=500;                                                                   
 
     const handleQuote = () => {
         setIsQuote(true);
@@ -79,8 +83,7 @@ const RightSide: React.FC<Tour> = ({ price, name, _id, slug, category, discount 
     const discountPercent = Number(discount) || 0;
     const discountedPrice = basePrice * (1 - discountPercent / 100);
     
-    // Calculate total prices based on quantity and services
-    const totalBasePrice = basePrice * quantity; //eslint-disable-line @typescript-eslint/no-unused-vars
+    
     const totalDiscountedPrice = discountedPrice * quantity;
     const finalPrice = totalDiscountedPrice + 
                     (guide ? (GUIDE_SERVICE_PRICE * quantity) : 0) + 
@@ -179,6 +182,7 @@ const RightSide: React.FC<Tour> = ({ price, name, _id, slug, category, discount 
                                 <Button 
                                     isIconOnly
                                     variant="bordered" 
+                                    isDisabled={guide}
                                     onPress={increaseQuantity}
                                     size='sm'
                                     className='bg-primary text-white'
@@ -225,6 +229,36 @@ const RightSide: React.FC<Tour> = ({ price, name, _id, slug, category, discount 
                                 </Checkbox>
                             </CheckboxGroup>
                         </div>
+                        {guide&&
+                        <div className='flex flex-col justify-start gap-2 w-full px-6'>
+                            <CheckboxGroup label="Select solo stay standards">
+                                <Checkbox
+                                    isSelected={second}
+                                    onChange={(e) => {
+                                            setSecond(e.target.checked);
+                                    }}
+                                    value="potter-service"
+                                    isDisabled={third} // Disable unless Guide service is selected
+                                >
+                                    4 Star (+${Second_Stay})
+                                </Checkbox>
+
+                                {/* Fullboard Service Checkbox */}
+                                <Checkbox
+                                    isSelected={third}
+                                    onChange={(e) => {
+                                            setThird(e.target.checked);
+                                        
+                                    }}
+                                    value="fullboard-service"
+                                    isDisabled={second} // Disable unless Guide service is selected
+                                >
+                                    5 Star (+${Third_Stay})
+                                </Checkbox>
+                            </CheckboxGroup>
+                        </div>
+                        }
+                        
                         <Divider className='w-full'/>
                         <div className="w-full font-bold text-lg flex items-center justify-between px-6">
                             <h1>Total:</h1> 

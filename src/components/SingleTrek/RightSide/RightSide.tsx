@@ -1,6 +1,6 @@
 "use client"
 import React, { useState } from 'react'
-import { Avatar, Button, DatePicker, Divider } from '@nextui-org/react'
+import { Avatar, Button, Checkbox, CheckboxGroup, DatePicker, Divider } from '@nextui-org/react'
 import QuoteModal from './QuoteModal'
 import Image from 'next/image'
 import Link from 'next/link'
@@ -35,6 +35,7 @@ const RightSide: React.FC<RightSideProps> = ({ price, title, _id, downloadPDF, s
     const [isOpen, setIsOpen] = useState(false);
     const [text, setText] = useState("");
     const [quantity, setQuantity] = useState(1);
+    const [selectedHotel, setSelectedHotel] = useState("");
 
     const {data:exploreBlogsData}=useQuery({
         queryKey: ['exploreBlogsData'],
@@ -78,7 +79,16 @@ const RightSide: React.FC<RightSideProps> = ({ price, title, _id, downloadPDF, s
     const basePrice = Number(price?.replace(/[^0-9]/g, '')) || 0;
     const discountPercent = Number(discount) || 0;
     const discountedPrice = basePrice * (1 - discountPercent / 100);
-    const totalPrice = discountedPrice * quantity;
+    
+    // Get hotel price based on selection
+    const getHotelPrice = () => {
+        if (selectedHotel === "4-star") return 450;
+        if (selectedHotel === "5-star") return 550;
+        return 0;
+    };
+    
+    const hotelPrice = getHotelPrice();
+    const totalPrice = (discountedPrice * quantity) + hotelPrice;
 
     return (
         <>
@@ -164,11 +174,36 @@ const RightSide: React.FC<RightSideProps> = ({ price, title, _id, downloadPDF, s
                             </p>
                         </div>
                         
+                        <CheckboxGroup 
+                            label="Hotel Options" 
+                            description="Only applicable for popular cities"
+                            orientation="horizontal"
+                            isRequired={false}
+                            className='flex flex-col'
+                            value={selectedHotel ? [selectedHotel] : []}
+                            onValueChange={(value) => setSelectedHotel(value.length > 0 ? value[0] : "")}
+                            classNames={{
+                                description: "text-gray-500 text-xs italic",
+                            }}
+                        >
+                            <Checkbox value="4-star">4 star Hotel ($450)</Checkbox>
+                            <Checkbox value="5-star">5 star Hotel ($550)</Checkbox>
+                        </CheckboxGroup>
+                        
+                        <div className="w-full px-6 mt-0">
+                            <p className="text-xs text-gray-500 italic">
+                                * Hotel options are only applicable for popular cities.
+                            </p>
+                        </div>
+                        
                         <Divider className='w-full mt-4'/>
                         <div className="w-full font-bold text-lg flex items-center justify-between px-6">
                             <h1>Total:</h1> 
                             <div className='flex gap-2 items-center'>
-                                <span className='text-xs text-gray-400'>{quantity} x ${discountedPrice.toFixed(0)} = </span>
+                                <span className='text-xs text-gray-400'>
+                                    {quantity} x ${discountedPrice.toFixed(0)} 
+                                    {hotelPrice > 0 && ` + ${selectedHotel} ($${hotelPrice})`} = 
+                                </span>
                                 <span>${totalPrice.toFixed(0)}</span>
                             </div>
                         </div>
