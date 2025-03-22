@@ -34,21 +34,21 @@ const RightSide: React.FC<Tour> = ({ price, name, _id, slug, category, discount,
     // Define accommodation options
     const ACCOMMODATION_OPTIONS = {
         STANDARD: { id: "standard", name: "Standard", price: 0 },
-        FOUR_STAR: { id: "four_star", name: "4 Star (9 Nights)", price: 150 },
-        FIVE_STAR: { id: "five_star", name: "5 Star (9 Nights)", price: 200 }
+        FOUR_STAR: { id: "Four Star", name: "4 Star", price: 150 },
+        FIVE_STAR: { id: "Five Star", name: "5 Star", price: 200 }
     };
 
     // Define solo tour options
     const SOLO_TOUR_OPTIONS = {
         NONE: { id: "none", name: "None", price: 0 },
-        PRIVATE_TOUR: { id: "private_tour", name: "Solo Private Tour", price: 100 }
+        PRIVATE_TOUR: { id: "Private Tour", name: "Solo Private Tour", price: 100 }
     };
 
     // Define solo stay standards
     const SOLO_STAY_OPTIONS = {
         NONE: { id: "none", name: "None", price: 0 },
-        FOUR_STAR: { id: "four_star", name: "4 Star", price: 400 },
-        FIVE_STAR: { id: "five_star", name: "5 Star", price: 500 }
+        FOUR_STAR: { id: "Solo Four Star", name: "4 Star", price: 400 },
+        FIVE_STAR: { id: "Solo Five Star", name: "5 Star", price: 500 }
     };
     
     // State variables for selections
@@ -150,10 +150,10 @@ const RightSide: React.FC<Tour> = ({ price, name, _id, slug, category, discount,
 
     // Handle accommodation selection
     const handleAccommodationChange = (isSelected: boolean, value: string) => {
-        if (isSelected && value === "four_star") {
+        if (isSelected && value === "Four Star") {
             setSelectedAccommodation(ACCOMMODATION_OPTIONS.FOUR_STAR.id);
             setSelectedSoloTour(SOLO_TOUR_OPTIONS.NONE.id); // Reset solo tour
-        } else if (isSelected && value === "five_star") {
+        } else if (isSelected && value === "Five Star") {
             setSelectedAccommodation(ACCOMMODATION_OPTIONS.FIVE_STAR.id);
             setSelectedSoloTour(SOLO_TOUR_OPTIONS.NONE.id); // Reset solo tour
         } else {
@@ -163,9 +163,9 @@ const RightSide: React.FC<Tour> = ({ price, name, _id, slug, category, discount,
 
     // Handle solo stay selection
     const handleSoloStayChange = (isSelected: boolean, value: string) => {
-        if (isSelected && value === "four_star") {
+        if (isSelected && value === "Four Star") {
             setSelectedSoloStay(SOLO_STAY_OPTIONS.FOUR_STAR.id);
-        } else if (isSelected && value === "five_star") {
+        } else if (isSelected && value === "Five Star") {
             setSelectedSoloStay(SOLO_STAY_OPTIONS.FIVE_STAR.id);
         } else {
             setSelectedSoloStay(SOLO_STAY_OPTIONS.NONE.id);
@@ -300,8 +300,8 @@ const RightSide: React.FC<Tour> = ({ price, name, _id, slug, category, discount,
                                 {/* Solo Private Tour Checkbox */}
                                 <Checkbox
                                     isSelected={selectedSoloTour === SOLO_TOUR_OPTIONS.PRIVATE_TOUR.id}
-                                    onChange={(e) => handleSoloTourChange(e.target.checked, "private_tour")}
-                                    value="private_tour"
+                                    onChange={(e) => handleSoloTourChange(e.target.checked, "Private Tour")}
+                                    value="Private tour"
                                     isDisabled={selectedAccommodation !== ACCOMMODATION_OPTIONS.STANDARD.id || quantity > 1}
                                 >
                                     {SOLO_TOUR_OPTIONS.PRIVATE_TOUR.name} (+${SOLO_TOUR_OPTIONS.PRIVATE_TOUR.price})
@@ -310,8 +310,8 @@ const RightSide: React.FC<Tour> = ({ price, name, _id, slug, category, discount,
                                 {/* 4 Star Accommodation Checkbox */}
                                 <Checkbox
                                     isSelected={selectedAccommodation === ACCOMMODATION_OPTIONS.FOUR_STAR.id}
-                                    onChange={(e) => handleAccommodationChange(e.target.checked, "four_star")}
-                                    value="four_star"
+                                    onChange={(e) => handleAccommodationChange(e.target.checked, "Four Star")}
+                                    value="Four star"
                                     isDisabled={selectedSoloTour === SOLO_TOUR_OPTIONS.PRIVATE_TOUR.id || selectedAccommodation === ACCOMMODATION_OPTIONS.FIVE_STAR.id}
                                 >
                                     {ACCOMMODATION_OPTIONS.FOUR_STAR.name} (+${ACCOMMODATION_OPTIONS.FOUR_STAR.price * quantity})
@@ -320,8 +320,8 @@ const RightSide: React.FC<Tour> = ({ price, name, _id, slug, category, discount,
                                 {/* 5 Star Accommodation Checkbox */}
                                 <Checkbox
                                     isSelected={selectedAccommodation === ACCOMMODATION_OPTIONS.FIVE_STAR.id}
-                                    onChange={(e) => handleAccommodationChange(e.target.checked, "five_star")}
-                                    value="five_star"
+                                    onChange={(e) => handleAccommodationChange(e.target.checked, "Five Star")}
+                                    value="Five star"
                                     isDisabled={selectedSoloTour === SOLO_TOUR_OPTIONS.PRIVATE_TOUR.id || selectedAccommodation === ACCOMMODATION_OPTIONS.FOUR_STAR.id}
                                 >
                                     {ACCOMMODATION_OPTIONS.FIVE_STAR.name} (+${ACCOMMODATION_OPTIONS.FIVE_STAR.price * quantity})
@@ -333,8 +333,8 @@ const RightSide: React.FC<Tour> = ({ price, name, _id, slug, category, discount,
                             <CheckboxGroup label="Select solo stay standards">
                                 <Checkbox
                                     isSelected={selectedSoloStay === SOLO_STAY_OPTIONS.FOUR_STAR.id}
-                                    onChange={(e) => handleSoloStayChange(e.target.checked, "four_star")}
-                                    value="four_star"
+                                    onChange={(e) => handleSoloStayChange(e.target.checked, "Solo Four Star")}
+                                    value="Solo Four Star"
                                     isDisabled={selectedSoloStay === SOLO_STAY_OPTIONS.FIVE_STAR.id}
                                 >
                                     {SOLO_STAY_OPTIONS.FOUR_STAR.name} (+${SOLO_STAY_OPTIONS.FOUR_STAR.price})
@@ -342,8 +342,8 @@ const RightSide: React.FC<Tour> = ({ price, name, _id, slug, category, discount,
 
                                 <Checkbox
                                     isSelected={selectedSoloStay === SOLO_STAY_OPTIONS.FIVE_STAR.id}
-                                    onChange={(e) => handleSoloStayChange(e.target.checked, "five_star")}
-                                    value="five_star"
+                                    onChange={(e) => handleSoloStayChange(e.target.checked, "Solo Five Star")}
+                                    value="Solo Five Star"
                                     isDisabled={selectedSoloStay === SOLO_STAY_OPTIONS.FOUR_STAR.id}
                                 >
                                     {SOLO_STAY_OPTIONS.FIVE_STAR.name} (+${SOLO_STAY_OPTIONS.FIVE_STAR.price})

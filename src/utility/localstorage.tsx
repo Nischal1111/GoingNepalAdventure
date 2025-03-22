@@ -5,7 +5,7 @@ export const isBrowser = (): boolean => {
 };
 
 // Safe localStorage getter
-export const getLocalStorage = (key: string, defaultValue: any = null): any => {
+export const getLocalStorage = (key: string, defaultValue: any = null): any => {//eslint-disable-line @typescript-eslint/no-explicit-any
   if (!isBrowser()) {
     return defaultValue;
   }
@@ -23,7 +23,7 @@ export const getLocalStorage = (key: string, defaultValue: any = null): any => {
 };
 
 // Safe localStorage setter
-export const setLocalStorage = (key: string, value: any): boolean => {
+export const setLocalStorage = (key: string, value: any): boolean => {//eslint-disable-line @typescript-eslint/no-explicit-any
   if (!isBrowser()) {
     return false;
   }

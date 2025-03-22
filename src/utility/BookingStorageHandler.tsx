@@ -19,13 +19,13 @@ export interface BookingDetails {
   
   // Booking information
   bookingDate: string;
-  extraServices?: any;  // Description of extra services
-  soloStandard?: any;   // Standard for solo travelers
+  extraServices?: any;  //eslint-disable-line @typescript-eslint/no-explicit-any
+  soloStandard?: any;   //eslint-disable-line @typescript-eslint/no-explicit-any
   
   // Pricing
-  price?: number;          // Base price per person
-  quantity?: number;       // Number of people
-  totalPrice: number;      // Total calculated price
+  price?: number;          
+  quantity?: number;      
+  totalPrice: number;     
 }
 
 // Save booking details to localStorage

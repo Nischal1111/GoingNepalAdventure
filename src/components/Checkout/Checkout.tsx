@@ -277,14 +277,14 @@ export default function CheckoutPage() {
                 </div>
 
                 <Divider />
-
+                 {renderExtraServices()}
                 <div className="space-y-2">
                   <div className="flex justify-between">
                     <span>Base Price ({bookingDetails.quantity} x ${bookingDetails.price})</span>
                     <span>${bookingDetails.totalPrice}</span>
                   </div>
 
-                  {renderExtraServices()}
+                 
                 </div>
 
                 <Divider />
