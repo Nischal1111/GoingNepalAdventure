@@ -153,7 +153,7 @@ const SingleTour:React.FC<pageProps> = ({id}) => {
                     <Gallery title={tour?.title} gallery={gallery} video={tourData?.data?.data?.video}/>
                 </div>
                 <div className='lg:w-[35%] w-full flex justify-start flex-col items-center'>
-                    <RightSide price={tour?.price} discount={tour?.discount} name={tour?.title} _id={tourData?.data?.data?._id} slug={tourData?.data?.data?.slug} category={tourData?.data?.data?.category}/>
+                    <RightSide price={tour?.price} discount={tour?.discount} name={tour?.title} type={tourData?.data?.data?.type} _id={tourData?.data?.data?._id} slug={tourData?.data?.data?.slug} category={tourData?.data?.data?.category}/>
                 </div>
             </section>
             

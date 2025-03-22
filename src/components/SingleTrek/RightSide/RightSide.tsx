@@ -5,13 +5,15 @@ import QuoteModal from './QuoteModal'
 import Image from 'next/image'
 import Link from 'next/link'
 import { Rowdies } from "next/font/google";
-import {today, getLocalTimeZone} from "@internationalized/date";
+import {today, getLocalTimeZone, CalendarDate} from "@internationalized/date";
 import { FaMinus, FaPlus, FaRegEye } from 'react-icons/fa6'
 import { useQuery } from '@tanstack/react-query'
 import { getBlogsByViews } from '@/services/blogs'
 import { excludeTrek } from '@/services/treks'
 import { GoDotFill } from 'react-icons/go'
 import { getAllActivitys } from '@/services/activities'
+import { useRouter } from 'next/navigation';
+import { saveBookingDetails } from '@/utility/BookingStorageHandler';
 
 export const rowdies=Rowdies({
     weight: '400',
@@ -27,14 +29,17 @@ interface RightSideProps {
     downloadPDF: () => void;
     slug: string;
     discount: string;
+    type:string|undefined
 }
 
-const RightSide: React.FC<RightSideProps> = ({ price, title, _id, downloadPDF, slug, discount }) => {
+const RightSide: React.FC<RightSideProps> = ({ price, title, _id, downloadPDF, slug, discount,type }) => {
+    const router = useRouter();
     const [isQuote, setIsQuote] = useState(false); //eslint-disable-line @typescript-eslint/no-unused-vars
     const [isCustomize, setIsCustomize] = useState(false);//eslint-disable-line @typescript-eslint/no-unused-vars
     const [isOpen, setIsOpen] = useState(false);
     const [text, setText] = useState("");
     const [quantity, setQuantity] = useState(1);
+    const [selectedDate, setSelectedDate] = useState<CalendarDate>(today(getLocalTimeZone()));
     const [selectedHotel, setSelectedHotel] = useState("");
 
     const {data:exploreBlogsData}=useQuery({
@@ -90,6 +95,30 @@ const RightSide: React.FC<RightSideProps> = ({ price, title, _id, downloadPDF, s
     const hotelPrice = getHotelPrice();
     const totalPrice = (discountedPrice * quantity) + hotelPrice;
 
+    console.log(totalPrice)
+    
+    // Handle Book Now button click
+    const handleBookNow = () => {
+        const bookingDetails = {
+            adventureId: _id,
+            adventureName: title,
+            adventureSlug: slug,                
+            price: discountPercent > 0 ? discountedPrice : basePrice,
+            quantity,
+            bookingDate: selectedDate.toString(),
+            adventureType: "Trek" as const,
+            extraServices: null,
+            soloStandard: selectedHotel,
+            totalPrice
+        };
+        
+        // Save to localStorage
+        saveBookingDetails(bookingDetails);
+        
+        // Navigate to checkout page
+        router.push('/checkout');
+    };
+
     return (
         <>
         <div className='px-12'>
@@ -129,6 +158,8 @@ const RightSide: React.FC<RightSideProps> = ({ price, title, _id, downloadPDF, s
                                     input: 'w-full bg-white border border-primary',
                                 }}
                                 defaultValue={today(getLocalTimeZone())}
+                                value={selectedDate}
+                                onChange={(date) => setSelectedDate(date)}
                                 minValue={today(getLocalTimeZone())}
                                 labelPlacement='outside'
                                 radius='sm'
@@ -207,9 +238,14 @@ const RightSide: React.FC<RightSideProps> = ({ price, title, _id, downloadPDF, s
                                 <span>${totalPrice.toFixed(0)}</span>
                             </div>
                         </div>
-                        <Link href={`/payment`}>
-                            <Button className='-mb-4 mt-4 bg-primary rounded-sm text-white w-[90%] flex self-center'>Book Now</Button>
-                        </Link>
+                        
+                        {/* Replace Link with Button */}
+                        <Button 
+                            className='-mb-4 mt-4 bg-primary rounded-sm text-white w-[90%] flex self-center'
+                            onPress={handleBookNow}
+                        >
+                            Book Now
+                        </Button>
                     </div>
                 </div>
             </div>

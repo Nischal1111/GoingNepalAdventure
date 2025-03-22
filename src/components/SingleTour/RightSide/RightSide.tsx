@@ -14,6 +14,7 @@ import { excludeTour } from '@/services/tour'
 import { GoDotFill } from 'react-icons/go'
 import { getAllActivitys } from '@/services/activities'
 import { useRouter } from 'next/navigation'
+import { saveBookingDetails } from '@/utility/BookingStorageHandler'
 
 
 export const rowdies=Rowdies({
@@ -22,23 +23,39 @@ export const rowdies=Rowdies({
     display: 'swap',
 })
 
-const RightSide: React.FC<Tour> = ({ price, name, _id, slug, category, discount }) => {
+const RightSide: React.FC<Tour> = ({ price, name, _id, slug, category, discount,type }) => {
+    const router = useRouter();
     const [isQuote, setIsQuote] = useState(false); // eslint-disable-line @typescript-eslint/no-unused-vars
     const [isCustomize, setIsCustomize] = useState(false); // eslint-disable-line @typescript-eslint/no-unused-vars
     const [isOpen, setIsOpen] = useState(false);
     const [text, setText] = useState("");
     const [quantity, setQuantity] = useState(1)
-    const [guide, setGuide] = useState(false)
-    const [potter, setPotter] = useState(false)
-    const [fullboard, setFullboard] = useState(false)
-    const [second,setSecond]=useState(false)                                                                                                                            
-    const [third,setThird]=useState(false)                                                                                                                                                  
+    
+    // Define accommodation options
+    const ACCOMMODATION_OPTIONS = {
+        STANDARD: { id: "standard", name: "Standard", price: 0 },
+        FOUR_STAR: { id: "four_star", name: "4 Star (9 Nights)", price: 150 },
+        FIVE_STAR: { id: "five_star", name: "5 Star (9 Nights)", price: 200 }
+    };
+
+    // Define solo tour options
+    const SOLO_TOUR_OPTIONS = {
+        NONE: { id: "none", name: "None", price: 0 },
+        PRIVATE_TOUR: { id: "private_tour", name: "Solo Private Tour", price: 100 }
+    };
+
+    // Define solo stay standards
+    const SOLO_STAY_OPTIONS = {
+        NONE: { id: "none", name: "None", price: 0 },
+        FOUR_STAR: { id: "four_star", name: "4 Star", price: 400 },
+        FIVE_STAR: { id: "five_star", name: "5 Star", price: 500 }
+    };
+    
+    // State variables for selections
+    const [selectedAccommodation, setSelectedAccommodation] = useState(ACCOMMODATION_OPTIONS.STANDARD.id);
+    const [selectedSoloTour, setSelectedSoloTour] = useState(SOLO_TOUR_OPTIONS.NONE.id);
+    const [selectedSoloStay, setSelectedSoloStay] = useState(SOLO_STAY_OPTIONS.NONE.id);
     const [selectedDate, setSelectedDate] = useState<CalendarDate>(today(getLocalTimeZone()))
-    const GUIDE_SERVICE_PRICE = 100;
-    const POTTER_SERVICE_PRICE = 150;
-    const FULLBOARD_SERVICE_PRICE = 200;
-    const Second_Stay=400;
-    const Third_Stay=500;                                                                   
 
     const handleQuote = () => {
         setIsQuote(true);
@@ -83,33 +100,120 @@ const RightSide: React.FC<Tour> = ({ price, name, _id, slug, category, discount 
     const discountPercent = Number(discount) || 0;
     const discountedPrice = basePrice * (1 - discountPercent / 100);
     
+    // Helper function to get accommodation price
+    const getAccommodationPrice = () => {
+        if (selectedAccommodation === ACCOMMODATION_OPTIONS.FOUR_STAR.id) {
+            return ACCOMMODATION_OPTIONS.FOUR_STAR.price * quantity;
+        } else if (selectedAccommodation === ACCOMMODATION_OPTIONS.FIVE_STAR.id) {
+            return ACCOMMODATION_OPTIONS.FIVE_STAR.price * quantity;
+        }
+        return 0;
+    };
     
+    // Helper function to get solo tour price
+    const getSoloTourPrice = () => {
+        if (selectedSoloTour === SOLO_TOUR_OPTIONS.PRIVATE_TOUR.id) {
+            return SOLO_TOUR_OPTIONS.PRIVATE_TOUR.price;
+        }
+        return 0;
+    };
+    
+    // Helper function to get solo stay price
+    const getSoloStayPrice = () => {
+        if (selectedSoloStay === SOLO_STAY_OPTIONS.FOUR_STAR.id) {
+            return SOLO_STAY_OPTIONS.FOUR_STAR.price;
+        } else if (selectedSoloStay === SOLO_STAY_OPTIONS.FIVE_STAR.id) {
+            return SOLO_STAY_OPTIONS.FIVE_STAR.price;
+        }
+        return 0;
+    };
+    
+    // Calculate total price for display
     const totalDiscountedPrice = discountedPrice * quantity;
-    const finalPrice = totalDiscountedPrice + 
-                    (guide ? (GUIDE_SERVICE_PRICE * quantity) : 0) + 
-                    (potter ? (POTTER_SERVICE_PRICE * quantity) : 0) + 
-                    (fullboard ? (FULLBOARD_SERVICE_PRICE * quantity) : 0);
+    const displayFinalPrice = totalDiscountedPrice + 
+                    getSoloTourPrice() + 
+                    getAccommodationPrice() + 
+                    getSoloStayPrice();
 
-    const router=useRouter()
+    // Handle solo tour selection
+    const handleSoloTourChange = (isSelected: boolean, value: string) => {
+        if (isSelected) {
+            setSelectedSoloTour(SOLO_TOUR_OPTIONS.PRIVATE_TOUR.id);
+            // Reset accommodation to standard when solo tour is selected
+            setSelectedAccommodation(ACCOMMODATION_OPTIONS.STANDARD.id);
+            setQuantity(1); // Force quantity to 1 for solo tour
+        } else {
+            setSelectedSoloTour(SOLO_TOUR_OPTIONS.NONE.id);
+            setSelectedSoloStay(SOLO_STAY_OPTIONS.NONE.id); // Reset solo stay when solo tour is deselected
+        }
+    };
+
+    // Handle accommodation selection
+    const handleAccommodationChange = (isSelected: boolean, value: string) => {
+        if (isSelected && value === "four_star") {
+            setSelectedAccommodation(ACCOMMODATION_OPTIONS.FOUR_STAR.id);
+            setSelectedSoloTour(SOLO_TOUR_OPTIONS.NONE.id); // Reset solo tour
+        } else if (isSelected && value === "five_star") {
+            setSelectedAccommodation(ACCOMMODATION_OPTIONS.FIVE_STAR.id);
+            setSelectedSoloTour(SOLO_TOUR_OPTIONS.NONE.id); // Reset solo tour
+        } else {
+            setSelectedAccommodation(ACCOMMODATION_OPTIONS.STANDARD.id);
+        }
+    };
+
+    // Handle solo stay selection
+    const handleSoloStayChange = (isSelected: boolean, value: string) => {
+        if (isSelected && value === "four_star") {
+            setSelectedSoloStay(SOLO_STAY_OPTIONS.FOUR_STAR.id);
+        } else if (isSelected && value === "five_star") {
+            setSelectedSoloStay(SOLO_STAY_OPTIONS.FIVE_STAR.id);
+        } else {
+            setSelectedSoloStay(SOLO_STAY_OPTIONS.NONE.id);
+        }
+    };
 
     const handleBookNow = () => {
+        // Use discounted price if applicable
+        const effectiveBasePrice = discountPercent > 0 ? discountedPrice : basePrice;
+    
+        // Calculate total price components
+        const accommodationPrice = getAccommodationPrice();
+        const soloTourPrice = getSoloTourPrice();
+        const soloStayPrice = getSoloStayPrice();
+        
+        const totalPrice = (effectiveBasePrice * quantity) + 
+                          accommodationPrice + 
+                          soloTourPrice + 
+                          soloStayPrice;
+                          
+        // Determine which extra service is selected (if any)
+        let extraService = null;
+        if (selectedAccommodation !== ACCOMMODATION_OPTIONS.STANDARD.id) {
+            extraService = selectedAccommodation;
+        } else if (selectedSoloTour !== SOLO_TOUR_OPTIONS.NONE.id) {
+            extraService = selectedSoloTour;
+        }
+        
+        // Determine which solo stay standard is selected (if any)
+        let soloStandard = selectedSoloStay !== SOLO_STAY_OPTIONS.NONE.id ? selectedSoloStay : null;
+        
+        // Create booking details object
         const bookingDetails = {
-            name,
-            price: discountPercent > 0 ? discountedPrice : basePrice,
+            adventureId: _id,
+            adventureName: name,
+            adventureSlug: slug,
+            price: effectiveBasePrice,
             quantity,
-            bookingDate: selectedDate,
-            extraServices: {
-                guide,
-                potter,
-                fullboard
-            }
+            bookingDate: selectedDate.toString(),
+            adventureType: "Tour" as const,
+            extraServices: extraService as string | null,
+            soloStandard: soloStandard as string | null,
+            totalPrice
         };
         
-        // Using searchParams for Next.js 13+
-        const searchParams = new URLSearchParams();
-        searchParams.set('details', JSON.stringify(bookingDetails));
+        saveBookingDetails(bookingDetails);
         
-        router.push(`/checkout?${searchParams.toString()}`);
+        router.push('/checkout');
     };
 
     return (
@@ -168,7 +272,7 @@ const RightSide: React.FC<Tour> = ({ price, name, _id, slug, category, discount 
                                     isIconOnly
                                     variant="bordered" 
                                     onPress={decreaseQuantity}
-                                    isDisabled={quantity <= 1}
+                                    isDisabled={quantity <= 1 || selectedSoloTour === SOLO_TOUR_OPTIONS.PRIVATE_TOUR.id}
                                     size='sm'
                                     className='bg-primary text-white'
                                 >
@@ -182,7 +286,7 @@ const RightSide: React.FC<Tour> = ({ price, name, _id, slug, category, discount 
                                 <Button 
                                     isIconOnly
                                     variant="bordered" 
-                                    isDisabled={guide}
+                                    isDisabled={selectedSoloTour === SOLO_TOUR_OPTIONS.PRIVATE_TOUR.id}
                                     onPress={increaseQuantity}
                                     size='sm'
                                     className='bg-primary text-white'
@@ -193,71 +297,60 @@ const RightSide: React.FC<Tour> = ({ price, name, _id, slug, category, discount 
                         </div>
                         <div className='flex flex-col justify-start gap-2 w-full px-6'>
                             <CheckboxGroup label="Select extra services">
-                                {/* Guide Service Checkbox */}
+                                {/* Solo Private Tour Checkbox */}
                                 <Checkbox
-                                    isSelected={guide}
-                                    onChange={(e) => setGuide(e.target.checked)}
-                                    value="guide-service"
-                                    isDisabled={potter || fullboard || quantity > 1}
+                                    isSelected={selectedSoloTour === SOLO_TOUR_OPTIONS.PRIVATE_TOUR.id}
+                                    onChange={(e) => handleSoloTourChange(e.target.checked, "private_tour")}
+                                    value="private_tour"
+                                    isDisabled={selectedAccommodation !== ACCOMMODATION_OPTIONS.STANDARD.id || quantity > 1}
                                 >
-                                    Solo Private Tour (+${GUIDE_SERVICE_PRICE})
+                                    {SOLO_TOUR_OPTIONS.PRIVATE_TOUR.name} (+${SOLO_TOUR_OPTIONS.PRIVATE_TOUR.price})
                                 </Checkbox>
 
-                                {/* Potter Service Checkbox */}
+                                {/* 4 Star Accommodation Checkbox */}
                                 <Checkbox
-                                    isSelected={potter}
-                                    onChange={(e) => {
-                                            setPotter(e.target.checked);
-                                    }}
-                                    value="potter-service"
-                                    isDisabled={guide || fullboard} // Disable unless Guide service is selected
+                                    isSelected={selectedAccommodation === ACCOMMODATION_OPTIONS.FOUR_STAR.id}
+                                    onChange={(e) => handleAccommodationChange(e.target.checked, "four_star")}
+                                    value="four_star"
+                                    isDisabled={selectedSoloTour === SOLO_TOUR_OPTIONS.PRIVATE_TOUR.id || selectedAccommodation === ACCOMMODATION_OPTIONS.FIVE_STAR.id}
                                 >
-                                    4 Star (9 Nights) (+${POTTER_SERVICE_PRICE*quantity})
+                                    {ACCOMMODATION_OPTIONS.FOUR_STAR.name} (+${ACCOMMODATION_OPTIONS.FOUR_STAR.price * quantity})
                                 </Checkbox>
 
-                                {/* Fullboard Service Checkbox */}
+                                {/* 5 Star Accommodation Checkbox */}
                                 <Checkbox
-                                    isSelected={fullboard}
-                                    onChange={(e) => {
-                                            setFullboard(e.target.checked);
-                                        
-                                    }}
-                                    value="fullboard-service"
-                                    isDisabled={guide || potter} // Disable unless Guide service is selected
+                                    isSelected={selectedAccommodation === ACCOMMODATION_OPTIONS.FIVE_STAR.id}
+                                    onChange={(e) => handleAccommodationChange(e.target.checked, "five_star")}
+                                    value="five_star"
+                                    isDisabled={selectedSoloTour === SOLO_TOUR_OPTIONS.PRIVATE_TOUR.id || selectedAccommodation === ACCOMMODATION_OPTIONS.FOUR_STAR.id}
                                 >
-                                    5 Star (9 Nights) (+${FULLBOARD_SERVICE_PRICE*quantity})
+                                    {ACCOMMODATION_OPTIONS.FIVE_STAR.name} (+${ACCOMMODATION_OPTIONS.FIVE_STAR.price * quantity})
                                 </Checkbox>
                             </CheckboxGroup>
                         </div>
-                        {guide&&
+                        {selectedSoloTour === SOLO_TOUR_OPTIONS.PRIVATE_TOUR.id && (
                         <div className='flex flex-col justify-start gap-2 w-full px-6'>
                             <CheckboxGroup label="Select solo stay standards">
                                 <Checkbox
-                                    isSelected={second}
-                                    onChange={(e) => {
-                                            setSecond(e.target.checked);
-                                    }}
-                                    value="potter-service"
-                                    isDisabled={third} // Disable unless Guide service is selected
+                                    isSelected={selectedSoloStay === SOLO_STAY_OPTIONS.FOUR_STAR.id}
+                                    onChange={(e) => handleSoloStayChange(e.target.checked, "four_star")}
+                                    value="four_star"
+                                    isDisabled={selectedSoloStay === SOLO_STAY_OPTIONS.FIVE_STAR.id}
                                 >
-                                    4 Star (+${Second_Stay})
+                                    {SOLO_STAY_OPTIONS.FOUR_STAR.name} (+${SOLO_STAY_OPTIONS.FOUR_STAR.price})
                                 </Checkbox>
 
-                                {/* Fullboard Service Checkbox */}
                                 <Checkbox
-                                    isSelected={third}
-                                    onChange={(e) => {
-                                            setThird(e.target.checked);
-                                        
-                                    }}
-                                    value="fullboard-service"
-                                    isDisabled={second} // Disable unless Guide service is selected
+                                    isSelected={selectedSoloStay === SOLO_STAY_OPTIONS.FIVE_STAR.id}
+                                    onChange={(e) => handleSoloStayChange(e.target.checked, "five_star")}
+                                    value="five_star"
+                                    isDisabled={selectedSoloStay === SOLO_STAY_OPTIONS.FOUR_STAR.id}
                                 >
-                                    5 Star (+${Third_Stay})
+                                    {SOLO_STAY_OPTIONS.FIVE_STAR.name} (+${SOLO_STAY_OPTIONS.FIVE_STAR.price})
                                 </Checkbox>
                             </CheckboxGroup>
                         </div>
-                        }
+                        )}
                         
                         <Divider className='w-full'/>
                         <div className="w-full font-bold text-lg flex items-center justify-between px-6">
@@ -268,10 +361,15 @@ const RightSide: React.FC<Tour> = ({ price, name, _id, slug, category, discount 
                                 ) : (
                                     <span className='text-xs text-gray-400'>{quantity} x ${basePrice} = </span>
                                 )}
-                                <span>${finalPrice.toFixed(0)}</span>
+                                <span>${displayFinalPrice.toFixed(0)}</span>
                             </div>
                         </div>
-                        <Button className='-mb-4 mt-4 bg-primary rounded-sm text-white w-[90%] flex self-center' onPress={handleBookNow}>Book Now</Button>
+                        <Button 
+                            className='-mb-4 mt-4 bg-primary rounded-sm text-white w-[90%] flex self-center' 
+                            onPress={handleBookNow}
+                        >
+                            Book Now
+                        </Button>
                     </div>
                 </div>
             </div>
