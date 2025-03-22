@@ -23,7 +23,7 @@ export const rowdies=Rowdies({
     display: 'swap',
 })
 
-const RightSide: React.FC<Tour> = ({ price, name, _id, slug, category, discount,type }) => {
+const RightSide: React.FC<Tour> = ({ price, name, _id, slug, category, discount}) => {
     const router = useRouter();
     const [isQuote, setIsQuote] = useState(false); // eslint-disable-line @typescript-eslint/no-unused-vars
     const [isCustomize, setIsCustomize] = useState(false); // eslint-disable-line @typescript-eslint/no-unused-vars
@@ -136,7 +136,7 @@ const RightSide: React.FC<Tour> = ({ price, name, _id, slug, category, discount,
                     getSoloStayPrice();
 
     // Handle solo tour selection
-    const handleSoloTourChange = (isSelected: boolean, value: string) => {
+    const handleSoloTourChange = (isSelected: boolean) => {
         if (isSelected) {
             setSelectedSoloTour(SOLO_TOUR_OPTIONS.PRIVATE_TOUR.id);
             // Reset accommodation to standard when solo tour is selected
@@ -195,7 +195,7 @@ const RightSide: React.FC<Tour> = ({ price, name, _id, slug, category, discount,
         }
         
         // Determine which solo stay standard is selected (if any)
-        let soloStandard = selectedSoloStay !== SOLO_STAY_OPTIONS.NONE.id ? selectedSoloStay : null;
+        const soloStandard = selectedSoloStay !== SOLO_STAY_OPTIONS.NONE.id ? selectedSoloStay : null;
         
         // Create booking details object
         const bookingDetails = {
@@ -300,7 +300,7 @@ const RightSide: React.FC<Tour> = ({ price, name, _id, slug, category, discount,
                                 {/* Solo Private Tour Checkbox */}
                                 <Checkbox
                                     isSelected={selectedSoloTour === SOLO_TOUR_OPTIONS.PRIVATE_TOUR.id}
-                                    onChange={(e) => handleSoloTourChange(e.target.checked, "Private Tour")}
+                                    onChange={(e) => handleSoloTourChange(e.target.checked)}
                                     value="Private tour"
                                     isDisabled={selectedAccommodation !== ACCOMMODATION_OPTIONS.STANDARD.id || quantity > 1}
                                 >

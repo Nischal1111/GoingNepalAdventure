@@ -36,7 +36,7 @@ export default function CheckoutPage() {
   });
 
   const {mutate:checkoutMutation}=useMutation({
-    mutationFn:(data:any)=>checkout(data),
+    mutationFn:(data:any)=>checkout(data), //eslint-disable-line @typescript-eslint/no-explicit-any
     onSuccess:()=>{
       toast.success('Your booking has been submitted successfully.')
       setFormData({
@@ -48,8 +48,8 @@ export default function CheckoutPage() {
       clearBookingDetails();
       router.push('/')
     },
-    onError:(error:any)=>{
-      console.log(error)
+    onError:()=>{
+      toast.error('Failed to submit your booking.')
     } 
     })
 
@@ -89,7 +89,7 @@ export default function CheckoutPage() {
     try {
       return new Date(dateString).toLocaleDateString();
     } catch (error) {
-      return 'Invalid date';
+      throw error;
     }
   };
 

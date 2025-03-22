@@ -32,7 +32,7 @@ interface RightSideProps {
     type:string|undefined
 }
 
-const RightSide: React.FC<RightSideProps> = ({ price, title, _id, downloadPDF, slug, discount,type }) => {
+const RightSide: React.FC<RightSideProps> = ({ price, title, _id, downloadPDF, slug, discount }) => {
     const router = useRouter();
     const [isQuote, setIsQuote] = useState(false); //eslint-disable-line @typescript-eslint/no-unused-vars
     const [isCustomize, setIsCustomize] = useState(false);//eslint-disable-line @typescript-eslint/no-unused-vars
