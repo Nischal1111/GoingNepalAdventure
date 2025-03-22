@@ -1,6 +1,5 @@
 "use client";
-import React, { useState } from 'react';
-import { useSearchParams} from 'next/navigation';
+import React, { useState, useEffect } from 'react';
 import { Card, CardBody, CardHeader } from "@nextui-org/card";
 import { Input } from "@nextui-org/input";
 import { Button } from "@nextui-org/button";
@@ -9,18 +8,12 @@ import { FiUser } from 'react-icons/fi';
 import { MdMail } from 'react-icons/md';
 import { FaPhone } from 'react-icons/fa';
 import { CiLocationOn } from 'react-icons/ci';
-
-interface BookingDetails {
-  name: string;
-  price: number;
-  quantity: number;
-  bookingDate: string;
-  extraServices: {
-    guide: boolean;
-    potter: boolean;
-    fullboard: boolean;
-  };
-}
+import { useRouter } from 'next/navigation';
+import { BookingDetails, clearBookingDetails, getBookingDetails } from '@/utility/BookingStorageHandler';
+import { useMutation } from '@tanstack/react-query';
+import { checkout } from '@/services/checkout';
+import Loader from '@/shared/Loader';
+import { toast } from 'sonner';
 
 interface FormData {
   fullName: string;
@@ -30,11 +23,10 @@ interface FormData {
 }
 
 export default function CheckoutPage() {
-  // const router = useRouter();
-  const searchParams = useSearchParams();
-  const detailsParam = searchParams.get('details');
-  const trekDetails: BookingDetails = detailsParam ? JSON.parse(detailsParam) : null;
-
+  const router = useRouter();
+  const [bookingDetails, setBookingDetails] = useState<BookingDetails | null>(null);
+  const [loading, setLoading] = useState(true);
+  
   const [errors, setErrors] = useState<Partial<FormData>>({});
   const [formData, setFormData] = useState<FormData>({
     fullName: '',
@@ -43,24 +35,62 @@ export default function CheckoutPage() {
     address: '',
   });
 
-  if (!trekDetails) {
+  const {mutate:checkoutMutation}=useMutation({
+    mutationFn:(data:any)=>checkout(data),
+    onSuccess:()=>{
+      toast.success('Your booking has been submitted successfully.')
+      setFormData({
+        fullName: '',
+        email: '',
+        phone: '',
+        address: '',       
+      })
+      clearBookingDetails();
+      router.push('/')
+    },
+    onError:(error:any)=>{
+      console.log(error)
+    } 
+    })
+
+  useEffect(() => {
+    // Get booking details from localStorage on client-side
+    // Using setTimeout to ensure this runs after component mounts
+    const loadBookingDetails = () => {
+      const details = getBookingDetails();
+      setBookingDetails(details);
+      setLoading(false);
+    };
+    
+    // Use setTimeout to ensure this runs client-side
+    setTimeout(loadBookingDetails, 0);
+  }, []);
+
+  if (loading) {
+    return (
+      <Loader/>
+    );
+  }
+
+  if (!bookingDetails) {
     return (
       <div className="flex min-h-screen items-center justify-center">
         <Card>
           <CardBody>
-            No booking details found. Please return to the trek page and try booking again.
+            <p className="mb-4">No booking details found. Please return to the trek or tour page and try booking again.</p>
+            <Button color="primary" onPress={() => router.push('/')}>Return to Home</Button>
           </CardBody>
         </Card>
       </div>
     );
   }
 
-  const calculateTotal = () => {
-    const basePrice = trekDetails.price * trekDetails.quantity;
-    const guidePrice = trekDetails.extraServices.guide ? 100 * trekDetails.quantity : 0;
-    const potterPrice = trekDetails.extraServices.potter ? 150 * trekDetails.quantity : 0;
-    const fullboardPrice = trekDetails.extraServices.fullboard ? 200 * trekDetails.quantity : 0;
-    return basePrice + guidePrice + potterPrice + fullboardPrice;
+  const formatDate = (dateString: string) => {
+    try {
+      return new Date(dateString).toLocaleDateString();
+    } catch (error) {
+      return 'Invalid date';
+    }
   };
 
   const validateForm = (): boolean => {
@@ -99,10 +129,73 @@ export default function CheckoutPage() {
     if (!validateForm()) {
       return;
     }
+    
+    checkoutMutation({
+      ...formData,
+      ...bookingDetails
+    })
+  };
 
-    // Form is valid, proceed to submit to HBL Payment Gateway
-    const form = document.getElementById('hbl-payment-form') as HTMLFormElement;
-    form.submit();
+  const renderExtraServices = () => {
+    const { soloStandard, extraServices, adventureType, quantity } = bookingDetails;
+    
+    if (adventureType === 'Tour') {
+      return (
+        <>
+          {extraServices === 'private_tour' && (
+            <div className="flex justify-between text-gray-600">
+              <span>Solo Private Tour</span>
+              <span>+$100</span>
+            </div>
+          )}
+
+          {extraServices === 'four_star' && (
+            <div className="flex justify-between text-gray-600">
+              <span>4 Star Accommodation (9 Nights)</span>
+              <span>+${150 * (quantity || 1)}</span>
+            </div>
+          )}
+
+          {extraServices === 'five_star' && (
+            <div className="flex justify-between text-gray-600">
+              <span>5 Star Accommodation (9 Nights)</span>
+              <span>+${200 * (quantity || 1)}</span>
+            </div>
+          )}
+          
+          {soloStandard === 'four_star' && (
+            <div className="flex justify-between text-gray-600">
+              <span>4 Star Solo Stay</span>
+              <span>+$400</span>
+            </div>
+          )}
+          
+          {soloStandard === 'five_star' && (
+            <div className="flex justify-between text-gray-600">
+              <span>5 Star Solo Stay</span>
+              <span>+$500</span>
+            </div>
+          )}
+        </>
+      );
+    } else if (adventureType === 'Trek') {
+      if (soloStandard) {
+        const hotelPrice = soloStandard === '4-star' ? 450 : 550;
+        return (
+          <div className="flex justify-between text-gray-600">
+            <span>{soloStandard === '4-star' ? '4 Star' : '5 Star'} Hotel</span>
+            <span>+${hotelPrice}</span>
+          </div>
+        );
+      }
+      return (
+        <div className="text-gray-600 italic text-sm">
+          Trek includes guide service, porter service, and full board service.
+        </div>
+      );
+    }
+    
+    return null;
   };
 
   return (
@@ -111,14 +204,11 @@ export default function CheckoutPage() {
         <h1 className="text-3xl font-bold mb-8">Checkout</h1>
         
         <form
-          id="hbl-payment-form"
-          onSubmit={handleSubmit}
-          action="http://localhost/hbldemo/payment_request.php" // Replace with your live backend URL
-          method="post"
           className="grid grid-cols-1 md:grid-cols-2 gap-8"
+          onSubmit={handleSubmit}
         >
           <div className="space-y-6">
-            <Card>
+            <Card className='px-4 py-4'>
               <CardHeader className="flex flex-col gap-1">
                 <h4 className="text-xl font-bold">Customer Information</h4>
                 <p className="text-sm text-gray-500">Please enter your details</p>
@@ -173,80 +263,45 @@ export default function CheckoutPage() {
           </div>
 
           <div>
-            <Card className="sticky top-8">
+            <Card className="sticky top-8 px-4 py-4">
               <CardHeader className="flex flex-col gap-1">
                 <h4 className="text-xl font-bold">Order Summary</h4>
                 <p className="text-sm text-gray-500">Review your booking details</p>
               </CardHeader>
               <CardBody className="space-y-4">
                 <div>
-                  <h3 className="text-xl font-semibold">{trekDetails.name}</h3>
-                  <p className="text-gray-600">Booking Date: {new Date(trekDetails.bookingDate).toLocaleDateString()}</p>
-                  <p className="text-gray-600">Number of Persons: {trekDetails.quantity}</p>
+                  <h3 className="text-xl font-semibold">{bookingDetails.adventureName}</h3>
+                  <p className="text-gray-600">Booking Type: {bookingDetails.adventureType === 'Trek' ? 'Trek' : 'Tour'}</p>
+                  <p className="text-gray-600">Booking Date: {formatDate(bookingDetails.bookingDate)}</p>
+                  <p className="text-gray-600">Number of Persons: {bookingDetails.quantity}</p>
                 </div>
 
                 <Divider />
 
                 <div className="space-y-2">
                   <div className="flex justify-between">
-                    <span>Base Price ({trekDetails.quantity} x ${trekDetails.price})</span>
-                    <span>${trekDetails.price * trekDetails.quantity}</span>
+                    <span>Base Price ({bookingDetails.quantity} x ${bookingDetails.price})</span>
+                    <span>${bookingDetails.totalPrice}</span>
                   </div>
 
-                  {trekDetails.extraServices.guide && (
-                    <div className="flex justify-between text-gray-600">
-                      <span>Solo Private Tour</span>
-                      <span>+$100</span>
-                    </div>
-                  )}
-
-                  {trekDetails.extraServices.potter && (
-                    <div className="flex justify-between text-gray-600">
-                      <span>4 Star Accommodation</span>
-                      <span>+${150 * trekDetails.quantity}</span>
-                    </div>
-                  )}
-
-                  {trekDetails.extraServices.fullboard && (
-                    <div className="flex justify-between text-gray-600">
-                      <span>5 Star Accommodation</span>
-                      <span>+${200 * trekDetails.quantity}</span>
-                    </div>
-                  )}
+                  {renderExtraServices()}
                 </div>
 
                 <Divider />
 
                 <div className="flex justify-between text-xl font-bold">
                   <span>Total</span>
-                  <span>${calculateTotal()}</span>
+                  <span>${bookingDetails.totalPrice}</span>
                 </div>
-
-                {/* Hidden fields for HBL Payment Gateway */}
-                <input type="hidden" name="api_key" value="YOUR_LIVE_API_KEY" />
-                <input type="hidden" name="merchant_id" value="YOUR_LIVE_MERCHANT_ID" />
-                <input type="hidden" name="input_currency" value="NPR" />
-                <input type="hidden" name="input_amount" value={calculateTotal()} />
-                <input type="hidden" name="input_3d" value="N" />
-                <input type="hidden" name="success_url" value="http://localhost/hbldemo/?payment=success" />
-                <input type="hidden" name="fail_url" value="http://localhost/hbldemo/?payment=failed" />
-                <input type="hidden" name="cancel_url" value="http://localhost/hbldemo/?payment=cancel" />
-                <input type="hidden" name="backend_url" value="http://localhost/hbldemo/?payment=backend" />
 
                 <Button 
                   color="primary"
                   size="lg"
-                  className="w-full"
+                  className="w-full rounded-sm"
                   type="submit"
                 >
-                  Pay ${calculateTotal()}
+                  Pay ${bookingDetails.totalPrice}
                 </Button>
-
-                <Card>
-                  <CardBody className="text-sm text-gray-600">
-                    Your booking will be confirmed after successful payment processing.
-                  </CardBody>
-                </Card>
               </CardBody>
             </Card>
           </div>

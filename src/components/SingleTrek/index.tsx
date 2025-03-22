@@ -220,7 +220,7 @@ const SingleTrek:React.FC<paramsProps> = ({id}) => {
                     <Gallery title={trek?.title} gallery={gallery} video={video}/>
                 </div>
                 <div className='lg:w-[35%] w-full flex justify-start flex-col items-center'>
-                    <RightSide slug={SingleTrekData?.data?.data?.slug} price={trek?.price} discount={trek?.discount} title={trek?.title} trekPdf={SingleTrekData?.data?.data?.trekPdf} _id={SingleTrekData?.data?.data?._id} downloadPDF={downloadPDF}/>
+                    <RightSide slug={SingleTrekData?.data?.data?.slug} type={SingleTrekData?.data?.data?.type} price={trek?.price} discount={trek?.discount} title={trek?.title} trekPdf={SingleTrekData?.data?.data?.trekPdf} _id={SingleTrekData?.data?.data?._id} downloadPDF={downloadPDF}/>
                 </div>
             </section>
             <div

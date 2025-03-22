@@ -25,6 +25,7 @@ export interface trekProps{
     desc?:string
     price?:string
     slug?:string
+    type?:string|undefined
     minitrekDetails?:{
         title:string
         value:string
@@ -127,6 +128,7 @@ export interface Tour {
   country?: string;
   language?: string;
   maxAltitude?: string;
+  type?: string|undefined;
   suitableAge?: string;
   location?: string;
   tripType?: string;
@@ -205,6 +207,7 @@ export interface WellnessData {
     name?: string;
     slug?: string;
     price?: number;
+    type?: string|undefined;
     thumbnail?: string;
     country?: string;
     language?: string;
