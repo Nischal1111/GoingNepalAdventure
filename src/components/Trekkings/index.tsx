@@ -232,7 +232,6 @@ const Trekking = () => {
         </div>
     );
 
-    if (isLoading) return <Loader />;
 
     return (
         <main>
@@ -242,7 +241,7 @@ const Trekking = () => {
                 <p className="text-justify text-gray-700 my-8">
                     {/* ... existing description text ... */}
                 </p>
-                
+                {isLoading && <Loader/>}
                 <div className="flex justify-between items-center mt-20">
                     <h1 ref={first} className={`${rowdies.className} lg:text-4xl text-2xl`}>
                         Trekking packages

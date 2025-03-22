@@ -229,8 +229,6 @@ const Tours = () => {
         </div>
     );
 
-    if (isLoading) return <Loader />;
-
     return (
         <div>
             <SharedSection 
@@ -274,7 +272,7 @@ const Tours = () => {
                 }
                 <Button className='bg-transparent -ml-4 text-primary' onPress={()=>handleDetailsClick()}>View <span>{full ? 'less' : 'more'}</span> detail</Button>
                 
-
+                {isLoading && <Loader/>}
                 <div className="flex justify-between items-center mt-8">
                     <h1 ref={first} className={`${rowdies.className} lg:text-4xl text-2xl`}>
                         Trips and Tours packages
